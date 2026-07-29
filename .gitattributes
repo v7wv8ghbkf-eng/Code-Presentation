@@ -1,2 +1,5 @@
-# Auto detect text files and perform LF normalization
+# Treat .cpp files as binary to prevent encoding corruption
+*.cpp binary
+*.h binary
+# All other text files default to LF normalization
 * text=auto
