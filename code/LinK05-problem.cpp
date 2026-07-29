@@ -1,23 +1,20 @@
-/*-----题目分析-----*/
-// 12枚硬币（A-L），其中11枚真币、1枚假币（不知轻重）
-// 经过3次称量，根据天平结果找出假币并判断其轻重
-// 解法：枚举法——对每枚硬币假设其为轻或重，验证是否满足三次称量结果
+﻿/*-----棰樼洰鍒嗘瀽-----*/
+// 12鏋氱‖甯侊紙A-L锛夛紝鍏朵腑11鏋氱湡甯併€?鏋氬亣甯侊紙涓嶇煡杞婚噸锛?// 缁忚繃3娆＄О閲忥紝鏍规嵁澶╁钩缁撴灉鎵惧嚭鍋囧竵骞跺垽鏂叾杞婚噸
+// 瑙ｆ硶锛氭灇涓炬硶鈥斺€斿姣忔灇纭竵鍋囪鍏朵负杞绘垨閲嶏紝楠岃瘉鏄惁婊¤冻涓夋绉伴噺缁撴灉
 
 #include <iostream>
 #include <string>
 using namespace std;
 
-/*-----称量数据结构-----*/
+/*-----绉伴噺鏁版嵁缁撴瀯-----*/
 struct weigh
 {
-    string left;    // 天平左边放置的硬币
-    string right;   // 天平右边放置的硬币
-    string result;  // 天平结果：even(平衡) / up(右高，即左重) / down(右低，即左轻)
+    string left;    // 澶╁钩宸﹁竟鏀剧疆鐨勭‖甯?    string right;   // 澶╁钩鍙宠竟鏀剧疆鐨勭‖甯?    string result;  // 澶╁钩缁撴灉锛歟ven(骞宠　) / up(鍙抽珮锛屽嵆宸﹂噸) / down(鍙充綆锛屽嵆宸﹁交)
 };
 
-/*-----check函数分析-----*/
-// 假设硬币 coin 是假币，且 isLight 为 true 表示假币较轻、false 表示假币较重
-// 对三次称量结果逐一验证，如果全部符合则假设成立
+/*-----check鍑芥暟鍒嗘瀽-----*/
+// 鍋囪纭竵 coin 鏄亣甯侊紝涓?isLight 涓?true 琛ㄧず鍋囧竵杈冭交銆乫alse 琛ㄧず鍋囧竵杈冮噸
+// 瀵逛笁娆＄О閲忕粨鏋滈€愪竴楠岃瘉锛屽鏋滃叏閮ㄧ鍚堝垯鍋囪鎴愮珛
 bool check(char coin, bool isLight, weigh w[])
 {
     for (int i = 0; i < 3; i++)
@@ -26,47 +23,44 @@ bool check(char coin, bool isLight, weigh w[])
         string r = w[i].right;
         string res = w[i].result;
 
-        // 统计左右两边的"重量"：只在含有假设假币的那一侧进行加减
-        // 真币重量记0，假币根据假设：轻为-1、重为+1
+        // 缁熻宸﹀彸涓よ竟鐨?閲嶉噺"锛氬彧鍦ㄥ惈鏈夊亣璁惧亣甯佺殑閭ｄ竴渚ц繘琛屽姞鍑?        // 鐪熷竵閲嶉噺璁?锛屽亣甯佹牴鎹亣璁撅細杞讳负-1銆侀噸涓?1
         int leftWeight = 0, rightWeight = 0;
 
-        // 这里直接通过“是否包含假币”和“假设的假币轻重”来改变先决为平衡的左右重量
-        // 可以这么操作是因为只包含一枚假币，天平平衡也只和这枚假币有关
-        
-        // 检查天平左侧是否包含假设的假币
+        // 杩欓噷鐩存帴閫氳繃鈥滄槸鍚﹀寘鍚亣甯佲€濆拰鈥滃亣璁剧殑鍋囧竵杞婚噸鈥濇潵鏀瑰彉鍏堝喅涓哄钩琛＄殑宸﹀彸閲嶉噺
+        // 鍙互杩欎箞鎿嶄綔鏄洜涓哄彧鍖呭惈涓€鏋氬亣甯侊紝澶╁钩骞宠　涔熷彧鍜岃繖鏋氬亣甯佹湁鍏?        
+        // 妫€鏌ュぉ骞冲乏渚ф槸鍚﹀寘鍚亣璁剧殑鍋囧竵
         for (char c : l)
         {
             if (c == coin)
             {
-                // 假币轻 → 左侧重量-1；假币重 → 左侧重量+1
+                // 鍋囧竵杞?鈫?宸︿晶閲嶉噺-1锛涘亣甯侀噸 鈫?宸︿晶閲嶉噺+1
                 leftWeight += (isLight ? -1 : 1);
             }
         }
 
-        // 检查天平右侧是否包含假设的假币
+        // 妫€鏌ュぉ骞冲彸渚ф槸鍚﹀寘鍚亣璁剧殑鍋囧竵
         for (char c : r)
         {
             if (c == coin)
             {
-                // 假币在右侧：轻 → 右侧-1；重 → 右侧+1
+                // 鍋囧竵鍦ㄥ彸渚э細杞?鈫?鍙充晶-1锛涢噸 鈫?鍙充晶+1
                 rightWeight += (isLight ? -1 : 1);
             }
         }
 
-        /*-----根据天平结果验证假设-----*/
-        // even：两边重量必须相等
-        if (res == "even")
+        /*-----鏍规嵁澶╁钩缁撴灉楠岃瘉鍋囪-----*/
+        // even锛氫袱杈归噸閲忓繀椤荤浉绛?        if (res == "even")
         {
             if (leftWeight != rightWeight)
                 return false;
         }
-        // up（右端高=左端重）：左侧重量必须 > 右侧重量
+        // up锛堝彸绔珮=宸︾閲嶏級锛氬乏渚ч噸閲忓繀椤?> 鍙充晶閲嶉噺
         else if (res == "up")
         {
             if (leftWeight <= rightWeight)
                 return false;
         }
-        // down（右端低=左端轻）：左侧重量必须 < 右侧重量
+        // down锛堝彸绔綆=宸︾杞伙級锛氬乏渚ч噸閲忓繀椤?< 鍙充晶閲嶉噺
         else if (res == "down")
         {
             if (leftWeight >= rightWeight)
@@ -74,7 +68,7 @@ bool check(char coin, bool isLight, weigh w[])
         }
     }
 
-    return true;    // 三次称量全部符合假设
+    return true;    // 涓夋绉伴噺鍏ㄩ儴绗﹀悎鍋囪
 }
 
 int main()
@@ -90,16 +84,13 @@ int main()
             cin >> w[i].left >> w[i].right >> w[i].result;
         }
 
-        // 枚举12枚硬币 A-L，对每枚分别假设其为轻和重
-        for (char c = 'A'; c <= 'L'; c++)
+        // 鏋氫妇12鏋氱‖甯?A-L锛屽姣忔灇鍒嗗埆鍋囪鍏朵负杞诲拰閲?        for (char c = 'A'; c <= 'L'; c++)
         {
-            if (check(c, true, w))      // 假设 c 是轻的假币
-            {
+            if (check(c, true, w))      // 鍋囪 c 鏄交鐨勫亣甯?            {
                 cout << c << " is the counterfeit coin and it is light." << endl;
                 break;
             }
-            if (check(c, false, w))     // 假设 c 是重的假币
-            {
+            if (check(c, false, w))     // 鍋囪 c 鏄噸鐨勫亣甯?            {
                 cout << c << " is the counterfeit coin and it is heavy." << endl;
                 break;
             }

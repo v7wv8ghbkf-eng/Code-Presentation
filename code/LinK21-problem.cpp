@@ -1,14 +1,14 @@
-/*-----与Link11重复，不做注释-----*/
-// 以下注释和所标记的代码为反复遇到部分通过无法解决时，Claude Code编辑的
+﻿/*-----涓嶭ink11閲嶅锛屼笉鍋氭敞閲?----*/
+// 浠ヤ笅娉ㄩ噴鍜屾墍鏍囪鐨勪唬鐮佷负鍙嶅閬囧埌閮ㄥ垎閫氳繃鏃犳硶瑙ｅ喅鏃讹紝Claude Code缂栬緫鐨?
 /*
- * 部分通过原因分析：
- * 1. cout << endl 每次都刷新缓冲区，n 较大时输出量巨大(n! 行)，导致 TLE
- *    修复：换用 '\n'，只在最后可能需要的 flush 处用 endl 或等程序结束自动 flush
- * 2. 未关闭 C/C++ IO 同步，cin/cout 效率低
- *    修复：添加 ios::sync_with_stdio(false); cin.tie(nullptr);
- * 3. <cstring> 中的 memset 在严格 C++ 标准下只保证 std::memset 存在
- *    修复：显式使用 std::memset（或直接用 vector<bool> 自动初始化为 false）
- * 4. dfs 末尾多余的 return; 已移除（void 函数自然返回即可）
+ * 閮ㄥ垎閫氳繃鍘熷洜鍒嗘瀽锛?
+ * 1. cout << endl 姣忔閮藉埛鏂扮紦鍐插尯锛宯 杈冨ぇ鏃惰緭鍑洪噺宸ㄥぇ(n! 琛?锛屽鑷?TLE
+ *    淇锛氭崲鐢?'\n'锛屽彧鍦ㄦ渶鍚庡彲鑳介渶瑕佺殑 flush 澶勭敤 endl 鎴栫瓑绋嬪簭缁撴潫鑷姩 flush
+ * 2. 鏈叧闂?C/C++ IO 鍚屾锛宑in/cout 鏁堢巼浣?
+ *    淇锛氭坊鍔?ios::sync_with_stdio(false); cin.tie(nullptr);
+ * 3. <cstring> 涓殑 memset 鍦ㄤ弗鏍?C++ 鏍囧噯涓嬪彧淇濊瘉 std::memset 瀛樺湪
+ *    淇锛氭樉寮忎娇鐢?std::memset锛堟垨鐩存帴鐢?vector<bool> 鑷姩鍒濆鍖栦负 false锛?
+ * 4. dfs 鏈熬澶氫綑鐨?return; 宸茬Щ闄わ紙void 鍑芥暟鑷劧杩斿洖鍗冲彲锛?
  */
 #include <iostream>
 #include <vector>
@@ -23,15 +23,15 @@ void dfs(int depth)
 {
     if (depth == n)
     {
-        for (int x = 0; x < n; x++)  // path.size() 在此处等价于 n，直接用 n 略快
+        for (int x = 0; x < n; x++)  // path.size() 鍦ㄦ澶勭瓑浠蜂簬 n锛岀洿鎺ョ敤 n 鐣ュ揩
         {
             cout << path[x];
             if (x != n - 1)
             {
-                cout << ' ';  // 单字符用 '' 而非 "" 略快
+                cout << ' ';  // 鍗曞瓧绗︾敤 '' 鑰岄潪 "" 鐣ュ揩
             }
         }
-        cout << '\n';  // 关键修复：用 '\n' 替代 endl，避免每行 flush
+        cout << '\n';  // 鍏抽敭淇锛氱敤 '\n' 鏇夸唬 endl锛岄伩鍏嶆瘡琛?flush
         return;
     }
 
@@ -50,10 +50,10 @@ void dfs(int depth)
 
 int main()
 {
-    ios::sync_with_stdio(false);  // 关闭 C/C++ IO 同步，大幅提升 cin/cout 速度
-    cin.tie(nullptr);             // 解除 cin 与 cout 的绑定
+    ios::sync_with_stdio(false);  // 鍏抽棴 C/C++ IO 鍚屾锛屽ぇ骞呮彁鍗?cin/cout 閫熷害
+    cin.tie(nullptr);             // 瑙ｉ櫎 cin 涓?cout 鐨勭粦瀹?
     cin >> n;
-    std::memset(st, false, sizeof st);  // 显式使用 std::memset
+    std::memset(st, false, sizeof st);  // 鏄惧紡浣跨敤 std::memset
     dfs(0);
     return 0;
 }

@@ -1,14 +1,9 @@
-/*-----题目分析-----
- * 最省赛程（状态图Dijkstra）：
- * N个城市M条赛道（无向图），每城市有油价P_i。车油箱容量C，初始空油。
- * q个查询(S,E,C)，求从S到E的最少油钱，不可达输出"impossible"。
- *
- * 解法：Dijkstra在状态图(city, fuel)上求最短路。
- *   状态转移有两种：
- *     1. 在当前城市加1单位油：cost+P[city], fuel+1 (if fuel<C)
- *     2. 去相邻城市：fuel-d (if fuel>=d)
- *   状态数N×C最多约1000×100=100000，用优先队列优化。
- *-----题目分析-----*/
+﻿/*-----棰樼洰鍒嗘瀽-----
+ * 鏈€鐪佽禌绋嬶紙鐘舵€佸浘Dijkstra锛夛細
+ * N涓煄甯侻鏉¤禌閬擄紙鏃犲悜鍥撅級锛屾瘡鍩庡競鏈夋补浠稰_i銆傝溅娌圭瀹归噺C锛屽垵濮嬬┖娌广€? * q涓煡璇?S,E,C)锛屾眰浠嶴鍒癊鐨勬渶灏戞补閽憋紝涓嶅彲杈捐緭鍑?impossible"銆? *
+ * 瑙ｆ硶锛欴ijkstra鍦ㄧ姸鎬佸浘(city, fuel)涓婃眰鏈€鐭矾銆? *   鐘舵€佽浆绉绘湁涓ょ锛? *     1. 鍦ㄥ綋鍓嶅煄甯傚姞1鍗曚綅娌癸細cost+P[city], fuel+1 (if fuel<C)
+ *     2. 鍘荤浉閭诲煄甯傦細fuel-d (if fuel>=d)
+ *   鐘舵€佹暟N脳C鏈€澶氱害1000脳100=100000锛岀敤浼樺厛闃熷垪浼樺寲銆? *-----棰樼洰鍒嗘瀽-----*/
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -19,22 +14,18 @@ using namespace std;
 const int N = 1010, M = 20010, C_MAX = 110;
 
 int n, m;
-int price[N];                               // 各城市油价
-int h[N], e[M], ne[M], w[M], idx;           // 邻接表（无向边）
+int price[N];                               // 鍚勫煄甯傛补浠?int h[N], e[M], ne[M], w[M], idx;           // 閭绘帴琛紙鏃犲悜杈癸級
 
 void add(int a, int b, int c) {
     e[idx] = b; w[idx] = c; ne[idx] = h[a]; h[a] = idx++;
 }
 
-/*-----状态图Dijkstra-----*/
-// dist[city][fuel]：到达某城市、油量为fuel时的最小花费
-int dist[N][C_MAX];
-bool vis[N][C_MAX];                         // 访问标记（可复用）
-
+/*-----鐘舵€佸浘Dijkstra-----*/
+// dist[city][fuel]锛氬埌杈炬煇鍩庡競銆佹补閲忎负fuel鏃剁殑鏈€灏忚姳璐?int dist[N][C_MAX];
+bool vis[N][C_MAX];                         // 璁块棶鏍囪锛堝彲澶嶇敤锛?
 struct State {
     int cost, city, fuel;
-    bool operator<(const State &o) const { return cost > o.cost; }  // 小根堆
-};
+    bool operator<(const State &o) const { return cost > o.cost; }  // 灏忔牴鍫?};
 
 int dijkstra(int C, int S, int E) {
     memset(dist, 0x3f, sizeof(dist));
@@ -46,11 +37,10 @@ int dijkstra(int C, int S, int E) {
 
     while (!pq.empty()) {
         auto top = pq.top(); pq.pop(); int cur_cost = top.cost, u = top.city, f = top.fuel;
-        if (u == E) return cur_cost;        // 到达终点，首次即最优
-        if (vis[u][f]) continue;
+        if (u == E) return cur_cost;        // 鍒拌揪缁堢偣锛岄娆″嵆鏈€浼?        if (vis[u][f]) continue;
         vis[u][f] = true;
 
-        /*-----转移1：在当前城市加1单位油-----*/
+        /*-----杞Щ1锛氬湪褰撳墠鍩庡競鍔?鍗曚綅娌?----*/
         if (f < C) {
             int nxt_cost = cur_cost + price[u];
             int nxt_f = f + 1;
@@ -60,7 +50,7 @@ int dijkstra(int C, int S, int E) {
             }
         }
 
-        /*-----转移2：去相邻城市-----*/
+        /*-----杞Щ2锛氬幓鐩搁偦鍩庡競-----*/
         for (int i = h[u]; i != -1; i = ne[i]) {
             int v = e[i], d = w[i];
             if (f >= d) {
@@ -72,8 +62,7 @@ int dijkstra(int C, int S, int E) {
             }
         }
     }
-    return -1;                              // 不可达
-}
+    return -1;                              // 涓嶅彲杈?}
 
 int main() {
     ios::sync_with_stdio(false); cin.tie(nullptr);
@@ -83,8 +72,7 @@ int main() {
     for (int i = 0; i < n; i++) cin >> price[i];
     while (m--) {
         int u, v, d; cin >> u >> v >> d;
-        add(u, v, d); add(v, u, d);         // 无向边
-    }
+        add(u, v, d); add(v, u, d);         // 鏃犲悜杈?    }
 
     int q; cin >> q;
     while (q--) {

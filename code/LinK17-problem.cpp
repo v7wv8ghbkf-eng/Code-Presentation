@@ -1,25 +1,21 @@
-/*-----题目分析-----
- * 波兰表达式（前缀表达式）求值：
- * 运算符写在操作数之前，如 "* + 2 3 4" 表示 (2+3)*4=20。
- * 输入为空格分隔的前缀表达式，操作数为浮点数。
- *
- * 解法：递归。前缀表达式天然适合递归：
- *   读入一个token → 是运算符则递归求左右操作数并运算；
- *   是数字则直接转double返回。
- *-----题目分析-----*/
+﻿/*-----棰樼洰鍒嗘瀽-----
+ * 娉㈠叞琛ㄨ揪寮忥紙鍓嶇紑琛ㄨ揪寮忥級姹傚€硷細
+ * 杩愮畻绗﹀啓鍦ㄦ搷浣滄暟涔嬪墠锛屽 "* + 2 3 4" 琛ㄧず (2+3)*4=20銆? * 杈撳叆涓虹┖鏍煎垎闅旂殑鍓嶇紑琛ㄨ揪寮忥紝鎿嶄綔鏁颁负娴偣鏁般€? *
+ * 瑙ｆ硶锛氶€掑綊銆傚墠缂€琛ㄨ揪寮忓ぉ鐒堕€傚悎閫掑綊锛? *   璇诲叆涓€涓猼oken 鈫?鏄繍绠楃鍒欓€掑綊姹傚乏鍙虫搷浣滄暟骞惰繍绠楋紱
+ *   鏄暟瀛楀垯鐩存帴杞琩ouble杩斿洖銆? *-----棰樼洰鍒嗘瀽-----*/
 #include <iostream>
 #include <string>
 #include <cstdlib>
 using namespace std;
 
-/*-----dfs：递归求值-----*/
+/*-----dfs锛氶€掑綊姹傚€?----*/
 double dfs() {
     string token; cin >> token;
     if (token == "+")      return dfs() + dfs();
     else if (token == "-") return dfs() - dfs();
     else if (token == "*") return dfs() * dfs();
     else if (token == "/") return dfs() / dfs();
-    else                   return atof(token.c_str());  // 数字
+    else                   return atof(token.c_str());  // 鏁板瓧
 }
 
 int main() {

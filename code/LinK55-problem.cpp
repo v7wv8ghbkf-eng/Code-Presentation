@@ -1,11 +1,8 @@
-/*-----题目分析-----
- * 多源BFS：给定N×M的01矩阵，计算每个位置到最近'1'的曼哈顿距离。
- * 等价于：所有'1'同时作为起点向外扩展，BFS逐层扩散。
- *
- * 解法：将所有'1'入队（距离=0），BFS向外扩展4个方向，
- *       每个格子的距离 = 前一格距离 + 1。
- * 时间复杂度 O(N×M)
- *-----题目分析-----*/
+﻿/*-----棰樼洰鍒嗘瀽-----
+ * 澶氭簮BFS锛氱粰瀹歂脳M鐨?1鐭╅樀锛岃绠楁瘡涓綅缃埌鏈€杩?1'鐨勬浖鍝堥】璺濈銆? * 绛変环浜庯細鎵€鏈?1'鍚屾椂浣滀负璧风偣鍚戝鎵╁睍锛孊FS閫愬眰鎵╂暎銆? *
+ * 瑙ｆ硶锛氬皢鎵€鏈?1'鍏ラ槦锛堣窛绂?0锛夛紝BFS鍚戝鎵╁睍4涓柟鍚戯紝
+ *       姣忎釜鏍煎瓙鐨勮窛绂?= 鍓嶄竴鏍艰窛绂?+ 1銆? * 鏃堕棿澶嶆潅搴?O(N脳M)
+ *-----棰樼洰鍒嗘瀽-----*/
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -14,10 +11,9 @@ using namespace std;
 
 const int MAXN = 1005;
 const int INF = 1e9;
-int dist[MAXN][MAXN];                       // dist[i][j]：(i,j)到最近'1'的距离
-int n, m;
+int dist[MAXN][MAXN];                       // dist[i][j]锛?i,j)鍒版渶杩?1'鐨勮窛绂?int n, m;
 
-int dx[] = {0, 0, 1, -1};                  // 4方向偏移
+int dx[] = {0, 0, 1, -1};                  // 4鏂瑰悜鍋忕Щ
 int dy[] = {1, -1, 0, 0};
 
 int main() {
@@ -30,36 +26,34 @@ int main() {
         cin >> grid[i];
     }
 
-    /*-----多源BFS-----*/
-    // 初始状态：所有'1'位置距离为0，同时入队
-    queue<pair<int,int>> q;
+    /*-----澶氭簮BFS-----*/
+    // 鍒濆鐘舵€侊細鎵€鏈?1'浣嶇疆璺濈涓?锛屽悓鏃跺叆闃?    queue<pair<int,int>> q;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             if (grid[i][j] == '1') {
-                dist[i][j] = 0;             // 源头距离为0
+                dist[i][j] = 0;             // 婧愬ご璺濈涓?
                 q.push({i, j});
             } else {
-                dist[i][j] = INF;           // 未访问标记为INF
+                dist[i][j] = INF;           // 鏈闂爣璁颁负INF
             }
         }
     }
 
-    // BFS逐层扩散
+    // BFS閫愬眰鎵╂暎
     while (!q.empty()) {
         auto t = q.front(); int x = t.first, y = t.second;
         q.pop();
         for (int d = 0; d < 4; d++) {
             int nx = x + dx[d];
             int ny = y + dy[d];
-            // 只访问未到达过的格子（dist==INF），BFS保证首次到达即最短距离
-            if (nx >= 0 && nx < n && ny >= 0 && ny < m && dist[nx][ny] == INF) {
+            // 鍙闂湭鍒拌揪杩囩殑鏍煎瓙锛坉ist==INF锛夛紝BFS淇濊瘉棣栨鍒拌揪鍗虫渶鐭窛绂?            if (nx >= 0 && nx < n && ny >= 0 && ny < m && dist[nx][ny] == INF) {
                 dist[nx][ny] = dist[x][y] + 1;
                 q.push({nx, ny});
             }
         }
     }
 
-    // 输出结果矩阵
+    // 杈撳嚭缁撴灉鐭╅樀
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             cout << dist[i][j];
