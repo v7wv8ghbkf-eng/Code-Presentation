@@ -1,0 +1,1183 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XMUOJ 题目展示 - 程序设计实践 (LinK01-LinK80)</title>
+<style>
+:root {
+  --bg: #f0f4f5; --bg2: #fff; --text: #1a1a1a; --text2: #555;
+  --border: #d0dde0; --accent: #087C87; --accent2: #0da5b3;
+  --tag-bg: #e0f2f4; --tag-text: #06606b;
+  --card-bg: #fff; --card-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  --btn-bg: #edf5f6; --btn-hover: #d4eaec;
+  --modal-overlay: rgba(0,0,0,0.5);
+  --code-bg: #1e1e1e; --code-text: #d4d4d4;
+  --diff-easy: #4caf50; --diff-mid: #ff9800; --diff-hard: #f44336;
+  --header-bg: linear-gradient(135deg, #054750, #087C87);
+  --header-text: #fff; --group-header: #065f68; --group-header-text: #fff;
+  --input-bg: #fff; --input-border: #b0c8cc;
+  --scrollbar: #87c4ca; --photo-zone: #f5fafa;
+  font-size: 15px;
+}
+[data-theme="dark"] {
+  --bg: #1a1f20; --bg2: #222728; --text: #dce8ea; --text2: #a0b5b8;
+  --border: #2a3538; --accent: #0da5b3; --accent2: #20c4d4;
+  --tag-bg: #1a2d30; --tag-text: #0da5b3;
+  --card-bg: #242a2c; --card-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  --btn-bg: #1a282a; --btn-hover: #253538;
+  --modal-overlay: rgba(0,0,0,0.75); --code-bg: #111; --code-text: #ddd;
+  --input-bg: #1a282a; --input-border: #2a4045; --photo-zone: #1e2628;
+  --header-bg: linear-gradient(135deg, #032d32, #054750); --group-header: #043840;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 4px; }
+header { background: var(--header-bg); color: var(--header-text); padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.02em; }
+header .subtitle { font-size: 0.8rem; opacity: 0.8; margin-top: 2px; }
+.header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.theme-btn { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+.theme-btn:hover { background: rgba(255,255,255,0.25); }
+.stats-bar { display: flex; gap: 16px; flex-wrap: wrap; padding: 12px 28px; background: var(--bg2); border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--text2); }
+.stat-item { display: flex; align-items: center; gap: 6px; }
+.stat-num { font-weight: 700; color: var(--accent); font-size: 1.1rem; }
+.tabs { display: flex; gap: 0; padding: 0 28px; background: var(--bg2); border-bottom: 1px solid var(--border); }
+.tab-btn { padding: 10px 20px; border: none; background: none; cursor: pointer; font-size: 0.9rem; color: var(--text2); border-bottom: 2px solid transparent; transition: all 0.2s; font-weight: 500; }
+.tab-btn:hover { color: var(--accent); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.filter-bar { padding: 16px 28px; background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.filter-bar input, .filter-bar select { padding: 8px 14px; border: 1px solid var(--input-border); border-radius: 8px; font-size: 0.9rem; background: var(--input-bg); color: var(--text); min-width: 140px; }
+.filter-bar input:focus, .filter-bar select:focus { outline: 2px solid var(--accent2); outline-offset: 1px; }
+.filter-bar input { flex: 1; min-width: 200px; max-width: 400px; }
+.clear-btn { padding: 8px 16px; background: var(--btn-bg); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; color: var(--text2); font-size: 0.85rem; }
+.clear-btn:hover { background: var(--btn-hover); }
+.content { max-width: 1200px; margin: 0 auto; padding: 20px 28px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.group { margin-bottom: 12px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg2); }
+.group-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; background: var(--group-header); color: var(--group-header-text); cursor: pointer; user-select: none; font-weight: 600; font-size: 0.95rem; }
+.group-header:hover { filter: brightness(1.1); }
+.group-count { font-size: 0.8rem; opacity: 0.85; background: rgba(255,255,255,0.15); padding: 2px 10px; border-radius: 10px; }
+.group-arrow { transition: transform 0.3s; font-size: 0.7rem; display: inline-block; }
+.group.collapsed .group-arrow { transform: rotate(-90deg); }
+.group-body { max-height: 8000px; overflow: hidden; transition: max-height 0.4s ease; }
+.group.collapsed .group-body { max-height: 0; }
+.sub-group { margin: 0; border-bottom: 1px solid var(--border); }
+.sub-group:last-child { border-bottom: none; }
+.sub-group-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px 10px 28px; background: var(--bg); cursor: pointer; font-weight: 500; font-size: 0.88rem; color: var(--text); border-bottom: 1px solid var(--border); }
+.sub-group-header:hover { background: var(--btn-hover); }
+.sub-group-body { padding: 0; }
+.sub-group.collapsed .sub-group-body { display: none; }
+.problem-card { display: flex; align-items: center; gap: 12px; padding: 10px 18px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.15s; font-size: 0.9rem; }
+.problem-card:last-child { border-bottom: none; }
+.problem-card:hover { background: var(--btn-hover); }
+.prob-num { font-weight: 700; color: var(--accent); min-width: 60px; font-size: 0.85rem; }
+.prob-title { flex: 1; font-weight: 500; }
+.prob-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.prob-tag { padding: 2px 8px; border-radius: 12px; font-size: 0.72rem; background: var(--tag-bg); color: var(--tag-text); white-space: nowrap; }
+.prob-diff { padding: 2px 8px; border-radius: 12px; font-size: 0.72rem; font-weight: 600; color: #fff; white-space: nowrap; }
+.diff-easy { background: var(--diff-easy); } .diff-mid { background: var(--diff-mid); } .diff-hard { background: var(--diff-hard); }
+.seq-item { display: flex; align-items: center; gap: 14px; padding: 11px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.15s; }
+.seq-item:hover { background: var(--btn-hover); }
+.modal-overlay { position: fixed; inset: 0; background: var(--modal-overlay); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.modal { background: var(--bg2); border-radius: 16px; max-width: 850px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.modal-header { padding: 18px 22px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.modal-header h2 { font-size: 1.2rem; color: var(--accent); }
+.modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text2); line-height: 1; padding: 4px 8px; border-radius: 6px; }
+.modal-close:hover { background: var(--btn-hover); }
+.modal-body { padding: 20px 22px; }
+.modal-section { margin-bottom: 18px; }
+.modal-section h3 { font-size: 0.95rem; color: var(--accent); margin-bottom: 8px; border-left: 3px solid var(--accent2); padding-left: 10px; }
+.modal-section p, .modal-section pre { margin: 4px 0; font-size: 0.88rem; }
+.modal-section pre { background: var(--code-bg); color: var(--code-text); padding: 14px; border-radius: 10px; overflow-x: auto; font-family: "Cascadia Code", "Fira Code", "JetBrains Mono", Consolas, monospace; font-size: 0.82rem; line-height: 1.5; }
+.badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.code-link { display: inline-block; padding: 8px 18px; background: var(--accent); color: #fff; text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 500; margin-top: 8px; }
+.code-link:hover { filter: brightness(1.15); }
+.photo-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 20px; text-align: center; background: var(--photo-zone); margin-top: 12px; }
+.photo-zone input[type="file"] { display: none; }
+.photo-zone label { cursor: pointer; color: var(--accent); font-weight: 500; }
+.photo-preview { margin-top: 10px; max-width: 300px; border-radius: 8px; }
+.photo-delete { display: inline-block; margin-top: 8px; padding: 4px 12px; background: #f44336; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+.photo-delete:hover { filter: brightness(1.1); }
+.no-results { text-align: center; padding: 40px; color: var(--text2); }
+
+/* ── Device Lock ── */
+.lock-btn { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+.lock-btn:hover { background: rgba(255,255,255,0.25); }
+.lock-btn.locked { background: rgba(255,180,60,0.3); border-color: rgba(255,200,80,0.5); }
+.lock-btn.unlocked { background: rgba(100,220,140,0.3); border-color: rgba(120,240,160,0.5); }
+.pin-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; display: flex; align-items: center; justify-content: center; }
+.pin-modal { background: var(--bg2); border-radius: 16px; padding: 28px 24px; width: 360px; max-width: 95vw; box-shadow: 0 20px 60px rgba(0,0,0,0.4); text-align: center; }
+.pin-modal h3 { margin-bottom: 6px; color: var(--accent); font-size: 1.1rem; }
+.pin-modal .pin-subtitle { font-size: 0.82rem; color: var(--text2); margin-bottom: 16px; }
+.pin-input-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 14px; }
+.pin-input-row input { width: 44px; height: 50px; text-align: center; font-size: 1.3rem; border: 2px solid var(--input-border); border-radius: 10px; background: var(--input-bg); color: var(--text); font-family: monospace; }
+.pin-input-row input:focus { outline: none; border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(8,124,135,0.15); }
+.pin-error { color: #f44336; font-size: 0.8rem; margin-bottom: 8px; min-height: 1.2em; }
+.pin-actions { display: flex; gap: 8px; justify-content: center; }
+.pin-btn { padding: 8px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: all 0.2s; }
+.pin-btn.primary { background: var(--accent); color: #fff; }
+.pin-btn.primary:hover { filter: brightness(1.15); }
+.pin-btn.secondary { background: var(--btn-bg); color: var(--text2); }
+.pin-btn.secondary:hover { background: var(--btn-hover); }
+
+/* ── Interactive Guide / Tour ── */
+.guide-btn { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s; }
+.guide-btn:hover { background: rgba(255,255,255,0.25); }
+.guide-spotlight { position: fixed; inset: 0; z-index: 400; pointer-events: none; }
+.guide-spotlight .spotlight-mask { position: absolute; inset: 0; background: rgba(0,0,0,0.65); transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+.guide-spotlight .spotlight-window { position: absolute; background: transparent; box-shadow: 0 0 0 9999px rgba(0,0,0,0.65); border-radius: 12px; transition: all 0.35s cubic-bezier(0.4,0,0.2,1); z-index: 1; pointer-events: none; }
+.guide-tooltip { position: fixed; z-index: 500; background: var(--bg2); border-radius: 14px; padding: 22px 20px; width: 340px; max-width: 90vw; box-shadow: 0 12px 40px rgba(0,0,0,0.35); text-align: left; line-height: 1.5; }
+.guide-tooltip h4 { font-size: 1rem; color: var(--accent); margin-bottom: 6px; }
+.guide-tooltip p { font-size: 0.85rem; color: var(--text2); margin-bottom: 14px; line-height: 1.5; }
+.guide-tooltip .step-dots { display: flex; gap: 5px; justify-content: center; margin-bottom: 12px; }
+.guide-tooltip .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background 0.2s; }
+.guide-tooltip .step-dot.active { background: var(--accent); width: 20px; border-radius: 4px; }
+.guide-tooltip .guide-actions { display: flex; gap: 8px; justify-content: space-between; }
+.guide-tooltip .guide-actions button { padding: 7px 16px; border-radius: 8px; border: none; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s; }
+.guide-tooltip .guide-next { background: var(--accent); color: #fff; margin-left: auto; }
+.guide-tooltip .guide-next:hover { filter: brightness(1.15); }
+.guide-tooltip .guide-skip { background: none; color: var(--text2); }
+.guide-tooltip .guide-skip:hover { color: var(--text); }
+.guide-tooltip .guide-prev { background: var(--btn-bg); color: var(--text2); }
+.guide-tooltip .guide-prev:hover { background: var(--btn-hover); }
+@media (max-width: 768px) {
+  .guide-tooltip { width: 280px; padding: 16px 14px; }
+  .pin-modal { width: 300px; padding: 20px 16px; }
+}
+
+/* ── Easter Egg ── */
+.egg-overlay { position: fixed; inset: 0; z-index: 900; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect x='11' y='2' width='10' height='14' rx='3' fill='%23a0b5b8'/%3E%3Crect x='13' y='0' width='6' height='5' rx='2' fill='%23876b50'/%3E%3C/svg%3E") 16 4, auto; background: linear-gradient(135deg, #032d32 0%, #054750 25%, #087C87 50%, #0da5b3 75%, #20c4d4 100%); animation: eggBgPulse 3s ease-in-out infinite; }
+@keyframes eggBgPulse { 0%,100% { filter: brightness(1); } 50% { filter: brightness(1.15); } }
+.egg-shape { width: 180px; height: 220px; background: linear-gradient(160deg, #f5fafa 0%, #d4eaec 30%, #87c4ca 55%, #087C87 85%, #054750 100%); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; box-shadow: 0 0 60px rgba(8,124,135,0.5), 0 0 120px rgba(13,165,179,0.3), inset 0 -20px 40px rgba(5,71,80,0.3); margin-bottom: 30px; animation: eggGlow 2s ease-in-out infinite alternate; position: relative; transition: transform 0.4s ease-out, opacity 0.4s ease-out; }
+.egg-shape.crack { animation: eggCrack 0.3s ease-in forwards; }
+.egg-shape.shatter { animation: eggShatter 0.5s ease-in forwards; }
+@keyframes eggCrack { 0% { transform: scale(1); } 20% { transform: scale(1.05) rotate(2deg); } 40% { transform: scale(0.95) rotate(-3deg); } 60% { transform: scale(1.03) rotate(1deg); } 80% { transform: scale(0.9) rotate(-2deg); } 100% { transform: scale(0.85) rotate(5deg); opacity: 0.7; box-shadow: 0 0 100px rgba(8,124,135,0.8), 0 0 200px rgba(13,165,179,0.6); } }
+@keyframes eggShatter { 0% { transform: scale(0.85) rotate(5deg); opacity: 0.7; } 100% { transform: scale(1.8) rotate(25deg); opacity: 0; filter: blur(8px); } }
+.egg-shape::after { content: ''; position: absolute; top: 22%; left: 28%; width: 32%; height: 28%; background: radial-gradient(ellipse, rgba(255,255,255,0.7) 0%, transparent 70%); border-radius: 50%; transform: rotate(-15deg); }
+.egg-text { color: #fff; font-size: 1rem; max-width: 560px; text-align: center; line-height: 1.8; padding: 0 24px; text-shadow: 0 2px 8px rgba(0,0,0,0.3); animation: textShimmer 3s ease-in-out infinite; font-style: italic; }
+@keyframes textShimmer { 0%,100% { opacity: 0.85; } 50% { opacity: 1; } }
+/* Egg break celebration */
+.egg-celebrate { position: fixed; inset: 0; z-index: 950; pointer-events: none; display: none; flex-direction: column; align-items: center; justify-content: center; }
+.egg-celebrate.active { display: flex; pointer-events: auto; }
+.egg-big-emoji { font-size: 12rem; color: #fff; text-shadow: 0 0 80px rgba(13,165,179,0.9), 0 0 160px rgba(8,124,135,0.6); transform: scale(0); transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.egg-big-emoji.pop { transform: scale(1.2); }
+.egg-msg { color: #fff; font-size: 1.2rem; font-weight: 600; text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,0.4); margin-top: 14px; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; max-width: 500px; }
+.egg-msg.show { opacity: 1; transform: translateY(0); }
+.egg-msg.msg1 { font-size: 1.1rem; font-style: italic; color: #d4eaec; }
+.egg-msg.msg2 { font-size: 1.05rem; color: #ffe0a0; }
+.egg-msg.msg3 { font-size: 1rem; color: #b8e8f0; }
+/* Confetti */
+.confetti-piece { position: fixed; z-index: 960; pointer-events: none; width: 10px; height: 14px; border-radius: 3px; animation: confettiFall linear forwards; }
+@keyframes confettiFall { 0% { transform: translateY(-120vh) rotate(0deg); opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+.egg-secret-input { padding: 10px 16px; border: 2px dashed var(--accent2); border-radius: 10px; background: var(--input-bg); color: var(--text); font-size: 1rem; text-align: center; width: 200px; margin-top: 8px; letter-spacing: 0.1em; }
+.egg-secret-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(8,124,135,0.2); }
+.egg-secret-btn { display: inline-block; margin-top: 8px; padding: 8px 20px; background: var(--accent); color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+.egg-secret-btn:hover { filter: brightness(1.15); }
+@keyframes eggGlow { 0% { box-shadow: 0 0 40px rgba(8,124,135,0.4), 0 0 80px rgba(13,165,179,0.2); } 100% { box-shadow: 0 0 80px rgba(8,124,135,0.7), 0 0 160px rgba(13,165,179,0.5); } }
+/* ── AC Screenshots Page ── */
+.ac-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; padding: 4px 0; }
+.ac-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; position: relative; transition: box-shadow 0.2s; }
+.ac-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+.ac-card-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; cursor: pointer; background: var(--code-bg); }
+.ac-card-footer { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--text2); }
+.ac-card-del { background: none; border: none; color: #f44336; cursor: pointer; font-size: 0.78rem; padding: 3px 8px; border-radius: 6px; }
+.ac-card-del:hover { background: rgba(244,67,54,0.1); }
+.ac-upload-card { border: 2px dashed var(--border); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; min-height: 200px; background: var(--photo-zone); transition: border-color 0.2s, background 0.2s; color: var(--text2); }
+.ac-upload-card:hover { border-color: var(--accent2); background: var(--btn-hover); }
+.ac-upload-card .ac-upload-plus { font-size: 2.5rem; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+.ac-upload-card .ac-upload-label { font-size: 0.9rem; font-weight: 500; }
+.ac-upload-card input[type="file"] { display: none; }
+.ac-empty { grid-column: 1 / -1; text-align: center; padding: 48px 20px; color: var(--text2); }
+.ac-empty-icon { font-size: 3rem; margin-bottom: 12px; }
+.ac-empty p { font-size: 0.9rem; }
+.ac-lightbox { position: fixed; inset: 0; z-index: 250; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.ac-lightbox img { max-width: 92vw; max-height: 92vh; border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
+@media (max-width: 768px) {
+  header { padding: 12px 16px; } header h1 { font-size: 1.1rem; }
+  .stats-bar, .filter-bar, .tabs { padding-left: 16px; padding-right: 16px; }
+  .content { padding: 12px 8px; }
+  .problem-card, .seq-item { flex-wrap: wrap; padding: 8px 12px; }
+  .modal { max-width: 100%; border-radius: 0; max-height: 100vh; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>XMUOJ 题目展示系统</h1>
+    <div class="subtitle">程序设计实践例题 · 05李胜睿班 · LinK01 – LinK80</div>
+  </div>
+  <div class="header-right">
+    <button class="guide-btn" onclick="startGuide()" title="查看使用指南">使用指南</button>
+    <button class="lock-btn locked" id="lock-btn" onclick="handleLockClick()" title="设备解锁/锁定">🔒 已锁定</button>
+    <span id="completion-badge" style="font-size:0.82rem;opacity:0.9;"></span>
+    <button class="theme-btn" onclick="toggleTheme()" title="切换深色/浅色模式">切换主题</button>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="stat-item">总题目：<span class="stat-num" id="stat-total">78</span></div>
+  <div class="stat-item">分类组别：<span class="stat-num" id="stat-groups">-</span></div>
+  <div class="stat-item">简单：<span class="stat-num" id="stat-easy">-</span></div>
+  <div class="stat-item">中等：<span class="stat-num" id="stat-mid">-</span></div>
+  <div class="stat-item">困难：<span class="stat-num" id="stat-hard">-</span></div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('categories')">分类组别</button>
+  <button class="tab-btn" onclick="switchTab('sequential')">按题号排列</button>
+  <button class="tab-btn" onclick="switchTab('screenshots')">AC截图</button>
+</div>
+
+<div class="filter-bar">
+  <input type="text" id="search-input" placeholder="搜索题号 / 标题 / 算法标签…" oninput="doFilter()">
+  <select id="diff-filter" onchange="doFilter()">
+    <option value="">全部难度</option><option value="easy">简单</option><option value="mid">中等</option><option value="hard">困难</option>
+  </select>
+  <select id="tag-filter" onchange="doFilter()">
+    <option value="">全部标签</option>
+  </select>
+  <button class="clear-btn" onclick="clearFilter()">清除筛选</button>
+</div>
+
+<div class="content">
+  <div id="tab-categories" class="tab-content active"></div>
+  <div id="tab-sequential" class="tab-content"></div>
+  <div id="tab-screenshots" class="tab-content"></div>
+</div>
+
+<div id="modal-overlay" class="modal-overlay" style="display:none;" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-box"></div>
+</div>
+
+<!-- PIN Setup / Verify Modal -->
+<div id="pin-modal-overlay" class="pin-modal-overlay" style="display:none;">
+  <div class="pin-modal">
+    <h3 id="pin-modal-title">设置设备密码</h3>
+    <div class="pin-subtitle" id="pin-modal-sub">首次使用，请设置一个 4~8 位数字密码，用于保护本设备的照片编辑权限</div>
+    <div class="pin-error" id="pin-error"></div>
+    <div class="pin-input-row" id="pin-inputs"></div>
+    <div class="pin-actions">
+      <button class="pin-btn secondary" id="pin-cancel-btn" onclick="closePinModal()">取消</button>
+      <button class="pin-btn primary" id="pin-confirm-btn" onclick="confirmPin()">确认</button>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive Guide Overlay -->
+<div id="guide-spotlight" class="guide-spotlight" style="display:none;">
+  <div class="spotlight-mask"></div>
+  <div class="spotlight-window" id="spotlight-window"></div>
+</div>
+<div id="guide-tooltip" class="guide-tooltip" style="display:none;">
+  <h4 id="guide-title"></h4>
+  <p id="guide-desc"></p>
+  <div class="step-dots" id="guide-dots"></div>
+  <div class="guide-actions">
+    <button class="guide-skip" onclick="endGuide()">跳过</button>
+    <button class="guide-prev" id="guide-prev" onclick="prevGuideStep()">上一步</button>
+    <button class="guide-next" id="guide-next" onclick="nextGuideStep()">下一步</button>
+  </div>
+</div>
+
+<!-- Problem data stored as JSON in a separate script tag for safety -->
+<script type="application/json" id="problem-data">[{"id":"LinK01","title":"A+B","cat":"基础入门","sub":"","diff":1,"tags":["输入输出"],"classic":"A+B Problem","naive":"读入两个整数，输出它们的和","keyCode":"/*-----题目分析-----*/\n// 输入两个整数 A 和 B（0 ≤ A, B ≤ 10^8），输出它们的和 A+B\n\n    int a, b;\n// [输入]\n// [输出]","summary":"最简单的输入输出练习，学习C++基本语法。","codeFile":"LinK01-a-b.cpp"},{"id":"LinK02","title":"完美立方","cat":"枚举","sub":"经典枚举","diff":1,"tags":["枚举","四重循环"],"classic":"Perfect Cube","naive":"四重循环枚举 a,b,c,d，检查 a³=b³+c³+d³ 且 b≤c≤d","keyCode":"/*-----题目分析-----*/\n// 寻找所有四元组 (a, b, c, d)，满足 a³ = b³ + c³ + d³\n// 其中 1 \u003c a, b, c, d ≤ N (N ≤ 100)，且 b ≤ c ≤ d\n// 输出格式：Cube = a, Triple = (b,c,d)\n// 按 a 升序输出，a 相同时按 b → c → d 优先级输出\n\n/*-----立方函数-----*/\n// 返回 x 的立方值，内联减少函数调用开销\ninline int v(int x)\n{\n    return x * x * x;\n}","summary":"枚举所有可能的四元组，利用 b≤c≤d 约束优化循环范围。","codeFile":"LinK02-problem.cpp"},{"id":"LinK03","title":"人的周期","cat":"数学","sub":"中国剩余定理","diff":2,"tags":["中国剩余定理","数论","模运算"],"classic":"生理周期 / Chinese Remainder Theorem","naive":"利用中国剩余定理：三个周期长度互质，直接套公式 x = Σ(p_i × M_i × t_i) mod M","keyCode":"/*-----题目分析-----*/\n// 人有三个生理周期：体力(23天)、感情(28天)、智力(33天)\n// 给定每个周期上一次高峰出现的天数 p, e, i 和当前天数 d\n// 求下一次三个高峰同时出现的天数（距 d 的天数）\n//\n// 解法：中国剩余定理 (Chinese Remainder Theorem)\n// 求 x 满足：x ≡ p (mod 23), x ≡ e (mod 28), x ≡ i (mod 33)\n// 模数两两互质，M = 23 × 28 × 33 = 21252\n\n    int p, e, i, d;\n    int caseNo = 1;\n    const int M = 21252;                // M = 23 × 28 × 33\n\n    // 三个周期的模数\n    int m1 = 23, m2 = 28, m3 = 33;\n\n    // M_i = M / m_i，分别是剔除当前模数后其他模数的乘积\n    int M1 = 924, M2 = 759, M3 = 644;   // 924 = 28×33, 759 = 23×33, 644 = 23×28\n\n    /*-----求逆元 t_i-----*/\n    // t_i 满足 (M_i × t_i) ≡ 1 (mod m_i)\n    // 由于模数很小，直接枚举 1 到 m_i-1 即可\n    int t1 = 0, t2 = 0, t3 = 0;\n    for (int k = 1; k \u003c m1; k++) if ((M1 * k) % m1 == 1) { t1 = k; break; }\n    for (int k = 1; k \u003c m2; k++) if ((M2 * k) % m2 == 1) { t2 = k; break; }\n    for (int k = 1; k \u003c m3; k++) if ((M3 * k) % m3 == 1) { t3 = k; break; }\n\n    // 多组输入，以 -1 -1 -1 -1 结束\n    while (cin \u003e\u003e p \u003e\u003e e \u003e\u003e i \u003e\u003e d) {\n        if (p == -1 \u0026\u0026 e == -1 \u0026\u0026 i == -1 \u0026\u0026 d == -1) break;\n\n        /*-----中国剩余定理公式-----*/\n        // x = Σ(p_i × M_i × t_i) mod M\n        int x = (p * M1 * t1 + e * M2 * t2 + i * M3 * t3) % M;\n\n        // 需要的是下一次高峰（即严格在 d 之后），如果 x ≤ d 则加上周期 M\n        if (x \u003c= d) x += M;\n\n        // [输出结果]\n             \u003c\u003c (x - d) \u003c\u003c \" days.\" \u003c\u003c endl;\n    }","summary":"中国剩余定理的经典应用。三个模数23、28、33互质，直接使用CRT公式求解。","codeFile":"LinK03-problem.cpp"},{"id":"LinK04","title":"排序考试","cat":"排序","sub":"基础排序","diff":1,"tags":["排序","sort"],"classic":"排序","naive":"直接使用STL的sort函数对数组排序即可","keyCode":"/*-----题目分析-----*/\n// 输入 T 组数据，每组数据第一个数为 N（该组元素个数），接着 N 个待排序整数\n// 对每组数据按升序排序后输出，每组结果占一行\n// 数据范围：N ≤ 1,000,000，T ≤ 100\n\n    ios::sync_with_stdio(false);    // 关闭 C/C++ IO 同步，加速大量数据读写\n    cin.tie(nullptr);\n\n    int T;\n    // [输入数据]\n    while (T--)\n    {\n        int n;\n        // [输入数据]\n        vector\u003cint\u003e arr(n);         // 直接用 n 构造，避免 resize\n\n        for (int i = 0; i \u003c n; i++)\n        {\n            // [输入数据]\n        }\n\n        sort(arr.begin(), arr.end());   // STL 排序，O(N log N)\n\n        for (int i = 0; i \u003c n; i++)\n        {\n            // [输出结果]\n            if (i != n - 1) cout \u003c\u003c \" \";   // 元素之间用空格分隔，行末无多余空格\n        }\n        // [输出结果]\n    }","summary":"练习使用C++ STL中的sort函数进行排序。","codeFile":"LinK04-problem.cpp"},{"id":"LinK05","title":"假币问题","cat":"枚举","sub":"经典枚举","diff":2,"tags":["枚举","天平称重"],"classic":"假币问题 / Counterfeit Coin","naive":"枚举每一枚硬币是假币的可能性（轻或重），检查是否与所有称量结果一致","keyCode":"/*-----题目分析-----*/\n// 12枚硬币（A-L），其中11枚真币、1枚假币（不知轻重）\n// 经过3次称量，根据天平结果找出假币并判断其轻重\n// 解法：枚举法——对每枚硬币假设其为轻或重，验证是否满足三次称量结果\n\n/*-----称量数据结构-----*/\nstruct weigh\n{\n    string left;    // 天平左边放置的硬币\n    string right;   // 天平右边放置的硬币\n    string result;  // 天平结果：even(平衡) / up(右高，即左重) / down(右低，即左轻)\n};\n\n/*-----check函数分析-----*/\n// 假设硬币 coin 是假币，且 isLight 为 true 表示假币较轻、false 表示假币较重\n// 对三次称量结果逐一验证，如果全部符合则假设成立\nbool check(char coin, bool isLight, weigh w[])\n{\n    for (int i = 0; i \u003c 3; i++)\n    {\n        string l = w[i].left;\n        string r = w[i].right;\n        string res = w[i].result;\n\n        // 统计左右两边的\"重量\"：只在含有假设假币的那一侧进行加减\n        // 真币重量记0，假币根据假设：轻为-1、重为+1\n        int leftWeight = 0, rightWeight = 0;\n\n        // 这里直接通过“是否包含假币”和“假设的假币轻重”来改变先决为平衡的左右重量\n        // 可以这么操作是因为只包含一枚假币，天平平衡也只和这枚假币有关\n        \n        // 检查天平左侧是否包含假设的假币\n        for (char c : l)\n        {\n            if (c == coin)\n            {\n                // 假币轻 → 左侧重量-1；假币重 → 左侧重量+1\n                leftWeight += (isLight ? -1 : 1);\n            }\n        }\n\n        // 检查天平右侧是否包含假设的假币\n        for (char c : r)\n        {\n            if (c == coin)\n            {\n                // 假币在右侧：轻 → 右侧-1；重 → 右侧+1\n                rightWeight += (isLight ? -1 : 1);\n            }\n        }\n\n        /*-----根据天平结果验证假设-----*/\n        // even：两边重量必须相等\n        if (res == \"even\")\n        {\n            if (leftWeight != rightWeight)\n                return false;\n        }\n        // up（右端高=左端重）：左侧重量必须 \u003e 右侧重量\n        else if (res == \"up\")\n        {\n            if (leftWeight \u003c= rightWeight)\n                return false;\n        }\n        // down（右端低=左端轻）：左侧重量必须 \u003c 右侧重量\n        else if (res == \"down\")\n        {\n            if (leftWeight \u003e= rightWeight)\n                return false;\n        }\n    }\n\n    return true;    // 三次称量全部符合假设\n}","summary":"经典的假币称重问题。枚举每枚硬币是轻假币或重假币，验证所有称量结果。","codeFile":"LinK05-problem.cpp"},{"id":"LinK06","title":"两数之和","cat":"双指针","sub":"经典双指针","diff":1,"tags":["双指针","有序数组"],"classic":"Two Sum (Sorted)","naive":"数组已升序，双指针从两端向中间逼近，O(n)时间","keyCode":"/*-----题目分析-----*/\n// 给定已升序排列且无重复元素的数组 a 和目标值 target\n// 找出两个元素使其和为 target，返回它们的下标 (i \u003c j)\n// 题目保证有且仅有一个答案\n\nvector\u003cint\u003e arr;\n\n    int target, n;\n    // [输入数据]\n\n    arr.resize(n);\n    for (int i = 0; i \u003c n; i++)\n    {\n        // [输入数据]\n    }\n\n    /*-----双指针（Two Pointers）解法-----*/\n    // 由于数组已升序排列，可以用左右双指针在 O(n) 时间内找到答案\n    // 左指针 i 指向最小值，右指针 j 指向最大值\n    // 若 arr[i] + arr[j] \u003e target → 右指针左移（减小和）\n    // 若 arr[i] + arr[j] \u003c target → 左指针右移（增大和）\n    int i = 0, j = n - 1;\n    while (i \u003c j)\n    {\n        int sum = arr[i] + arr[j];\n        if (sum == target)\n        {\n            // [输出结果]\n            return 0;\n        }\n        else if (sum \u003c target)\n        {\n            i++;    // 和太小，左指针右移\n        }\n        else\n        {\n            j--;    // 和太大，右指针左移\n        }\n    }","summary":"双指针经典模板题。利用有序性质，左右指针夹逼目标值。","codeFile":"LinK06-problem.cpp"},{"id":"LinK07","title":"三数之和","cat":"双指针","sub":"经典双指针","diff":2,"tags":["双指针","排序","去重"],"classic":"3Sum","naive":"排序后枚举第一个数，剩余两数用双指针在O(n)内找","keyCode":"/*-----题目分析-----*/\n// 给定目标值 target 和整数数组 a，找出所有满足 x + y + z == target 的三元组\n// 要求 x \u003c y \u003c z，不允许重复三元组，按 x 升序输出\n// 实际上就是多了一个要求的数，同样可以使用双指针来减少循环次数（双指针的意义也就是这样）\n// 解法：排序 + 固定第一个数 + 双指针（三数之和经典解法）\n// 时间复杂度 O(n²)，其中排序 O(n log n)，双指针 O(n²)\n\n    // 确定目标和数组大小\n    int target, n;\n    // [输入数据]\n\n    // 装填元素\n    vector\u003cint\u003e a(n);\n    for (int i = 0; i \u003c n; i++)\n    {\n        // [输入数据]\n    }\n\n    /*-----第一步：排序-----*/\n    // 排序是为了方便使用双指针以及去重（重复数字会相邻）\n    sort(a.begin(), a.end());\n\n    vector\u003cvector\u003cint\u003e\u003e result;  // 存储所有满足条件的三元组\n\n    /*-----第二步：固定第一个数，双指针查找后两个数-----*/\n    // 初始检索\n    for (int i = 0; i \u003c n - 2; i++)\n    {\n        // 去重：如果当前数和前一个相同，跳过（避免生成重复三元组）\n        if (i \u003e 0 \u0026\u0026 a[i] == a[i - 1])\n            continue;\n\n        // 因为要求严格递增， 而且由于是升序+去重，查找结果是分别唯一的\n        // 左指针从 i+1 开始，右指针从末尾开始，向中间逼近\n        int left = i + 1;\n        int right = n - 1;\n\n        while (left \u003c right)\n        {\n            int sum = a[i] + a[left] + a[right];\n\n            if (sum == target)\n            {\n                // 找到一组解，存入结果\n                result.push_back({a[i], a[left], a[right]});\n\n                // 双指针同时移动，继续搜索\n                left++;\n                right--;\n\n                // 跳过左侧重复值（避免生成重复三元组）\n                while (left \u003c right \u0026\u0026 a[left] == a[left - 1])\n                    left++;\n                // 跳过右侧重复值\n                while (left \u003c right \u0026\u0026 a[right] == a[right + 1])\n                    right--;\n            }\n            else if (sum \u003c target)\n            {\n                // 和太小 → 需要增大 → 左指针右移（取更大的数）\n                left++;\n            }\n            else\n            {\n                // 和太大 → 需要减小 → 右指针左移（取更小的数）\n                right--;\n            }\n        }\n    }\n\n    /*-----第三步：输出结果-----*/\n    // 由于排序和固定第一个数的遍历顺序，结果天然按 x 升序\n    for (auto triplet : result)\n    {\n        // [输出结果]\n    }","summary":"三数之和，排序+固定一个数+双指针。注意去重处理。","codeFile":"LinK07-problem.cpp"},{"id":"LinK08","title":"四数之和","cat":"双指针","sub":"经典双指针","diff":2,"tags":["双指针","排序","四数之和"],"classic":"4Sum","naive":"排序后枚举前两个数，剩余两数用双指针，O(n³)时间","keyCode":"/*-----题目分析-----*/\n// 给定目标值 target 和整数数组 A，找出所有满足 a + b + c + d == target 的四元组\n// 要求 a \u003c b \u003c c \u003c d，不允许重复四元组，按 a → b → c → d 优先级升序输出\n// （多加一层循环而已）\n// 解法：排序 + 固定前两个数 + 双指针（四数之和经典解法）\n// 时间复杂度 O(n³)，其中双指针 O(n)，外层固定两个数 O(n²)\n\n    int target, n;\n    // [输入数据]\n\n    vector\u003cint\u003e A(n);\n    for (int i = 0; i \u003c n; i++)\n    {\n        // [输入数据]\n    }\n\n    /*-----第一步：排序-----*/\n    // 排序确保去重简单（重复数字相邻）且双指针策略有效\n    sort(A.begin(), A.end());\n\n    vector\u003cvector\u003cint\u003e\u003e result;  // 存储所有满足条件的四元组\n\n    /*-----第二步：固定第一个数-----*/\n    for (int i = 0; i \u003c n - 3; i++)\n    {\n        // 去重：跳过与前一元素相同的值，避免生成重复四元组\n        if (i \u003e 0 \u0026\u0026 A[i] == A[i - 1])\n            continue;\n\n        /*-----第三步：固定第二个数-----*/\n        for (int j = i + 1; j \u003c n - 2; j++)\n        {\n            // 去重：跳过与前一元素相同的值\n            if (j \u003e i + 1 \u0026\u0026 A[j] == A[j - 1])\n                continue;\n\n            /*-----第四步：双指针查找后两个数-----*/\n            int left = j + 1;      // 左指针从 j+1 开始\n            int right = n - 1;     // 右指针从末尾开始\n\n            while (left \u003c right)\n            {\n                int sum = A[i] + A[j] + A[left] + A[right];\n\n                if (sum == target)\n                {\n                    result.push_back({A[i], A[j], A[left], A[right]});\n\n                    left++;\n                    right--;\n\n                    // 跳过左侧重复值\n                    while (left \u003c right \u0026\u0026 A[left] == A[left - 1])\n                        left++;\n                    // 跳过右侧重复值\n                    while (left \u003c right \u0026\u0026 A[right] == A[right + 1])\n                        right--;\n                }\n                else if (sum \u003c target)\n                {\n                    left++;     // 和太小 → 左指针右移增大和\n                }\n                else\n                {\n                    right--;    // 和太大 → 右指针左移减小和\n                }\n            }\n        }\n    }\n\n    /*-----第五步：输出结果-----*/\n    // 由于固定数的遍历顺序和排序，结果天然按 a → b → c → d 升序\n    for (auto quadruplet : result)\n    {\n        // [输出结果]\n             \u003c\u003c quadruplet[2] \u003c\u003c \" \" \u003c\u003c quadruplet[3] \u003c\u003c endl;\n    }","summary":"四数之和是在三数之和基础上再加一层循环。时间复杂度O(n³)。","codeFile":"LinK08-problem.cpp"},{"id":"LinK09","title":"汉诺塔I","cat":"递归","sub":"经典递归","diff":1,"tags":["递归","汉诺塔","分治"],"classic":"Tower of Hanoi I","naive":"递归：将n-1个盘子移到中间柱，再将最大的移到目标柱，最后将n-1个移到目标柱","keyCode":"/*-----移动函数move-----*/\n// 外显移动过程，由“所在”柱子移动到“目标”柱子\ninline void move(char start, char target)\n{\n    cout \u003c\u003c start \u003c\u003c \"-\u003e\" \u003c\u003c target \u003c\u003c endl;\n    return;\n}\n\n/*-----递归函数分析------*/\n// hamoi：将n个盘子借助middle由start移动到target\n// 因为只有一个盘子移动可以不借助middle\n// 汉莫塔问题一次只能移动一个盘子，所以这里的移动n个盘子意味着移动之后依然保持自下而上盘子半径的升序\nvoid hamoi(int n, char start, char middle, char target)\n{\n    // 如果只移动一个盘子，那么直接移动\n    // 所有复杂问题最终都会回归到最简单的子问题，所以这也是递归出口\n    if(n == 1)\n    {\n        move(start, target);\n        return;\n    }\n\n    // 首先，将n-1个盘子通过极其复杂的方式移动到middle，保持升序\n    hamoi(n - 1, start, target, middle);\n    // 其次，将第n个盘子移动到target作为底座\n    move(start, target);\n    // 最后，将n-1个盘子移动到target\n    hamoi(n - 1, middle, start, target);\n}","summary":"汉诺塔是递归的经典入门题。理解\"把n-1个盘子当作一个整体\"的分治思想。","codeFile":"LinK09-i.cpp"},{"id":"LinK10","title":"汉诺塔II","cat":"递归","sub":"经典递归","diff":2,"tags":["递归","汉诺塔","变体"],"classic":"Tower of Hanoi II","naive":"汉诺塔变体，增加了移动限制或不同的柱数","keyCode":"/*-----题目分析-----\n * 汉诺塔问题变体：有三根杆子（由输入的三个字符指定编号），\n * A杆上有N个穿孔圆盘（从小到大编号1~N），盘的尺寸由下到上依次变小。\n * 要求按规则将所有圆盘从A移至C杆：\n *   - 每次只能移动一个圆盘\n *   - 大盘不能叠在小盘上面\n * 输入：整数N和三个单字符（分别表示三个杆子的编号）\n * 输出：每一步移动盘子的记录，格式为 编号:起始杆-\u003e目标杆\n *-----题目分析-----*/\n\n/*-----移动函数-----*/\n// 外显移动过程、输出单步移动记录：将编号为n的盘子从start杆移动到target杆\nvoid move(char start, char target, int n)\n{\n    cout \u003c\u003c n \u003c\u003c \":\" \u003c\u003c start \u003c\u003c \"-\u003e\" \u003c\u003c target \u003c\u003c endl;\n    return;\n}\n\n/*-----dfs函数分析-----*/\n// dfs：将n个盘子从start杆，借助middle杆，移动到target杆\n// 递归策略：将n-1个盘子的子问题委托给递归，自己只负责移动最底下的第n个盘子\n// 这与Link09（汉诺塔I）不同之处在于：杆子编号由输入指定而非固定为A/B/C，\n// 且输出格式包含盘子编号\nvoid dfs(int n, char start, char middle, char target)\n{\n    // 递归出口：只有一个盘子时，直接从start移动到target（无需借助middle）\n    if (n == 1)\n    {\n        move(start, target, n);\n        return;\n    }\n\n    // 第一步：把上面n-1个盘子从start移动到middle（借助target作为临时杆）\n    dfs(n - 1, start, target, middle);\n\n    // 第二步：把最大的第n个盘子直接从start移动到target\n    move(start, target, n);\n\n    // 第三步：把n-1个盘子从middle移动到target（借助start作为临时杆）\n    dfs(n - 1, middle, start, target);\n\n    return;\n}","summary":"汉诺塔的变体版本，在经典汉诺塔基础上增加了约束条件，锻炼递归思维的灵活性。","codeFile":"LinK10-ii.cpp"},{"id":"LinK11","title":"DFS试炼之排列数字","cat":"递归","sub":"DFS排列","diff":1,"tags":["DFS","全排列","回溯"],"classic":"全排列 / Permutations","naive":"DFS回溯：每次从未使用的数字中选一个放入当前位置，递归到底输出","keyCode":"const int N = 10;\n\nint n;\n\n/*-----dfs函数分析-----*/\n// dfs：对从1到n的n个数按照字典序输出其所有可能的排列（由题意）\n// 但很显然n是固定值，这里使用它不合适，而且已经设置全局变量了\n// 这里对每层，都属于一个“选不选某个数字”的问题，需要标记数字使用情况;同时也需要数组来装在、演示时用过的数字\nbool st[N];\nvector\u003cint\u003e arr;\n// 只需要关心是否触底，这也是需要变动并经由dfs传递的“状态”\nvoid dfs(int depth)\n{\n    // 考虑递归出口的时候，除了考虑最简单的子问题，也可以考虑循环结束/dfs操作结束的标志\n    // 这样的标志往往可以或者应当通过形参在各个dfs调用中传递\n    if (depth == n)\n    {\n        for (int x = 0; x \u003c arr.size(); x++)\n        {\n            cout \u003c\u003c arr[x];\n            if (x != arr.size() - 1)\n                cout \u003c\u003c \" \";\n        }\n        cout \u003c\u003c endl;\n        return;\n    }\n\n    // 每次都从1开始到n枚举，选择还没用过的数字放到外显数组中\n    for(int x = 1; x \u003c= n; x++)\n    {\n        if(!st[x])\n        {\n            arr.push_back(x);\n            st[x] = true;\n            dfs(depth + 1);\n            // 一整条调用结束，恢复现场，也就是恢复st和arr状态\n            st[x] = false;\n            arr.pop_back();\n        }\n    }\n\n    return;\n}","summary":"DFS全排列模板。通过回溯和状态数组标记数字是否使用过，生成字典序全排列。","codeFile":"LinK11-dfs.cpp"},{"id":"LinK12","title":"字符全排列","cat":"递归","sub":"DFS排列","diff":1,"tags":["DFS","全排列","字符串"],"classic":"字符串全排列","naive":"对输入字符串排序后进行DFS全排列，注意去重","keyCode":"/*-----题目分析-----\n * 字符全排列：给定一个由不同小写字母组成的字符串，输出该字符串的所有全排列。\n * 输入：一行，由不同小写字母组成的字符串（长度2~8）\n * 输出：所有排列方式，每行一个，按字母序升序输出\n * 关键点：需要先对输入字符串排序，保证DFS枚举时按字典序生成排列\n *-----题目分析-----*/\n\nconst int N = 10;\n\n// 输入字符串（排序后）\nstring str;\n// used[i]：str[i]是否已被选入当前排列（就是之前的st[]）\nbool used[N];\n// 当前排列路径，外显数组\nvector\u003cchar\u003e path;\n\n/*-----dfs函数分析-----*/\n// dfs：按字典序遍历字符串的所有排列\n// 递归策略：每层从未使用的字符中按顺序选取一个，加入路径并标记已用\n// 递归出口：当路径长度等于字符串长度时，输出当前排列\nvoid dfs(int depth)\n{\n    // 递归出口：已选出完整排列，输出\n    if (depth == (int)str.size())\n    {\n        for (int i = 0; i \u003c (int)path.size(); i++)\n        {\n            cout \u003c\u003c path[i];\n        }\n        cout \u003c\u003c endl;\n        return;\n    }\n\n    // 横向枚举：按顺序尝试每个未使用的字符（因为str已排序，保证了字典序）\n    for (int i = 0; i \u003c (int)str.size(); i++)\n    {\n        if (!used[i])\n        {\n            used[i] = true;\n            path.push_back(str[i]);\n            dfs(depth + 1);  // 竖向深入下一层\n            path.pop_back(); // 回溯：撤销选择\n            used[i] = false; // 回溯：恢复标记\n        }\n    }\n}","summary":"字符串全排列，需要对重复字符去重。先排序再DFS，跳过同层重复字符。","codeFile":"LinK12-problem.cpp"},{"id":"LinK13","title":"输出N皇后的全部摆法","cat":"递归","sub":"DFS回溯","diff":2,"tags":["DFS","N皇后","回溯","经典问题"],"classic":"N-Queens","naive":"DFS逐行放置皇后，用三个数组标记列、主对角线、副对角线是否被占用","keyCode":"/*-----题目分析-----*/\n// 输入N个皇后，任意两个皇后不能在同一行、列、对角线\n// 棋盘大小等于N * N\n// 要求输出不同的摆法，输出顺序代表从1-n每个皇后所在列序号\n\nconst int N = 15;\n\n// 皇后个数，全局变量方便函数调用\nint n;\n\n/*-----dfs函数分析-----*/\n// dfs：输出各种皇后摆放的解，这一点上和字符/数字全排列是极相似的；\n// 保持这个思路，实际上皇后的摆放就等价于数字/字符的放置\n// 所以递归形参也是depth，在这里就是row（行序数），表示从第row行开始\n// 同样的，需要外显数组；arr[0~n-1]表示第1~n行皇后分别所在的列序号\u0026\u0026需要当前行列对角线的状态来判断能不能放这个皇后\nvector\u003cint\u003e arr;\nbool used[N];\n// bool数组只能保证对每个行，不同列是否能放\n// 所以还需要检查对角线的方式，需要分别存放各个行皇后的行列之和、之差;也需要外置检查函数\nint diag1[N], diag2[N];\ninline bool isValid(int row, int col)\n{\n    int add = row + col;\n    int minus = row - col;\n\n    for (int i = 1; i \u003c= n; i++)\n    {\n        if (used[i] \u0026\u0026 (diag1[i] == add || diag2[i] == minus))\n        {\n            return false;\n        }\n    }\n\n    return true;\n}\nvoid dfs(int row)\n{\n    if (row == n + 1)\n    {\n        for (int x = 0; x \u003c arr.size(); x++)\n        {\n            cout \u003c\u003c arr[x];\n        }\n        cout \u003c\u003c endl;\n        return;\n    }\n\n    for (int col = 1; col \u003c= n; col++)\n    {\n        if (!used[col] \u0026\u0026 isValid(row, col))\n        {\n            arr.push_back(col);\n            used[col] = true;\n            diag1[col] = row + col;\n            diag2[col] = row - col;\n            dfs(row + 1);\n            arr.pop_back();\n            used[col] = false;\n            diag1[col] = -1;\n            diag2[col] = -1;\n        }\n    }\n}","summary":"N皇后是回溯算法的标志性题目。关键在对角线坐标 row+col 和 row-col+n 来判断冲突。","codeFile":"LinK13-n.cpp"},{"id":"LinK14.5","title":"DFS试炼之n皇后问题","cat":"递归","sub":"DFS回溯","diff":2,"tags":["DFS","N皇后","回溯"],"classic":"N-Queens (DFS Practice)","naive":"与LinK13类似，N皇后问题的DFS练习版，输出方案数或全部方案","keyCode":"/*-----题目分析-----\n * N皇后问题（棋盘格式输出）：在N×N的棋盘上放置N个皇后，使其互不攻击。\n * 输入：n（1\u003c=n\u003c=12）\n * 输出：每个方案占n行，每行输出一个长度为n的字符串，\n *       \u0027.\u0027 表示空格，\u0027Q\u0027 表示皇后；每个方案后输出一个空行\n * 思路：与LinK13类似，但需要构建棋盘并用对角线数组优化冲突判断\n *       对角线索引：主对角线用 row+c，副对角线用 row-c+n（避免负索引）\n *-----题目分析-----*/\n\nint n;\nvector\u003cstring\u003e board;                              // 棋盘状态\nbool col[15], diag1[30], diag2[30];                // 列、主对角线、副对角线占用标记\n// diag1[row+c]：主对角线（从左上到右下），同一主对角线上 row+c 为定值\n// diag2[row-c+n]：副对角线（从右上到左下），+n 偏移避免负索引\n\n/*-----dfs函数分析-----*/\n// dfs：逐行放置皇后，row表示当前行（0-indexed）\n// 递归出口：row == n 表示所有行都已放置完毕，输出棋盘\n// 递归策略：枚举当前行的每一列，检查列和两条对角线是否被占用\nvoid dfs(int row) {\n    if (row == n) {\n        // 输出当前棋盘方案\n        for (int i = 0; i \u003c n; i++) {\n            cout \u003c\u003c board[i] \u003c\u003c endl;\n        }\n        cout \u003c\u003c endl;       // 每个方案后输出空行\n        return;\n    }\n    // 横向枚举：尝试当前行的每一列\n    for (int c = 0; c \u003c n; c++) {\n        // 同时检查列、主对角线、副对角线是否被占用\n        if (!col[c] \u0026\u0026 !diag1[row + c] \u0026\u0026 !diag2[row - c + n]) {\n            // 放置皇后，标记占用\n            col[c] = diag1[row + c] = diag2[row - c + n] = true;\n            board[row][c] = \u0027Q\u0027;\n            dfs(row + 1);       // 递归下一行\n            // 回溯：撤销占用标记和棋盘状态\n            board[row][c] = \u0027.\u0027;\n            col[c] = diag1[row + c] = diag2[row - c + n] = false;\n        }\n    }\n}","summary":"N皇后问题的DFS练习版本，强化对角线和回溯标记的理解。","codeFile":"LinK14.5-dfs-n.cpp"},{"id":"LinK14","title":"求八皇后的第n种解","cat":"递归","sub":"DFS回溯","diff":2,"tags":["DFS","八皇后","第k种解"],"classic":"8-Queens k-th Solution","naive":"DFS生成所有八皇后解并按序编号，输出第n个解","keyCode":"/*-----题目分析-----\n * 八皇后第n个解：8×8棋盘上放置8个皇后使其互不攻击，共有92组解。\n * 每组解用8位数字串表示（第i位=第i行皇后所在列号）。\n * 输入T组数据，每组n(1≤n≤92)，输出按字典序第n小的皇后串。\n *\n * 解法：DFS回溯生成所有92解（按列号1→8枚举自然保证字典序），\n *       存入数组，O(1)查询输出。\n *-----题目分析-----*/\n\nint col[9];                                 // col[row]：第row行皇后所在列（1~8）\nbool used[9];                               // used[c]：第c列是否被占用\nvector\u003cint\u003e solutions;                      // 所有92个解（整数形式，天然字典序）\n\n/*-----check：检查(row, c)是否与已放置皇后冲突-----*/\nbool check(int row, int c) {\n    for (int i = 1; i \u003c row; i++)\n        if (abs(row - i) == abs(c - col[i]))\n            return false;                   // 对角线冲突：行差==列差\n    return true;\n}\n\n/*-----dfs：逐行放置皇后，生成全部解-----*/\nvoid dfs(int row) {\n    if (row \u003e 8) {                          // 8行放置完毕，记录这一组解\n        int num = 0;\n        for (int i = 1; i \u003c= 8; i++)\n            num = num * 10 + col[i];        // 拼接为8位整数\n        solutions.push_back(num);\n        return;\n    }\n    for (int c = 1; c \u003c= 8; c++) {          // 1→8枚举保证字典序\n        if (!used[c] \u0026\u0026 check(row, c)) {\n            used[c] = true; col[row] = c;\n            dfs(row + 1);\n            used[c] = false;                // 回溯\n        }\n    }\n}","summary":"在八皇后基础上要求输出第n种解。只需在DFS找到解时计数，匹配目标序号时输出。","codeFile":"LinK14-n.cpp"},{"id":"LinK15","title":"爬天梯","cat":"递归","sub":"递推/DP入门","diff":1,"tags":["递归","递推","斐波那契"],"classic":"爬楼梯 / Climbing Stairs","naive":"递推：f(n)=f(n-1)+f(n-2)，可递归或迭代","keyCode":"// 功能是输出：剩余n个台阶有几种走法\nint dfs(int n)\n{\n    if(n == 0 || n == 1) return 1;\n    if(n == 2) return 2;\n\n    /*\n    其实就是：\n    int cur = dfs(n - 1) + dfs(n - 2);\n    return cur;\n    */\n   // 剩余n个台阶的走法取决于上一步是怎么走的\n   // 上一步要么是一级台阶跨上去、要么是两级台阶跨上去；分别剩余n - 1 / n - 2 级台阶\n   // 这里的任务分配也是从根递归到叶子再加总回来\n    return dfs(n - 1) + dfs(n - 2);\n}","summary":"经典爬楼梯问题，斐波那契数列的变体。用迭代递推比递归更高效。","codeFile":"LinK15-problem.cpp"},{"id":"LinK16","title":"放苹果","cat":"递归","sub":"递推/DP入门","diff":2,"tags":["递归","整数划分","DP"],"classic":"放苹果 / Integer Partition","naive":"递归/DP：f(m,n)=f(m,n-1)+f(m-n,n)，将m个苹果放入n个盘子","keyCode":"// 剪枝：记忆化\nint memo[35][20];\n\n/*-----dfs函数分析-----*/\n// dfs：对剩余的m个苹果和n个盘子有几种放法\nint dfs(int m, int n)\n{\n    // 如果没有苹果，只能是全空\n    if (m == 0)\n        return 1;\n    // 如果没有盘子，不存在放法\n    if (n == 0)\n        return 0;\n    // 如果只有一个盘子，存在唯一放法\n    if (n == 1)\n        return 1;\n\n    if (memo[m][n] != -1) return memo[m][n];\n\n    int res = 0;\n    // 如果苹果个数更少，那么只存在放不满的情况\n    // 为了确保只考虑“存在空盘子”，直接将必然空的m - n个盘子丢掉\n    // 剩下的盘子是继续留有空盘子还是全放满，那是dfs需要考虑的问题\n    if (m \u003c n)\n        res += dfs(m, m);\n    else\n    {\n        // 将“存在空盘子”与“不存在空盘子的放法”加起来\n        res += dfs(m, n - 1) + dfs(m - n, n);\n    }\n    \n    memo[m][n] = res;\n    return res;\n}","summary":"经典的整数划分问题。关键递推公式：有空盘+无空盘两种情况。","codeFile":"LinK16-problem.cpp"},{"id":"LinK17","title":"递归求波兰表达式","cat":"递归","sub":"递归求值","diff":2,"tags":["递归","前缀表达式","表达式求值"],"classic":"Polish Notation Evaluation","naive":"递归：读入token，是运算符则递归求左右操作数，是数字则直接返回","keyCode":"/*-----题目分析-----\n * 波兰表达式（前缀表达式）求值：\n * 运算符写在操作数之前，如 \"* + 2 3 4\" 表示 (2+3)*4=20。\n * 输入为空格分隔的前缀表达式，操作数为浮点数。\n *\n * 解法：递归。前缀表达式天然适合递归：\n *   读入一个token → 是运算符则递归求左右操作数并运算；\n *   是数字则直接转double返回。\n *-----题目分析-----*/\n\n/*-----dfs：递归求值-----*/\ndouble dfs() {\n    string token; cin \u003e\u003e token;\n    if (token == \"+\")      return dfs() + dfs();\n    else if (token == \"-\") return dfs() - dfs();\n    else if (token == \"*\") return dfs() * dfs();\n    else if (token == \"/\") return dfs() / dfs();\n    else                   return atof(token.c_str());  // 数字\n}","summary":"前缀表达式天然适合递归求值。每次读入一个token，运算符则递归计算两个操作数。","codeFile":"LinK17-problem.cpp"},{"id":"LinK18","title":"2的幂次方表示","cat":"递归","sub":"递归分解","diff":2,"tags":["递归","分治","二进制"],"classic":"Power of Two Representation","naive":"递归将数字拆解为2的幂次之和，每个幂次继续递归拆解","keyCode":"/*-----题目分析-----\n * 2的幂次方表示：将正整数n表示为2的幂次方的和，且幂次方也要用2的幂次方表示。\n * 例：137 = 2(2(2)+2+2(0))+2(2+2(0))+2(0)\n * 约定：2的0次方表示为2(0)，2的1次方直接写2\n * 输入：n（n\u003c=20000）\n * 输出：符合约定的表示（无空格）\n * 思路：将n分解为若干2^k之和（二进制分解），对每个指数k递归地表示\n *-----题目分析-----*/\n\n/*-----dfs函数分析-----*/\n// dfs：返回整数n的2的幂次方表示字符串\n// 递归策略：\n//   1. 找到不超过n的最大2^k（即n的最高二进制位）\n//   2. 对k递归表示（k=0时返回\"2(0)\"，k=1时返回\"2\"，k\u003e1时返回\"2(\"+dfs(k)+\")\"）\n//   3. 若还有剩余（n-2^k \u003e 0），用\"+\"连接剩余部分的表示\n// 递归出口：n==0返回\"0\"，n==1返回\"2(0)\"，n==2返回\"2\"\nstring dfs(int n)\n{\n    // 递归出口：处理基础情况\n    if (n == 0) return \"0\";\n    if (n == 1) return \"2(0)\";\n    if (n == 2) return \"2\";\n\n    string res = \"\";\n    int k = 0;\n    // 找到不超过n的最大2的幂次：2^k \u003c= n \u003c 2^(k+1)\n    while ((1 \u003c\u003c (k + 1)) \u003c= n)\n    {\n        k++;\n    }\n\n    // 构造2^k的表示\n    if (k == 1)\n    {\n        // 2^1 直接写 \"2\"，不需要括号\n        res += \"2\";\n    }\n    else\n    {\n        // k\u003e1 时，需要递归表示指数k\n        res += \"2(\" + dfs(k) + \")\";\n    }\n\n    // 处理剩余部分：n - 2^k\n    int remain = n - (1 \u003c\u003c k);\n    if (remain \u003e 0)\n        res += \"+\" + dfs(remain);   // 递归表示剩余部分\n\n    return res;\n}","summary":"将整数表示为2的幂次方的嵌套形式。用位运算找出所有为1的位，递归处理指数。","codeFile":"LinK18-2.cpp"},{"id":"LinK19","title":"递归实现指数型枚举","cat":"递归","sub":"DFS枚举","diff":1,"tags":["DFS","指数枚举","子集"],"classic":"指数型枚举 / Subset Enumeration","naive":"每个元素选或不选，共2^n种。DFS递归决定每个位置","keyCode":"/*-----题目分析-----\n * 递归实现指数型枚举：从1~n这n个整数中随机选取任意多个（0~n个），输出所有可能的选择方案。\n * 输入：n（1\u003c=n\u003c=15）\n * 输出：每行一种方案，行内升序排列；空方案输出空行；各行顺序任意（有SPJ校验）\n * 思路：DFS枚举每个数的选/不选，等价于枚举{1,2,...,n}的所有子集\n *-----题目分析-----*/\n\nint n;\nvector\u003cint\u003e path;       // 当前子集路径\n\n/*-----dfs函数分析-----*/\n// dfs：枚举从start开始的所有子集，当前路径path中保存已选的数\n// 递归策略：每个节点先输出当前路径（即一个子集），再枚举下一个选的数\n// 关键设计：每次进入dfs先输出，保证空集也能输出；然后从start往后选数，\n//          保证子集内元素升序，同时避免重复（如{1,2}和{2,1}只输出一次）\nvoid dfs(int start) {\n    // 将当前路径中的子集输出（每个节点都是一个合法子集，包括空集）\n    for (int i = 0; i \u003c (int)path.size(); i++)\n    {\n        if (i \u003e 0) cout \u003c\u003c \" \";\n        cout \u003c\u003c path[i];\n    }\n    cout \u003c\u003c endl;\n\n    // 横向枚举：从start开始依次尝试选择每个数加入子集\n    // i从start开始保证了升序，避免重复子集\n    for (int i = start; i \u003c= n; i++)\n    {\n        path.push_back(i);      // 选择i加入当前子集\n        dfs(i + 1);             // 竖向深入：下一个数从i+1开始选（保证升序）\n        path.pop_back();        // 回溯：撤销选择，横向尝试下一个数\n    }\n}","summary":"指数型枚举（子集枚举）。每个元素有选/不选两种状态，共2^n种方案。","codeFile":"LinK19-problem.cpp"},{"id":"LinK20","title":"递归实现组合型枚举","cat":"递归","sub":"DFS枚举","diff":2,"tags":["DFS","组合枚举","剪枝"],"classic":"组合型枚举 / Combination","naive":"从n个数中选m个，DFS+剪枝保证字典序和数量","keyCode":"/*-----题目分析-----\n * 递归实现组合型枚举：从1~n这n个整数中随机选出m个，输出所有可能的选择方案。\n * 输入：n, m（0≤m≤n, n+(n-m)≤25）\n * 输出：按字典序输出所有方案，每行m个数升序排列\n * 思路：DFS枚举组合，从start开始依次选数，用depth控制递归层数（即已选数量）\n *       剪枝：当剩余可选数字不足以凑满m个时提前返回\n *-----题目分析-----*/\n\nint n, m;\nvector\u003cint\u003e path;       // 当前组合路径\n\n/*-----dfs函数分析-----*/\n// dfs：从start开始选数，当前已选depth个，最终需要选满m个\n// 递归出口：depth == m 时输出当前组合\n// 剪枝策略：当剩余可选数字 (n - start + 1) 不足凑满还需的 (m - depth) 个时，提前返回\nvoid dfs(int start, int depth)\n{\n    // 递归出口：已选满m个数，输出当前组合\n    if (depth == m)\n    {\n        for (int i = 0; i \u003c (int)path.size(); i++)\n        {\n            cout \u003c\u003c path[i];\n            if (i != (int)path.size() - 1)\n            {\n                cout \u003c\u003c \" \";\n            }\n        }\n        cout \u003c\u003c endl;\n        return;\n    }\n\n    /*-----剪枝-----*/\n    // 如果起始位置已越界，或者剩余可选数字不足，直接返回\n    // 剩余可选数字 = n - start + 1，还需选 = m - depth\n    if (start \u003e n || depth + n - start + 1 \u003c m)\n    {\n        return;\n    }\n\n    // 横向枚举：从start开始依次尝试选择每个数加入组合\n    // i从start开始保证了组合内元素升序，避免重复\n    for (int i = start; i \u003c= n; i++)\n    {\n        path.push_back(i);\n        dfs(i + 1, depth + 1);      // 竖向深入：下一个数从i+1开始选\n        path.pop_back();            // 回溯：撤销选择\n    }\n}","summary":"组合型枚举。通过start参数保证选数递增，剪枝优化提前退出。","codeFile":"LinK20-problem.cpp"},{"id":"LinK21","title":"递归实现排列型枚举","cat":"递归","sub":"DFS枚举","diff":2,"tags":["DFS","排列枚举","回溯"],"classic":"排列型枚举 / Permutation Enumeration","naive":"DFS回溯：从n个数中选排列，用状态数组标记使用情况","keyCode":"/*-----与Link11重复，不做注释-----*/\n// 以下注释和所标记的代码为反复遇到部分通过无法解决时，Claude Code编辑的\n/*\n * 部分通过原因分析：\n * 1. cout \u003c\u003c endl 每次都刷新缓冲区，n 较大时输出量巨大(n! 行)，导致 TLE\n *    修复：换用 \u0027\\n\u0027，只在最后可能需要的 flush 处用 endl 或等程序结束自动 flush\n * 2. 未关闭 C/C++ IO 同步，cin/cout 效率低\n *    修复：添加 ios::sync_with_stdio(false); cin.tie(nullptr);\n * 3. \u003ccstring\u003e 中的 memset 在严格 C++ 标准下只保证 std::memset 存在\n *    修复：显式使用 std::memset（或直接用 vector\u003cbool\u003e 自动初始化为 false）\n * 4. dfs 末尾多余的 return; 已移除（void 函数自然返回即可）\n */\n\nint n;\nvector\u003cint\u003e path;\nbool st[30];\n\nvoid dfs(int depth)\n{\n    if (depth == n)\n    {\n        for (int x = 0; x \u003c n; x++)  // path.size() 在此处等价于 n，直接用 n 略快\n        {\n            cout \u003c\u003c path[x];\n            if (x != n - 1)\n            {\n                cout \u003c\u003c \u0027 \u0027;  // 单字符用 \u0027\u0027 而非 \"\" 略快\n            }\n        }\n        cout \u003c\u003c \u0027\\n\u0027;  // 关键修复：用 \u0027\\n\u0027 替代 endl，避免每行 flush\n        return;\n    }\n\n    for (int i = 1; i \u003c= n; i++)\n    {\n        if (!st[i])\n        {\n            path.push_back(i);\n            st[i] = true;\n            dfs(depth + 1);\n            st[i] = false;\n            path.pop_back();\n        }\n    }\n}","summary":"排列型枚举。不同于组合，排列关心顺序，通过used数组标记使用情况。","codeFile":"LinK21-problem.cpp"},{"id":"LinK22","title":"算术表达式","cat":"递归","sub":"递归求值","diff":2,"tags":["递归","表达式求值","栈"],"classic":"表达式求值 / Expression Evaluation","naive":"递归处理加减乘除和括号，或使用栈进行中缀转后缀求值","keyCode":"/*-----题目分析-----\n * 算术表达式求值：给定仅含正整数(1-9)、\u0027*\u0027和\u0027+\u0027的表达式，计算结果对1e9+7取模。\n * 输入：第一行N（数字个数，2≤N≤200000），第二行表达式字符串（2N-1个字符）\n * 输出：运算结果 mod 1000000007\n *\n * 解法：一次遍历，利用\"先乘后加\"的运算优先级\n *   遇到 * → 当前乘法段继续累积；遇到 + → 将当前乘法段的结果累加到答案，重置乘法段\n *   时间复杂度 O(N)，空间复杂度 O(1)\n *-----题目分析-----*/\n\nconst int MOD = 1000000007;\n\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    int n;\n    string expr;\n    // [输入数据]\n\n    /*-----一次遍历求值-----*/\n    // 关键：表达式由数字和运算符交替组成，格式为 d1 op1 d2 op2 d3 ...\n    // 乘法的优先级高于加法，所以遇到乘法就累积乘法段，遇到加法就结算乘法段\n    long long ans = 0;                      // 最终结果（所有加法项的和）\n    long long cur = 0;                      // 当前乘法段的值\n    int num = expr[0] - \u00270\u0027;                // 第一个数字\n    cur = num;\n\n    // 表达式结构：num0 op1 num1 op2 num2 ...\n    // i 从 1 开始，每次跳 2（跳过运算符+数字）：i 指向运算符，i+1 指向下一个数字\n    for (int i = 1; i \u003c (int)expr.size(); i += 2) {\n        char op = expr[i];                  // 运算符：\u0027*\u0027 或 \u0027+\u0027\n        int nextNum = expr[i + 1] - \u00270\u0027;    // 下一个数字\n\n        if (op == \u0027*\u0027)\n        {\n            // 乘法：继续累积当前乘法段（因为乘法优先级高，先不结算）\n            cur = (cur * nextNum) % MOD;\n        } \n        else \n        {   // op == \u0027+\u0027\n            // 加法：结算当前乘法段，将其结果加到答案中\n            // 并开始新的乘法段\n            ans = (ans + cur) % MOD;\n            cur = nextNum;\n        }\n    }\n    // 结算最后一个乘法段\n    ans = (ans + cur) % MOD;\n\n    // [输出结果]","summary":"表达式求值，核心是处理运算符优先级。递归下降法或栈方法均可。","codeFile":"LinK22-problem.cpp"},{"id":"LinK23","title":"二进制密码锁","cat":"枚举","sub":"位运算枚举","diff":2,"tags":["枚举","位运算","BFS"],"classic":"二进制状态锁","naive":"枚举/搜索所有可能的按钮方案，找到最少步数","keyCode":"/*-----题目分析-----\n * 二进制密码锁：n个按钮(n\u003c30)，0=凹，1=凸。按一个按钮会反转自身及相邻按钮。\n * 给定初始和目标状态，求最少按按钮次数；无解输出\"impossible\"。\n *\n * 解法：枚举+贪心。第一个按钮按/不按决定了整个序列的后续操作——\n *   当从左到右处理到第i位时，第i-1位只能通过按第i个按钮来改变。\n *   所以枚举第一个按钮的2种状态，贪心推导后续即可。取可行方案中步数少的。\n *-----题目分析-----*/\n\nstring src, dst; int n;\n\n/*-----solve：模拟——给定第一个按钮是否按下-----*/\nint solve(bool pressFirst) {\n    string s = src; int cnt = 0;\n    if (pressFirst) {\n        cnt++; s[0] ^= 1;                   // 反转自身\n        if (n \u003e 1) s[1] ^= 1;               // 反转右侧\n    }\n    for (int i = 1; i \u003c n; i++) {\n        if (s[i - 1] != dst[i - 1]) {       // 当前位置需要改变\n            cnt++;\n            s[i - 1] ^= 1;                  // 反转左侧\n            s[i] ^= 1;                      // 反转自身\n            if (i + 1 \u003c n) s[i + 1] ^= 1;   // 反转右侧\n        }\n    }\n    return (s[n - 1] == dst[n - 1]) ? cnt : INT_MAX;\n}","summary":"将状态编码为二进制，通过枚举或BFS找到最小操作次数。","codeFile":"LinK23-problem.cpp"},{"id":"LinK24","title":"熄灯问题","cat":"枚举","sub":"经典枚举","diff":2,"tags":["枚举","位运算","逐行确定"],"classic":"熄灯问题 / Lights Out","naive":"枚举第一行64种按法，逐行确定后续按钮，检查最后一行","keyCode":"/*-----题目分析-----\n * 熄灯问题（Lights Out）：\n *   给定一个5行6列的01矩阵，0表示灯灭，1表示灯亮。\n *   每按下一个按钮，该按钮及其上下左右的灯状态取反（亮变灭，灭变亮）。\n *   每个按钮最多按一次（按两次等于没按），求一个按钮方案使得所有灯熄灭。\n *\n * 解题思路（逐行确定法）：\n *   关键性质：灯的状态只依赖其自身和上下左右的按钮。\n *   枚举第一行的所有2^6=64种按法，然后对每种枚举逐行确定：\n *     - 第i+1行的按钮必须让第i行的灯全部熄灭，\n *       即 press[i+1][j] = (puzzle[i][j] 在周围按钮影响后的状态)\n *     - 以此递推第2~5行，最后检查第5行是否全灭。\n *   第一个满足条件的方案即为答案（题目保证有唯一解）。\n *\n * 注意：每个输入用例有多组数据（T），需要依次输出每组答案。\n */\n\nint puzzle[5][6];   // 初始灯状态：0-灭，1-亮\nint press[5][6];    // 按钮按下方案：1-按，0-不按\n\n/*-----solve函数分析-----\n * 功能：枚举第一行所有64种按法，确定后续行，返回是否找到可行解。\n *\n * 算法流程：\n *   1. 枚举 firstRow ∈ [0, 63]，用二进制位表示第一行每列的按法\n *   2. 从第0行到第3行，根据当前灯的累积状态确定下一行的按钮\n *      —— 核心方程：press[i+1][j] 必须等于 puzzle[i][j] 在当前所有影响下的状态\n *   3. 检查第4行（最后一行）是否能全部熄灭\n *\n * 正确性：若第i行的按钮方案能保证前i-1行全灭，\n *   那么第i+1行的按钮由第i行的残余状态唯一确定，\n *   只需验证最后一行即可。\n */\nbool solve() {\n    // 枚举第一行的所有64种按法（2^6=64）\n    for (int firstRow = 0; firstRow \u003c 64; firstRow++) {\n        // 根据firstRow的二进制位设置第一行的press\n        for (int j = 0; j \u003c 6; j++) {\n            press[0][j] = (firstRow \u003e\u003e j) \u0026 1;\n        }\n\n        /*-----逐行确定后续按钮-----\n         * 对于第i行的每盏灯，计算它在已按下按钮影响下的当前状态（state），\n         * 然后令 press[i+1][j] = state，使得经过第i+1行按钮影响后该灯熄灭。\n         */\n        for (int i = 0; i \u003c 4; i++) {\n            for (int j = 0; j \u003c 6; j++) {\n                // 计算(i,j)位置的灯在当前所有已知按钮影响下的状态\n                int state = puzzle[i][j];        // 初始状态\n                state ^= press[i][j];            // 自身按钮\n                if (j \u003e 0) state ^= press[i][j-1];  // 左侧按钮\n                if (j \u003c 5) state ^= press[i][j+1];  // 右侧按钮\n                if (i \u003e 0) state ^= press[i-1][j];  // 上方按钮\n                // 下方按钮 press[i+1][j] 必须恰好抵消此状态，才能使该灯熄灭\n                press[i+1][j] = state;\n            }\n        }\n\n        /*-----验证最后一行-----\n         * 计算第4行每盏灯在所有按钮影响下的最终状态，必须全0。\n         */\n        bool ok = true;\n        for (int j = 0; j \u003c 6; j++) {\n            int state = puzzle[4][j];\n            state ^= press[4][j];            // 自身按钮\n            if (j \u003e 0) state ^= press[4][j-1];  // 左侧\n            if (j \u003c 5) state ^= press[4][j+1];  // 右侧\n            state ^= press[3][j];            // 上方按钮（最后一行没有下方）\n            if (state != 0) {\n                ok = false;\n                break;\n            }\n        }\n\n        if (ok) return true;  // 找到可行方案\n    }\n    return false;  // 理论上题目保证有解，不会到达这里\n}","summary":"枚举第一行+逐行确定。核心洞察：第i+1行的按钮由第i行的灯状态唯一确定。","codeFile":"LinK24-problem.cpp"},{"id":"LinK25","title":"拨钟问题","cat":"枚举","sub":"经典枚举","diff":3,"tags":["枚举","模运算","钟表"],"classic":"拨钟问题 / Clock Problem","naive":"与熄灯问题思路类似，枚举第一行的操作，后续行由前一行状态确定","keyCode":"/*-----题目分析-----\n * 拨钟问题：3×3共9个时钟，状态0/1/2/3（12点/3点/6点/9点）。\n * 9种移动各会拨动若干时钟90°。求最短移动序列使全部归0。\n *\n * 解法：枚举+推导。每种移动做4次=回到原点，所以次数∈{0,1,2,3}。\n *   只需枚举移动1,2,3各0~3次（4³=64种），然后根据时钟A的状态推导移动4的次数，\n *   根据B推导移动5……以此类推，最后验证所有时钟是否归0。\n *   取总次数最少的方案。\n *-----题目分析-----*/\n\n// 各移动影响的时钟（A~I用0~8表示）\nconst int moves[9][9] = {\n    {1,1,0,1,1,0,0,0,0}, {1,1,1,0,0,0,0,0,0}, {0,1,1,0,1,1,0,0,0},\n    {1,0,0,1,0,0,1,0,0}, {0,1,0,1,1,1,0,1,0}, {0,0,1,0,0,1,0,0,1},\n    {0,0,0,1,1,0,1,1,0}, {0,0,0,0,0,0,1,1,1}, {0,0,0,0,1,1,0,1,1}\n};\n\n    int init[9], cnt[9], best[9] = {0}, bestCnt = 1e9;\n    for (int i = 0; i \u003c 9; i++) cin \u003e\u003e init[i];\n\n    for (cnt[0] = 0; cnt[0] \u003c 4; cnt[0]++)\n    for (cnt[1] = 0; cnt[1] \u003c 4; cnt[1]++)\n    for (cnt[2] = 0; cnt[2] \u003c 4; cnt[2]++) {\n        // 依A→B→C→D→G→E推出移动4~9\n        int sumA = init[0]; for (int i = 0; i \u003c 3; i++) sumA += cnt[i] * moves[i][0];\n        cnt[3] = (4 - sumA % 4) % 4;\n\n        int sumB = init[1]; for (int i = 0; i \u003c 4; i++) sumB += cnt[i] * moves[i][1];\n        cnt[4] = (4 - sumB % 4) % 4;\n\n        int sumC = init[2]; for (int i = 0; i \u003c 5; i++) sumC += cnt[i] * moves[i][2];\n        cnt[5] = (4 - sumC % 4) % 4;\n\n        int sumD = init[3]; for (int i = 0; i \u003c 6; i++) sumD += cnt[i] * moves[i][3];\n        cnt[6] = (4 - sumD % 4) % 4;\n\n        int sumG = init[6]; for (int i = 0; i \u003c 7; i++) sumG += cnt[i] * moves[i][6];\n        cnt[7] = (4 - sumG % 4) % 4;\n\n        int sumE = init[4]; for (int i = 0; i \u003c 8; i++) sumE += cnt[i] * moves[i][4];\n        cnt[8] = (4 - sumE % 4) % 4;\n\n        // 验证全部9个时钟\n        bool ok = true;\n        for (int c = 0; c \u003c 9; c++) {\n            int s = init[c];\n            for (int i = 0; i \u003c 9; i++) s += cnt[i] * moves[i][c];\n            if (s % 4 != 0) { ok = false; break; }\n        }\n        if (ok) {\n            int total = 0;\n            for (int i = 0; i \u003c 9; i++) total += cnt[i];\n            if (total \u003c bestCnt) {\n                bestCnt = total;\n                memcpy(best, cnt, sizeof(cnt));\n            }\n        }\n    }\n    // 按序号从小到大输出\n    for (int i = 0; i \u003c 9; i++)\n        for (int j = 0; j \u003c best[i]; j++)\n            // [输出结果]\n    // [输出结果]","summary":"熄灯问题的变体。状态模4，第一行枚举4^9种可能，逐行确定。","codeFile":"LinK25-problem.cpp"},{"id":"LinK26","title":"算24","cat":"枚举","sub":"经典枚举","diff":2,"tags":["枚举","递归","表达式"],"classic":"24 Game","naive":"枚举所有数字的排列、运算符组合和括号方式，检查是否等于24","keyCode":"/*-----题目分析-----\n * 算24：给4个\u003c10的非负整数，用+ - * /和括号能否凑出24。多组数据，以4个0结束。\n * 数字可重排，除法按实数除。\n *\n * 解法：DFS枚举所有运算过程。从n个数中选2个做6种运算(a+b,a-b,b-a,a*b,a/b,b/a)，\n *       结果与剩余数组成新数组（规模-1），递归到只剩1个数判断是否为24。\n *-----题目分析-----*/\nconst double EPS = 1e-6;\n\nbool dfs(double a[], int n) {\n    if (n == 1) return fabs(a[0] - 24.0) \u003c EPS;\n    for (int i = 0; i \u003c n; i++) {\n        for (int j = 0; j \u003c n; j++) {\n            if (i == j) continue;\n            double b[4]; int m = 0;\n            for (int k = 0; k \u003c n; k++)\n                if (k != i \u0026\u0026 k != j) b[m++] = a[k];  // 剩余数放入b\n\n            b[m] = a[i] + a[j]; if (dfs(b, m + 1)) return true;  // +\n            b[m] = a[i] - a[j]; if (dfs(b, m + 1)) return true;  // a-b\n            b[m] = a[i] * a[j]; if (dfs(b, m + 1)) return true;  // *\n            if (fabs(a[j]) \u003e EPS) { b[m] = a[i] / a[j]; if (dfs(b, m + 1)) return true; }  // a/b\n        }\n    }\n    return false;\n}","summary":"经典24点游戏。递归枚举两两数字的四种运算，缩小问题规模。","codeFile":"LinK26-24.cpp"},{"id":"LinK27","title":"大数排序","cat":"排序","sub":"基础排序","diff":2,"tags":["排序","大整数","字符串比较"],"classic":"大数排序 / Big Number Sort","naive":"大数以字符串读入，自定义比较：先比长度，同长比字典序","keyCode":"/*-----题目分析-----\n * 大数排序：\n *   给定一个长度为 n（1≤n≤100000）的整数数列，所有整数在 [1, 10^9] 范围内，\n *   要求将数列从小到大排序并输出。\n *\n * 解题思路：\n *   使用快速排序（Quick Sort）—— 平均 O(n log n)，是最通用的高效排序算法之一。\n *   本题 n 可达 10^5，冒泡排序等 O(n^2) 算法无法通过。\n *\n * 算法选择：Hoare 划分方案，以区间中点为基准元素，双指针扫描交换。\n */\n\nconst int N = 1000010;\nint q[N];  // 全局数组，存储待排序数据\n\n/*-----quick_sort函数分析-----\n * 功能：对数组 nums 在 [left, right] 区间内进行快速排序（升序）。\n *\n * 算法流程（Hoare 划分）：\n *   1. 递归终止条件：left \u003e= right，区间为空或单元素，无需排序。\n *   2. 选取基准值 x = nums[(left + right) / 2]（区间中间位置的元素）。\n *   3. 双指针 i（从左向右）、j（从右向左）扫描：\n *      - i 跳过所有小于 x 的元素（遇到 \u003e= x 的元素停止）\n *      - j 跳过所有大于 x 的元素（遇到 \u003c= x 的元素停止）\n *      - 若 i \u003c j 则交换 nums[i] 和 nums[j]，继续扫描\n *   4. 指针交错后，左子区间 [left, j] 中的元素均 \u003c= 右子区间 [j+1, right] 中的元素，\n *      递归对两个子区间分别排序。\n *\n * 注意：此处 while(i\u003cj) + do-while 结构保证指针一定会移动，\n *   避免取到极端基准值时出现死循环。\n */\nvoid quick_sort(int nums[], int left, int right)\n{\n    if (left \u003e= right)\n        return;  // 区间大小为0或1，已经有序\n\n    int i = left - 1, j = right + 1;\n    int x = nums[left + right \u003e\u003e 1];  // 取区间中间位置的元素作为基准\n\n    while (i \u003c j)\n    {\n        // i 右移，直到找到 \u003e= 基准的元素\n        do\n        {\n            i++;\n        } while (nums[i] \u003c x);\n\n        // j 左移，直到找到 \u003c= 基准的元素\n        do\n        {\n            j--;\n        } while (nums[j] \u003e x);\n\n        // 若 i \u003c j，交换两个\"站错位置\"的元素\n        if (i \u003c j)\n            swap(nums[i], nums[j]);\n    }\n\n    // 划分完成后，[left, j] 中的元素 ≤ [j+1, right] 中的元素\n    // 递归处理左右两个子区间\n    quick_sort(nums, left, j);\n    quick_sort(nums, j + 1, right);\n}","summary":"大整数不能直接用int比较。用字符串比较：先比长度，长度相同时比字典序。","codeFile":"LinK27-problem.cpp"},{"id":"LinK28","title":"快速选择第k个数","cat":"排序","sub":"快速选择","diff":2,"tags":["快速选择","分治","第k小"],"classic":"Quick Select / 第k小元素","naive":"类似快排的分治，每次partition后只在含k的那一半继续找，期望O(n)","keyCode":"/*-----题目分析-----\n * 快速选择——求第 k 小的数：\n *   给定一个长度为 n（1≤n≤100000）的整数数列和一个整数 k（1≤k≤n），\n *   要求找出数列中第 k 小的数（即排序后下标为 k-1 的元素）。\n *\n * 解题思路：\n *   使用快速选择算法（Quick Select）—— 基于快速排序的分治思想。\n *   与快速排序不同，快速选择每次只需递归一侧，平均时间复杂度 O(n)。\n *\n * 算法核心：\n *   每次划分后，根据左子区间的元素个数 l = j - left + 1 来判断：\n *     - 若 l \u003e= k，说明第 k 小的元素在左子区间 [left, j] 中\n *     - 若 l \u003c k，说明第 k 小的元素在右子区间 [j+1, right] 中，\n *       且是右子区间的第 (k - l) 小元素\n */\n\nconst int N = 100000;\nint numbers[N];  // 全局数组，存储输入数列\n\n/*-----quick_sort（快速选择）函数分析-----\n * 功能：在数组 nums 的 [left, right] 区间内找到第 k 小的数并返回其值。\n *\n * 参数说明：\n *   nums  - 待查找的数组\n *   left  - 当前搜索区间的左边界\n *   right - 当前搜索区间的右边界\n *   k     - 在当前区间内要找第几小的数（1-based）\n *\n * 流程：\n *   1. 递归基：left \u003e= right 时区间只剩一个元素，直接返回。\n *   2. Hoare 划分：以区间中点为基准，双指针扫描交换。\n *   3. 计算左子区间长度 l = j - left + 1：\n *      - 若 l \u003e= k → 第 k 小在左子区间，递归搜索左边\n *      - 若 l \u003c k  → 第 k 小在右子区间，递归搜索右边，\n *        此时在右子区间要找的是第 (k - l) 小的元素\n */\nint quick_sort(int nums[] , int left , int right , int k)\n{\n    // 递归基：区间只剩一个元素，它就是要找的第k小\n    if(left \u003e= right) return nums[left];\n\n    int i = left - 1 , j = right + 1;\n    int x = nums[left + right \u003e\u003e 1];  // 基准值取区间中间位置\n\n    // Hoare 划分：小的放左边，大的放右边\n    while(i \u003c j)\n    {\n        do\n        {\n            i ++;\n        } while (nums[i] \u003c x);   // 找到左边第一个 \u003e= x 的元素\n\n        do\n        {\n            j --;\n        } while (nums[j] \u003e x);   // 找到右边第一个 \u003c= x 的元素\n\n        if(i \u003c j)\n        {\n            swap(nums[i] , nums[j]);  // 交换两个错位的元素\n        }\n    }\n\n    // l = 左子区间 [left, j] 的元素个数\n    int l = j - left + 1;\n    if(l \u003e= k)\n        return quick_sort(nums , left , j , k);       // 第k小在左边\n    else\n        return quick_sort(nums , j + 1 , right , k - l); // 第k小在右边，更新k\n}","summary":"快速选择算法。基于快排的分区思想，每次只递归一半，期望时间复杂度O(n)。","codeFile":"LinK28-k.cpp"},{"id":"LinK29","title":"输出前k大的数","cat":"排序","sub":"Top-K","diff":2,"tags":["优先队列","堆","Top-K"],"classic":"Top K Largest","naive":"用小顶堆维护当前最大的k个数，或者用快速选择+排序","keyCode":"/*-----题目分析-----\n * 输出前 k 大的数：\n *   给定一个长度为 n（n \u003c 100000）的整数数组和一个整数 k（k \u003c n），\n *   要求找出前 k 大的数，并从大到小输出，每个数占一行。\n *\n * 解题思路（STL nth_element 解法）：\n *   直接使用 C++ STL 中的 nth_element，其内部采用 Introselect 算法\n *   （快速选择 + 堆排序的混合），保证最坏情况 O(n) 的时间复杂度。\n *\n * 步骤：\n *   1. 用 nth_element 将第 n-k 小的元素放到 nums[n-k] 位置，\n *      同时保证 [n-k, n) 区间的元素是前 k 大的数（内部未排序）。\n *   2. 对 [n-k, n) 区间用 sort + greater\u003cint\u003e() 从大到小排序。\n *   3. 依次输出。\n *\n * 注意：原注释中保留了之前错误尝试的代码（已注释），仅供参考。\n */\n\nconst int N = 100000;\nint numbers[N];\n\n    int n;\n    scanf(\"%d\", \u0026n);\n    for (int i = 0; i \u003c n; i++) {\n        scanf(\"%d\", \u0026numbers[i]);\n    }\n\n    int k;\n    scanf(\"%d\", \u0026k);\n\n    /*-----STL nth_element 快速划分-----\n     * nth_element 重新排列数组，使得：\n     *   - numbers[n-k] 处的元素等于完全排序后该位置的元素\n     *   - numbers[n-k] 左侧的元素都 ≤ 它，右侧的元素都 ≥ 它\n     * 这样 [n-k, n) 区间就包含了前 k 大的数（但内部无序）。\n     *\n     * 内部使用 Introselect（快速选择 + 堆排序备选），\n     * 保证即使在最坏情况下也是 O(n)。\n     */\n    nth_element(numbers, numbers + n - k, numbers + n);\n\n    // 将前k大的数从大到小排列\n    sort(numbers + n - k, numbers + n, greater\u003cint\u003e());\n\n    // 输出前k大的数，每行一个\n    for (int i = n - k; i \u003c n; i++) {\n        printf(\"%d\\n\", numbers[i]);\n    }","summary":"Top-K经典问题。用小顶堆维护前k大，堆顶就是第k大的数。","codeFile":"LinK29-k.cpp"},{"id":"LinK30","title":"归并排序","cat":"排序","sub":"基础排序","diff":2,"tags":["归并排序","分治","双指针"],"classic":"归并排序 / Merge Sort","naive":"递归将数组二分，分别排序后再合并两个有序子数组","keyCode":"/*-----题目分析-----\n * 归并排序：\n *   给定一个长度为 n（1≤n≤100000）的整数数列，\n *   要求使用归并排序将数列从小到大排序并输出。\n *\n * 解题思路：\n *   归并排序（Merge Sort）是经典的分治算法，时间复杂度稳定为 O(n log n)，\n *   空间复杂度 O(n)（需要临时数组）。\n *\n * 算法流程：\n *   1. 递归地将数组分成左右两半，直到子区间长度为1（自然有序）\n *   2. 合并两个已排序的子区间：用双指针比较，较小的先放入临时数组\n *   3. 将临时数组复制回原数组的对应位置\n */\n\nconst int N = 100007;\nint n;\nint numbers[N], temp[N];  // temp[] 为归并过程中使用的临时数组\n\n/*-----mergeSort函数分析-----\n * 功能：对数组 nums 在 [left, right] 区间内进行归并排序（升序）。\n *\n * 分治三步：\n *   1. 递归基：left \u003e= right 时区间为空或单元素，已经有序，直接返回。\n *   2. 分治：取中间点 mid，分别对左半 [left, mid] 和右半 [mid+1, right] 递归排序。\n *   3. 合并：双指针 i/j 分别指向左右子区间的起始位置，\n *      每次取 nums[i] 和 nums[j] 中较小的放入 temp 数组，\n *      最后将 temp 中排好的数据复制回 nums 的对应位置。\n *\n * 设计要点：\n *   - 左右子区间内部已经有序（递归保证），合并时只需比较两个子区间当前最小元素\n *   - 合并后的数据写回原数组，供上层递归继续合并\n */\nvoid mergeSort(int nums[], int left, int right)\n{\n    if(left \u003e= right) return;  // 递归基：区间长度为0或1\n\n    int mid = left + right \u003e\u003e 1;  // 取中点\n\n    // 递归排序左右子区间（自顶向下分解，自底向上合并）\n    mergeSort(nums , left , mid);\n    mergeSort(nums , mid + 1 , right);\n\n    /*-----归并（合并两个有序子区间）-----*/\n    int k = 0 , i = left , j = mid + 1;\n    // 双指针扫描：每次取较小的元素放入 temp\n    while(i \u003c= mid \u0026\u0026 j \u003c= right)\n    {\n        if(nums[i] \u003c= nums[j])\n        {\n            temp[k++] = nums[i++];\n        }\n        else\n        {\n            temp[k++] = nums[j++];\n        }\n    }\n\n    // 将左半区间剩余元素（如果还有）全部追加到 temp\n    while(i \u003c= mid)\n    {\n        temp[k++] = nums[i++];\n    }\n    // 将右半区间剩余元素（如果还有）全部追加到 temp\n    while(j \u003c= right)\n    {\n        temp[k++] = nums[j++];\n    }\n\n    // 将 temp 中合并好的数据写回到原数组的 [left, right] 区间\n    for(i = left , k = 0; i \u003c= right; i++ , k ++)\n    {\n        nums[i] = temp[k];\n    }\n}","summary":"归并排序，稳定O(n log n)。核心是合并两个已有序的子数组。理解分治思想的关键范例。","codeFile":"LinK30-problem.cpp"},{"id":"LinK31","title":"求排列的逆序数","cat":"排序","sub":"归并应用","diff":2,"tags":["逆序对","归并排序","分治"],"classic":"逆序对 / Inversion Count","naive":"在归并排序的合并过程中统计逆序对数量","keyCode":"/*-----题目分析-----\n * 求排列的逆序数：\n *   给定 1~n 的一个排列（n ≤ 100000），求其逆序数。\n *   逆序：若 i \u003c j 且 a[i] \u003e a[j]，则 (a[i], a[j]) 构成一个逆序对。\n *   逆序数 = 所有逆序对的总数。\n *\n * 解题思路（归并排序求逆序数）：\n *   在归并排序的合并阶段统计逆序对。当左子区间元素 nums[x] \u003e 右子区间元素 nums[y] 时，\n *   由于左子区间 [x, mid] 内部已有序，从中点到 x 这段所有元素都 \u003e nums[y]，\n *   因此产生 (mid - x + 1) 个逆序对。\n *\n * 关键性质：\n *   - 归并排序在合并时，左右子区间内部已经有序。\n *   - 当取右子区间元素放入 temp 时，说明它比左子区间所有未处理的元素都小，\n *     这些左区间剩余元素都与它构成逆序对。\n *   - 逆序数可能很大（最大约 n(n-1)/2 ≈ 5×10^9），必须用 long long。\n */\n\nconst int N = 100000;\n\nint n;\nlong long cnt = 0;      // 逆序数计数器，使用 long long 防止溢出\nint nums[N], temp[N];   // temp[] 为归并临时数组\n\n/*-----merge_set函数分析-----\n * 功能：对 [l, r] 区间进行归并排序，同时统计该区间内的逆序数。\n *\n * 算法流程：\n *   1. 递归基：l \u003e= r 时区间长度为0或1，没有逆序对，直接返回。\n *   2. 分治：取中点 mid，递归处理左右两个子区间。\n *      （左右子区间内部的逆序对在递归中统计完毕）\n *   3. 合并：双指针 x（左半）、y（右半）扫描：\n *      - 若 nums[x] \u003c= nums[y]：正常合并，不产生逆序对\n *      - 若 nums[x] \u003e nums[y]：nums[y] 与左半区间所有剩余元素\n *        （即 [x, mid]）都构成逆序对，cnt += (mid - x + 1)\n *   4. 将合并后的有序数据写回原数组。\n *\n * 为什么只在取右区间元素时计数？\n *   因为当 nums[x] \u003e nums[y] 时，左区间 [x, mid] 中的元素\n *   在原排列中都位于 nums[y] 之前（索引更小）但值更大，\n *   恰好满足逆序对的定义 (i \u003c j 且 a[i] \u003e a[j])。\n */\nvoid merge_set(int l, int r)\n{\n    if (l \u003e= r)\n        return;  // 递归基：单元素区间无逆序对\n\n    int mid = l + r \u003e\u003e 1;  // 取中点\n    int x = l, y = mid + 1;  // x:左子区间指针, y:右子区间指针\n    int k = 0;               // temp数组的写入指针\n\n    // 递归处理左右两个子区间（子区间内部的逆序对在递归中统计）\n    merge_set(l, mid);\n    merge_set(mid + 1, r);\n\n    // 合并两个有序子区间，同时统计跨区间逆序对\n    while (x \u003c= mid \u0026\u0026 y \u003c= r)\n    {\n        if (nums[x] \u003c= nums[y])\n        {\n            // 正常情况：左 ≤ 右，不产生逆序对\n            temp[k++] = nums[x++];\n        }\n        else\n        {\n            /*-----逆序对统计核心-----\n             * nums[x] \u003e nums[y]，说明 nums[y] 与左区间 [x, mid] 中\n             * 所有剩余元素都构成逆序对——这些元素都在 nums[y] 前面（索引更小）\n             * 但值都比 nums[y] 大。\n             */\n            cnt += mid - x + 1;  // 一次性统计 mid - x + 1 个逆序对\n            temp[k++] = nums[y++];\n        }\n    }\n    // 处理左子区间剩余元素（这些元素比右子区间所有元素都大，但索引在前，不产生新的逆序对）\n    while (x \u003c= mid)\n    {\n        temp[k++] = nums[x++];\n    }\n    // 处理右子区间剩余元素（此时左子区间已空，不会产生新的逆序对）\n    while (y \u003c= r)\n    {\n        temp[k++] = nums[y++];\n    }\n    // 将合并后的有序数据写回原数组 [l, r] 区间\n    for (int i = l, j = 0; i \u003c= r; i++, j++)\n    {\n        nums[i] = temp[j];\n    }\n    return;\n}","summary":"用归并排序计算逆序对数量。当arr[i]\u003earr[j]时，左半剩余元素都与arr[j]构成逆序对。","codeFile":"LinK31-problem.cpp"},{"id":"LinK32","title":"查找指定数","cat":"二分查找","sub":"经典二分","diff":1,"tags":["二分查找","有序数组"],"classic":"二分查找 / Binary Search","naive":"在有序数组中二分查找目标值，返回下标或-1","keyCode":"/*-----题目分析-----\n * 给定N个怪物的编号（可能会有重复），对于每个查询target，\n * 需要输出该编号怪物在数组中的下标位置。若不存在则输出-1。\n *\n * 解法：使用unordered_map建立\"编号→下标\"的哈希映射，实现O(1)查询。\n * 注意：若存在重复编号，map保留的是最后一次出现的下标；\n *       若题目要求返回第一次出现的位置，则需改用\"只插入不覆盖\"的策略。\n *-----*/\n\n    int N;\n    // [输入数据]\n\n    unordered_map\u003cint, int\u003e mp;  // 编号 -\u003e 下标的哈希映射\n\n    // 读入每个怪物的编号，建立映射\n    for (int i = 0; i \u003c N; i++)\n    {\n        int x;\n        // [输入数据]\n        mp[x] = i;  // 存储编号x出现的最新位置\n    }\n\n    int T;\n    // [输入数据]\n\n    // 处理T次查询\n    while (T--)\n    {\n        int target;\n        // [输入数据]\n\n        auto it = mp.find(target);\n\n        if (it != mp.end())\n        {\n            // [输出结果]\n        }\n        else\n        {\n            // [输出结果]\n        }\n    }","summary":"二分查找模板。关键：while条件用l\u003c=r，mid计算避免溢出，更新时l=mid+1/r=mid-1。","codeFile":"LinK32-problem.cpp"},{"id":"LinK33","title":"攻击范围","cat":"二分查找","sub":"二分答案","diff":2,"tags":["二分答案","范围判断"],"classic":"攻击范围 / Attack Range","naive":"二分查找最大攻击范围的半径，check函数检查能否覆盖所有目标","keyCode":"/*-----题目分析-----\n * 在升序数组nums中，对于每个查询target，找出target在数组中的\n * 起始下标和终止下标（从0开始计数）。\n * 若target不存在于数组中，则输出\"-1 -1\"。\n *\n * 解法：两次二分查找。\n * - findFirst：查找第一个等于target的位置（左边界）\n * - findSecond：查找最后一个等于target的位置（右边界）\n * 时间复杂度：O(q log n)，其中q是查询次数。\n *-----*/\n\nvector\u003cint\u003e arr;\n\n/*-----findFirst：二分查找target的左边界-----*/\n/* 功能：在升序数组arr中找到第一个等于target的下标，找不到返回-1。\n *\n * 二分策略：\n * - 当arr[mid] == target时，不立即返回，而是收缩右边界(r=mid-1)，\n *   继续向左搜索，确保最终找到的是最左出现位置。\n * - 当arr[mid] \u003c target时，target在右半部分，收缩左边界(l=mid+1)。\n * - 当arr[mid] \u003e target时，target在左半部分，收缩右边界(r=mid-1)。\n */\nint findFirst(int target)\n{\n    int l = 0, r = arr.size() - 1;\n    int result = -1;  // 默认值：未找到\n\n    while (l \u003c= r)\n    {\n        int mid = l + r \u003e\u003e 1;  // 等价于 (l + r) / 2\n        if (arr[mid] == target)\n        {\n            r = mid - 1;       // 继续向左搜，找更早出现的相同元素\n            result = mid;      // 记录当前找到的位置\n        }\n        else if (arr[mid] \u003c target)\n        {\n            l = mid + 1;       // target在右半部分\n        }\n        else\n        {\n            r = mid - 1;       // target在左半部分\n        }\n    }\n\n    return result;\n}\n\n/*-----findSecond：二分查找target的右边界-----*/\n/* 功能：在升序数组arr中找到最后一个等于target的下标，找不到返回-1。\n *\n * 二分策略：\n * - 当arr[mid] == target时，收缩左边界(l=mid+1)，\n *   继续向右搜索，确保最终找到的是最右出现位置。\n * - 其余逻辑与findFirst对称。\n */\nint findSecond(int target)\n{\n    int l = 0, r = arr.size() - 1;\n    int result = -1;\n\n    while (l \u003c= r)\n    {\n        int mid = l + r \u003e\u003e 1;\n        if (arr[mid] == target)\n        {\n            l = mid + 1;       // 继续向右搜，找更晚出现的相同元素\n            result = mid;\n        }\n        else if (arr[mid] \u003c target)\n        {\n            l = mid + 1;\n        }\n        else\n        {\n            r = mid - 1;\n        }\n    }\n\n    return result;\n}","summary":"二分答案。当问题可以转化为\"验证某个值是否可行\"时，用二分逐步逼近最优值。","codeFile":"LinK33-problem.cpp"},{"id":"LinK34","title":"求方程的根","cat":"二分查找","sub":"二分答案","diff":2,"tags":["二分","方程求根","浮点二分"],"classic":"方程求根 / Root Finding","naive":"在单调区间上二分查找函数值为0的点，精度控制用eps","keyCode":"/*-----题目分析-----\n * 二分法求方程根：f(x) = x³ - 5x² + 10x - 80 = 0，精确到9位小数。\n * f(0)=-80\u003c0, f(100)\u003e0 → 根在[0,100]区间。直接二分。\n *-----题目分析-----*/\n\ndouble f(double x) { return x*x*x - 5*x*x + 10*x - 80; }","summary":"浮点数二分求方程的根。利用函数在区间上的单调性和零点定理。","codeFile":"LinK34-problem.cpp"},{"id":"LinK35","title":"数的三次方根","cat":"二分查找","sub":"二分答案","diff":1,"tags":["二分","浮点数","三次方根"],"classic":"立方根 / Cubic Root","naive":"二分逼近目标数的三次方根，正负分别处理","keyCode":"/*-----题目分析-----\n * 数的三次方根：给定浮点数n，输出n^(1/3)，保留6位小数。n范围[-10000,10000]。\n * 解法：二分，注意处理负数。\n *-----题目分析-----*/\n\n    double n; cin \u003e\u003e n;\n    double L = min(-1.0, n), R = max(1.0, n);  // 确保区间包含立方根\n    for (int i = 0; i \u003c 100; i++) {             // 固定100次迭代保证精度\n        double mid = (L + R) / 2.0;\n        if (mid * mid * mid \u003e= n) R = mid; else L = mid;\n// [输出]","summary":"浮点二分模板。在足够大的范围内二分，直到精度满足要求。注意处理负数。","codeFile":"LinK35-problem.cpp"},{"id":"LinK36","title":"最小预算值","cat":"二分查找","sub":"二分答案","diff":2,"tags":["二分答案","优化问题"],"classic":"最小预算 / Minimum Budget","naive":"二分答案求满足条件的最小值，check函数验证可行性","keyCode":"/*-----题目分析-----\n * 最小预算值（二分+贪心）：N天开销分为M组（每组连续），每组预算固定。\n * 求能满足所有组的最小预算值。\n *\n * 解法：二分答案 + 贪心验证。\n *   二分预算值budget，贪心从左到右分组：若当前组加入下一天不超过budget则加入，\n *   否则新开一组。最终分组数≤M则可行。\n *-----题目分析-----*/\n\nconst int N = 100010;\nint n, m, a[N];\n\n/*-----check：验证预算值x是否可行-----*/\n// 将N天按预算x分组，统计组数，若≤M则可行\nbool check(int x) {\n    int cnt = 1, sum = 0;                   // cnt:组数, sum:当前组总和\n    for (int i = 0; i \u003c n; i++) {\n        if (a[i] \u003e x) return false;         // 某一天本身超过预算，不可行\n        if (sum + a[i] \u003c= x) {\n            sum += a[i];                    // 加入当前组\n        } else {\n            cnt++;                          // 新开一组\n            sum = a[i];\n        }\n    }\n    return cnt \u003c= m;\n}","summary":"整数二分求最小值。模板：可行则r=mid（尝试更小），不可行则l=mid+1。","codeFile":"LinK36-problem.cpp"},{"id":"LinK37","title":"林克的蛋糕","cat":"二分查找","sub":"二分答案","diff":2,"tags":["二分答案","分割问题"],"classic":"蛋糕分配 / Cake Distribution","naive":"二分每块蛋糕的最小大小，检查能否切出F+1块","keyCode":"/*-----题目分析-----\n * 林克的蛋糕（二分+贪心）：N个圆柱蛋糕（高=1，半径r_i），分给F+1个人。\n * 每人分一块同口味（即同一蛋糕切出），可以切但不拼凑。求最大每人能得到的体积。\n *\n * 解法：二分答案（体积） + 贪心验证。\n *   对目标体积mid，每个蛋糕能切出 floor(π*r² / mid) 块，累加判断是否≥F+1。\n *   注意：π*r² 可能很大，用double；为避免精度问题直接用r²比较。\n *-----题目分析-----*/\n\nconst int N = 10010;\nconst double PI = acos(-1.0);\nint n, F;\ndouble vol[N];                              // 每个蛋糕的体积（含π）\n\n/*-----check：每人分到体积x是否可能-----*/\nbool check(double x) {\n    int cnt = 0;\n    for (int i = 0; i \u003c n; i++)\n        cnt += (int)(vol[i] / x);           // 该蛋糕能切出几块\n    return cnt \u003e= F + 1;                    // 够不够F+1人\n}","summary":"经典二分答案应用题。将连续优化问题转化为判定问题：能否切出k块大小\u003e=mid的蛋糕。","codeFile":"LinK37-problem.cpp"},{"id":"LinK38","title":"林克的命运之阵","cat":"搜索","sub":"DFS搜索","diff":2,"tags":["DFS","路径计数","网格"],"classic":"命运之阵 / Destiny Grid - Path Counting","naive":"DFS计数：从第0行出发，每次向下/左/右移动一格，求走n步的不同路径数（n\u003c=20）","keyCode":"/*-----题目分析-----\n * 在无限大的方格命运矩阵上，从第0行出发，每次只能向下、左、右三个\n * 方向移动一格，走过的格子不可重复访问。求恰好走n步的不同路径总数。\n *\n * 本质：在二维网格上统计\"不重复访问\"的路径数量，移动方向受限为\n *       左、右、下三个方向（无向上），且不能走回头路。\n *\n * 解法：DFS + 回溯。\n * - fates[][] 标记已访问的格子\n * - 对当前位置，尝试三种走法，递归计算剩余步数的方案数\n * - 回溯时取消标记，使不同分支可以独立搜索\n *\n * 起点选择：由于n \u003c= 20，最坏情况全向左（或全向右）需要20列空间，\n * 因此将起点放在(0, N/2)即第0行第35列，N=70提供左右各35列的缓冲。\n *-----*/\n\nconst int N = 70;\nbool fates[N][N];  // 标记矩阵：fates[i][j]=true表示格子(i,j)已被踩过\n\n/* 三种移动方向与坐标变动的关系：\n * k=0: 向左 —— (0, -1)\n * k=1: 向右 —— (0, +1)\n * k=2: 向下 —— (+1, 0)\n * 注意：没有向上移动，因为只能向下、左、右三个方向走。 */\nint dx[3] = {0, 0, 1}, dy[3] = {-1, 1, 0};\n\n/*-----dfs函数分析-----\n * dfs(i, j, n)：从格子(i,j)出发，恰好走n步的不同路径数。\n *\n * 递归分解：\n * - 边界条件：n == 0 时，无需再走，仅有\"原地不动\"这1种方案。\n * - 递归体：\n *   1. 标记当前格子为已访问（fates[i][j] = true）\n *   2. 遍历三种走法（左、右、下），对每种走法的目标格子：\n *      - 若目标格子未被访问过，则递归计算走n-1步的路径数并累加\n *   3. 回溯：取消当前格子的标记（fates[i][j] = false），\n *      使其他递归分支可以重新访问该格子。\n *\n * 返回值使用long long：n=20时结果可达54608393，超出int范围。\n *-----*/\nlong long dfs(int i, int j, int n)\n{\n    if (n == 0)\n        return 1;  // 边界：剩余0步，只有1种方案\n\n    long long res = 0;  // 累加所有合法走法的路径数\n\n    fates[i][j] = true;         // 标记当前格子已被踩入\n    for (int k = 0; k \u003c 3; k++) // 尝试三种走法：左、右、下\n    {\n        int x = i + dx[k], y = j + dy[k];\n        // 若目标格子未被访问过，则可以向该方向走\n        if (fates[x][y] == 0)\n            res += dfs(x, y, n - 1);  // 递归：走完这一步后还剩n-1步\n    }\n\n    fates[i][j] = false;  // 回溯：恢复标记，供其他路径分支使用\n    return res;\n}","summary":"DFS路径计数问题。从起点出发，每次有三个方向选择，统计所有可能的路径。可用记忆化优化。","codeFile":"LinK38-problem.cpp"},{"id":"LinK39","title":"净化迷雾森林","cat":"搜索","sub":"DFS搜索","diff":2,"tags":["DFS","网格搜索","连通性"],"classic":"迷雾森林 / Fog Forest (DFS)","naive":"DFS从起点遍历，标记所有可达的连通区域","keyCode":"/*-----题目分析-----\n * 净化迷雾森林：在H×W的迷宫中，林克从起点\u0027@\u0027出发，只能向上下左右\n * 四个方向移动到相邻的迷雾区域\u0027.\u0027（墙壁\u0027#\u0027不可通过）。\n * 求林克总共能净化多少区域（包括初始位置）。\n *\n * 本质：连通分量大小计算（Flood Fill / 洪水填充）。\n * 解法：DFS。每访问一个迷雾格子就标记为\u0027#\u0027（即已净化），\n *       递归统计所有可达的迷雾格子数量。\n * 时间复杂度：O(H×W)，每个格子最多被访问一次。\n *-----*/\n\nint H, W;\nchar forest[30][30];  // 迷宫地图，30×30可以容纳题目限制的20×20\n\n// 四个方向的移动偏移量：右、下、上、左\nint dx[4] = {0, 1, -1, 0}, dy[4] = {1, 0, 0, -1};\n\n/*-----dfs函数分析-----\n * dfs(i, j)：从格子(i,j)出发，DFS统计能访问到的迷雾格子总数。\n *\n * 递归分解：\n * - 自身计入：res初始为1（当前格子）。\n * - 标记访问：将当前格子改为\u0027#\u0027，防止重复计数（Flood Fill的核心技巧：\n *   直接在原地图上修改，省去额外的visited数组）。\n * - 递归扩展：向四个方向尝试，对每个合法的相邻迷雾格子递归统计，\n *   将结果累加到res中。\n * - 返回：以(i,j)为根的连通分量总大小。\n *\n * 注意：该函数不回溯（不改回\u0027.\u0027），因为每个格子只需访问一次，\n *       标记为\u0027#\u0027后永久排除，符合连通分量计数的语义。\n *-----*/\nint dfs(int i, int j)\n{\n    int res = 1;           // 计数：至少包含当前格子自身\n    forest[i][j] = \u0027#\u0027;    // 标记为已访问（已净化），防止走回头路\n\n    for (int k = 0; k \u003c 4; k++)  // 尝试四个方向\n    {\n        int x = i + dx[k], y = j + dy[k];\n        // 边界检查 + 判断是否为可净化的迷雾区域\n        if (x \u003e= 0 \u0026\u0026 y \u003e= 0 \u0026\u0026 x \u003c H \u0026\u0026 y \u003c W \u0026\u0026 forest[x][y] == \u0027.\u0027)\n        {\n            res += dfs(x, y);  // 递归净化相邻区域，累加结果\n        }\n    }\n\n    return res;\n}","summary":"网格DFS模板。从起点出发，向四周探索所有可达的连通区域。","codeFile":"LinK39-problem.cpp"},{"id":"LinK40","title":"骑士林克的怜悯(1)","cat":"搜索","sub":"BFS搜索","diff":2,"tags":["BFS","最短路径","网格"],"classic":"骑士的怜悯 / Knight\u0027s Mercy I","naive":"BFS求从起点到终点的最短步数，分层搜索","keyCode":"/*-----题目分析-----\n * 骑士巡游问题（Knight\u0027s Tour）：在p×q的变形棋盘上，\n * 骑士按国际象棋马的走法（走\"日\"字，共8种），问是否能一次遍历\n * 所有格子恰好一次。若存在，输出字典序最小的完整路径；\n * 若不存在，输出\"none\"。\n *\n * 输出格式：每个格子用\"大写字母+数字\"表示，如A1、B3等。\n * 字母对应列（A=第0列），数字对应行（1=第0行）。\n *\n * 解法：DFS + 回溯。\n * 关键1：dx/dy数组的排列顺序决定了试探的字典序——按字典序\n *        排列移动方向，保证首次找到的完整路径即为字典序最小的解。\n * 关键2：DFS找到第一条完整路径即停止（剪枝），不再搜索其他路径。\n * 时间复杂度：最坏O(8^(p*q))，但实际由于约束和剪枝会大幅缩小。\n *-----*/\n\nconst int N = 27;\nint p, q;                     // p: 行数（数字维度），q: 列数（字母维度）\nbool st[N][N];                // st[i][j]=true 表示格子(i,j)已被访问\nvector\u003cpair\u003cchar, int\u003e\u003e path; // 当前搜索路径：first=列字母, second=行号\n\n/*-----8种骑士走法（按输出字典序排列）-----\n * 输出格式为\"字母+数字\"（如A1B3），字典序优先比较字母（即列），\n * 字母相同时比较数字（即行）。因此dx/dy的排列使得DFS优先尝试\n * 字母更小、数字更小的目标格子。\n *\n * dx[8] = {-2, -2, -1, -1,  1,  1,  2,  2}  // 列（字母）变化\n * dy[8] = {-1,  1, -2,  2, -2,  2, -1,  1}  // 行（数字）变化\n *\n * 对应走法：(Δ列, Δ行) = 列变化量, 行变化量\n * (-2,-1) (-2,+1) (-1,-2) (-1,+2) (+1,-2) (+1,+2) (+2,-1) (+2,+1)\n *\n * 为什么这个顺序能保证字典序最小：\n * - 目标列字母较小的走法排在前面（Δx更负的优先）\n * - 列相同时，目标行数字较小的排在前面（Δy更负的优先）\n *-----*/\nint dx[8] = {-2, -2, -1, -1,  1,  1,  2,  2};\nint dy[8] = {-1,  1, -2,  2, -2,  2, -1,  1};\n\n/*-----dfs函数分析-----\n * dfs(x, y, cnt)：从格子(x,y)出发，当前已访问cnt个格子（含当前），\n * 尝试完成骑士巡游。\n *\n * 参数说明：\n * - x: 当前列索引（0=\u0027A\u0027, 1=\u0027B\u0027, ...）\n * - y: 当前行索引（0=第1行, 1=第2行, ...）\n * - cnt: 已访问的格子数量（含当前格子）\n *\n * 递归分解：\n * - 记录路径：将当前格子（列字母+行号）加入path。\n * - 边界条件：cnt == p*q 时，所有格子均已访问，输出完整路径并返回true。\n * - 递归体：\n *   1. 标记当前格子为已访问（st[x][y] = true）\n *   2. 按字典序遍历8种走法，对每种合法走法（在边界内且未访问）递归\n *   3. 剪枝优化：若某分支dfs返回true，立即向上返回true（不再尝试其他走法）\n *   4. 回溯：若所有走法均失败，取消标记并从路径中移除当前格子\n * -----*/\nbool dfs(int x, int y, int cnt)\n{\n    // 将当前格子加入路径：列字母 + 行号（行号从1开始）\n    path.push_back({char(x + \u0027A\u0027), y + 1});\n\n    // 边界条件：已访问完所有格子\n    if (cnt == p * q)\n    {\n        for (auto a : path)\n            cout \u003c\u003c a.first \u003c\u003c a.second;  // 输出完整巡游路径\n        return true;  // 找到解，立即返回（保证字典序最小）\n    }\n\n    st[x][y] = true;  // 标记当前格子为已访问\n\n    // 按字典序遍历8种骑士走法\n    for (int i = 0; i \u003c 8; i++)\n    {\n        int a = x + dx[i], b = y + dy[i];\n\n        // 边界检查：目标格子必须在棋盘范围内\n        if (a \u003c 0 || a \u003e= q || b \u003c 0 || b \u003e= p)\n            continue;\n        // 已访问检查：不能重复踩同一个格子\n        if (st[a][b])\n            continue;\n        // 递归尝试，若找到解则立即传播成功信号\n        if (dfs(a, b, cnt + 1))\n            return true;\n    }\n\n    // 回溯：当前格子出发的所有走法均已尝试且失败，恢复状态\n    st[x][y] = false;\n    path.pop_back();\n    return false;\n}","summary":"网格BFS求最短路径。BFS按层扩展，保证第一次访问到终点时步数最短。","codeFile":"LinK40-1.cpp"},{"id":"LinK41","title":"英杰们的蛋糕塔","cat":"搜索","sub":"BFS搜索","diff":3,"tags":["BFS","最短路径","优化"],"classic":"蛋糕塔 / Cake Tower","naive":"BFS变体，可能需要状态压缩或优先队列优化","keyCode":"/*-----题目分析-----*/\n// 题目要求输入蛋糕塔总体积V、蛋糕塔层数N，输出最小表面积S\n// 从功能性的角度上来说，这也是dfs的输入和输出\n\nint V, N;\n\n/*------dfs函数分析-----*/\n// dfs:对给定的层数N，总体积V;输出最小表面积S\n/*\n本题与黄金蛋糕人马的区别在于串行堆叠、并行分割\n切蛋糕时候对每一个枚举出来的左右/上下两块，都还存在无数的切法（因为还存在横竖切法不同+要求块数不同）\n但蛋糕塔将其分为上下两层是没有意义的，因为“层数分配”与“半径与高度的递增”关联不大\ndfs必然包括r、h的限制并且能够通过dfs本身传递，同时也能包括v、n的确定\n所以蛋糕塔问题是基于处理完本层+继续进行下一层来迭代的\n*/\n\nint dfs(int v, int n, int last_r, int last_h)\n{\n    // 如果层数为0，说明不需要继续递归了；如果v == 0，那么本层就是啥都没有；如果还有剩下的体积没用完\n    if (n == 0)\n        return v == 0 ? 0 : INT_MAX;\n\n    // 对本层的r、h进行枚举 \n    // 由于是自下而上枚举的，是for(上限;下限;递减)\n    \n    int best = INT_MAX;\n    // r为什么必然大于层数n?因为如果r == n，那么接下来的每一层都是层半径最小值1，如果r小于n，那么剩下的层中会存在小数或者0，是不可取的\n    // h的下限也是同理\n    // r的上限是上一层半径限制（传参会减1，所以可以等于）和本层体积开方这两者中更小的那个\n    // h的上限是对已经选的r，如果恰好能撑满v的高度\n    // 之所以上限需要取min，是因为如果后面的外加限制大于last会出问题；而如果外加限制更小，那么就必须用这个外加限制\n    for (int r = min(last_r, (int)sqrt(v)); r \u003e= n; r--)\n    {\n        for (int h = min(last_h, v / (r * r)); h \u003e= n; h--)\n        {\n            int cur = 2 * r * h;\n            int sub =  dfs(v - r * r * h, n - 1, r - 1, h - 1);\n            if(sub != INT_MAX)\n            best = min(best, cur + sub);\n        }\n    }\n    return best;\n}","summary":"搜索进阶题。在普通BFS基础上增加了额外的状态维度，需要更复杂的状态设计。","codeFile":"LinK41-problem.cpp"},{"id":"LinK42","title":"击杀黄金蛋糕人马","cat":"搜索","sub":"BFS搜索","diff":3,"tags":["BFS","多阶段搜索"],"classic":"击杀蛋糕人马 / Slay the Cake Centaur","naive":"多目标BFS，可能需要分别计算到各目标的距离再组合","keyCode":"/*----- 本题题面分析-----*/\n// 要求对长为w、宽为h的蛋糕进行切割；要求一共切成m块\n// 题目需要不同方案切出来的m块蛋糕中，蛋糕最大面积的下限\n// 朴素逻辑：对每种方案枚举，对切出来的m个蛋糕取max，再对众多方案的max值取min\n\n/*-------代码实现-------*/\n\n// \u003cclimits\u003e中包含了INT_MAX,是系统设定好的极大值\n\n/*-----memo记忆化-----*/\n// 记忆化是剪枝的一环\n// memo会存储已经确定的dfs[w][h][m]\n// 这是因为在对w、h的不同切法中，总会切出来重复面对某个长宽以及某个要求切出块数\n// 如果已经通过dfs得到过某个dfs的答案，那么可以不重复计算\nint memo[25][25][25];\n\n/*-----dfs函数-----*/\n// 对于dfs函数如果不从递归的方式去看会好理解一些\n// 也就是将其纯功能性处理(dfs是实现什么功能的)：\n// dfs(w, h, m)是用来输出将长为w、宽为h的蛋糕切出来的m块蛋糕中，蛋糕最大面积的下限\n// (这里特殊在本题可以只使用dfs输出答案，dfs作为函数当然也可以只实现局部功能)\nint dfs(int w, int h, int m)\n{\n    // 如果只需要切成1块，那就是蛋糕块本身\n    if (m == 1)\n        return w * h;\n\n    // memo对于未搜索的dfs组合为-1\n    // res(result,dfs最终输出“结果”)是引用，相当于是简化了memo的冗长书写\n    int \u0026res = memo[w][h][m];\n    if (res != -1)\n        return res;\n\n    /*-----函数主体功能分析-----*/\n    // 对于dfs[w][h][m]而言，要划分任务、细分下去，取决于第一刀的切法\n    // 这一刀可以横切或者竖切，并以此为依据把“切成m块”的任务分配给切出来的那两块\n    // 然后再继续按照不同切法切下去\n    // 不需要管递归是什么结构，只关注功能本身的实现与dfs函数的结合即可\n\n    // best是最后我取到的结果\n    // 以防第一次best在min更新中会错误导致无法选中得出的值，选个较大的数字\n    int best = INT_MAX;\n\n    // 对横切，会将宽h分为h1、h2，那么这里可以枚举和h1长度\n    for (int h1 = 1; h1 \u003c h; h1++)\n    {\n        // 切出来的分割为h1 + h2 = h\n        int h2 = h - h1;\n        // 枚举分割给h1的块数k，那么给h2的就是m - k块嘛\n        for (int k = 1; k \u003c m; k++)\n        {\n            // 对于长w宽h的蛋糕且切出来边长为整数，理论上只能切成1x1的大小\n            // 也就是最多切成w * h块\n            // 如果分配给某一边的块数太多，那么这个k就需要被跳过\n            if (k \u003e h1 * w || m - k \u003e h2 * w)\n                continue;\n\n            // 本题这里的处理很像DP，因为是在不断优化取最优解，再在最优解的基础上更新\n            // 同时不会有回头路，因为都被memo砍掉了\n            int cur = max(dfs(w, h1, k), dfs(w, h2, m - k));\n            best = min(best, cur);\n        }\n    }\n\n    // 接下来就是竖着切\n    for (int w1 = 1; w1 \u003c w; w1++)\n    {\n        int w2 = w - w1;\n        for (int k = 1; k \u003c m; k++)\n        {\n            if (k \u003e w1 * h || m - k \u003e w2 * h)\n                continue;\n\n            int cur = max(dfs(w1, h, k), dfs(w2, h, m - k));\n            best = min(best, cur);\n        }\n    }\n\n    // 在best对两种方案分别更新过后，可以输出了\n    // 但也不能忘记对以w,h,m为形参的dfs做memo记忆化储存\n    return res = best;\n}","summary":"多目标搜索问题。需要计算到多个关键点的最短距离，然后组合出最优路径。","codeFile":"LinK42-problem.cpp"},{"id":"LinK43","title":"求二进制中1的个数","cat":"位运算","sub":"基础位运算","diff":1,"tags":["位运算","二进制","popcount"],"classic":"二进制中1的个数 / Popcount","naive":"逐位检查（右移+与1），或使用n\u0026(n-1)技巧每次消除最低位的1","keyCode":"/*-----题目分析-----\n * 输入一个32位整数（可为负数），输出其二进制表示中1的个数。\n * 负数在计算机中用补码表示，因此 -2 的二进制有31个1。\n * 解法：使用 lowbit 算法，每次减去 n \u0026 -n（最低位的1），计数+1\n *-----题目分析-----*/\n\n/*-----lowbit函数-----*/\n// lowbit(n) = n \u0026 -n，返回 n 的二进制表示中最低位的1所代表的值\n// 例如：lowbit(12) = lowbit(1100₂) = 4 (即100₂)\n//       lowbit(-2) = lowbit(1111...1110₂) = 2\nint lowbit(int n) {\n    return n \u0026 -n;\n}\n\n/*-----NumberOf1函数-----*/\n// 统计 n 的二进制中1的个数\n// 原理：每次用 n -= lowbit(n) 消去最低位的1，计数+1，直到 n 变为 0\nint NumberOf1(int n) {\n    int res = 0;\n    for (int i = n; i; i -= lowbit(i))\n        res++;\n    return res;\n}","summary":"位运算经典技巧。n\u0026(n-1)可以消除二进制中最低位的1，用于计算1的个数。","codeFile":"LinK43-1.cpp"},{"id":"LinK44","title":"二进制中1的最低位位置(打表+Lowbit)","cat":"位运算","sub":"Lowbit","diff":2,"tags":["位运算","lowbit","打表"],"classic":"Lowbit / 最低位1的位置","naive":"打表预处理1-255的lowbit位置，或用__builtin_ctz","keyCode":"/*-----题目分析-----\n * 给定一个16位十进制数，将其视为二进制后，找出最低位的1出现的位置（0-indexed）。\n * 例如：9 = 1001₂，最低位的1在第0位；8 = 1000₂，最低位的1在第3位。\n *\n * 解法：打表法 + lowbit\n *   1. lowbit(n) 提取最低位的1所代表的值（即 2^k）\n *   2. 用打表法快速求出 log₂(2^k) = k，即最低位1的位置\n *      Log[2^k] = k，对于 k = 0~15 预先建立映射\n *-----题目分析-----*/\n\nconst int N = 16;               // 16位数，lowbit结果只有16种可能（2^0 ~ 2^15）\nint Log[1 \u003c\u003c N];                // 打表数组：Log[2^k] = k\n\n/*-----buildList函数-----*/\n// 建立 lowbit 结果到位置的映射表\n// 只对 2^0, 2^1, ..., 2^15 这16个值建立映射，其余位置初始化为 -1\nvoid buildList()\n{\n    // 先全部初始化为 -1（未检索到此位置）\n    memset(Log, -1, sizeof(Log));\n\n    // 建立映射：Log[2^i] = i，即 2^i 的最低1位在第 i 位\n    for (int i = 0; i \u003c N; i++)\n    {\n        Log[1 \u003c\u003c i] = i;\n    }\n}\n\n/*-----lowbit函数-----*/\n// 返回 n 的二进制中最低位的1所代表的值\nint lowbit(int n)\n{\n    return n \u0026 -n;\n}\n\n/*-----query函数-----*/\n// 查询 n 的二进制中最低位1的位置（0-indexed）\n// 先提取最低位的1的值（如8→8），再通过打表查出位置（8→3）\nint query(int n)\n{\n    if (n == 0) return -1;          // 0 没有1，返回 -1\n    return Log[lowbit(n)];          // O(1) 查表\n}","summary":"lowbit(x)=x\u0026-x，树状数组的核心操作。结合查表快速得到最低位1的位置。","codeFile":"LinK44-1-lowbit.cpp"},{"id":"LinK45","title":"真假记忆碎片","cat":"搜索","sub":"回溯/数独","diff":2,"tags":["回溯","数独","验证"],"classic":"数独验证 / Sudoku Validator","naive":"验证给定的9x9数独初始矩阵是否是一个合法的已完成数独","keyCode":"/*-----题目分析-----\n * 数独验证：给定一个9×9矩阵作为\"记忆碎片\"，判定它是否是初始矩阵A的有效解。\n * 初始矩阵A（9×9）中0表示空格，需要填入1-9使每行、每列、每个3×3宫格内数字不重复。\n * 输入的矩阵若满足：与初始矩阵A的已知数字不冲突（即非0位置不变），\n *   且每行、每列、每个宫格内无重复数字（0空格除外），则为有效解输出\"Yes\"，否则\"No\"。\n *-----题目分析-----*/\n\nconst int N = 9;                        // 数独大小 9×9\nconst int M = 3;                        // 宫格大小 3×3\n\n// 初始矩阵A（0表示空格，需填入1-9）\nstring memory[N] = {\"530070000\",\n                    \"600195000\",\n                    \"098000060\",\n                    \"800060003\",\n                    \"400803001\",\n                    \"700020006\",\n                    \"060000280\",\n                    \"000419005\",\n                    \"000080079\"};\n\nint a[N][N], b[N][N];                   // a:初始矩阵，b:输入矩阵\nbool st[N + 1];                         // 数字标记数组（1~9）\n\n/*-----check_input：验证输入格式-----*/\n// 读入9行字符串，每行必须是恰好9个数字字符（\u00270\u0027~\u00279\u0027）\nbool check_input()\n{\n    string line;\n    for (int i = 0; i \u003c N; i++)\n    {\n        cin \u003e\u003e line;\n        if (line.size() != N)           // 行长度不对（如样例3某行过长）\n            return false;\n\n        for (int j = 0; j \u003c N; j++)\n        {\n            int t = line[j] - \u00270\u0027;\n            if (t \u003c 0 || t \u003e N)         // 非数字字符\n                return false;\n            b[i][j] = t;                // 存入 b 矩阵\n        }\n    }\n    return true;\n}\n\n/*-----check_row：检查每行是否有重复数字-----*/\nbool check_row()\n{\n    for (int i = 0; i \u003c N; i++)\n    {\n        memset(st, false, sizeof(st));\n        for (int j = 0; j \u003c N; j++)\n        {\n            int t = b[i][j];\n            if (t \u003c 0 || t \u003e N) return false;\n            if (t == 0) continue;       // 0 表示空格，跳过检查\n            if (st[t] == true)          // 数字t已在本行出现过\n                return false;\n            st[t] = true;\n        }\n    }\n    return true;\n}\n\n/*-----check_col：检查每列是否有重复数字-----*/\nbool check_col()\n{\n    for (int i = 0; i \u003c N; i++)\n    {\n        memset(st, false, sizeof(st));\n        for (int j = 0; j \u003c N; j++)\n        {\n            int t = b[j][i];            // 注意：行索引为j，列索引为i\n            if (t \u003c 0 || t \u003e N) return false;\n            if (t == 0) continue;\n            if (st[t] == true)\n                return false;\n            st[t] = true;\n        }\n    }\n    return true;\n}\n\n/*-----check_block：检查每个3×3宫格是否有重复数字-----*/\nbool check_block()\n{\n    for (int i = 0; i \u003c N; i += M)          // 宫格行起点：0, 3, 6\n    {\n        for (int j = 0; j \u003c N; j += M)      // 宫格列起点：0, 3, 6\n        {\n            memset(st, false, sizeof(st));\n            for (int dx = 0; dx \u003c M; dx++)\n            {\n                for (int dy = 0; dy \u003c M; dy++)\n                {\n                    int t = b[i + dx][j + dy];\n                    if (t \u003c 0 || t \u003e N) return false;\n                    if (t == 0) continue;\n                    if (st[t] == true)\n                        return false;\n                    st[t] = true;\n                }\n            }\n        }\n    }\n    return true;\n}","summary":"数独验证——输入一个已填满的9x9数独，判断是否合法。需检查行、列、3x3宫。","codeFile":"LinK45-problem.cpp"},{"id":"LinK46","title":"寻找林克的回忆(1)","cat":"搜索","sub":"回溯/数独","diff":3,"tags":["回溯","DFS","数独求解"],"classic":"数独求解 I / Sudoku Solver I","naive":"标准9x9数独求解，DFS回溯：逐格尝试1-9，检查行/列/宫约束","keyCode":"/*-----题目分析-----\n * 数独求解（DFS回溯）：给定一个9×9的数独初始状态（0表示空格），\n * 填入1~9使每行、每列、每个3×3宫格内数字1~9恰好出现一次。\n * 只需输出任意一种合法解。\n *\n * 解法：DFS逐格回溯\n *   用 row[x][t]、col[y][t]、cell[x/3][y/3][t] 三个bool数组标记\n *   第x行/第y列/第(x/3,y/3)宫格中数字t是否已被占用，\n *   每次选择可选数字尝试填入，失败则回溯。\n *-----题目分析-----*/\n\nconst int N = 9;\n\nint g[N][N];                            // 数独棋盘（0表示空格）\n\n/*-----占用标记数组-----*/\n// row[x][t]: 第x行中数字t是否已被使用（t范围1~9，下标0浪费不用）\n// col[y][t]: 第y列中数字t是否已被使用\n// cell[i][j][t]: 第(i,j)个3×3宫格（i,j ∈ {0,1,2}）中数字t是否已被使用\nbool row[N][N + 1], col[N][N + 1], cell[3][3][N + 1];\n\n/*-----dfs函数分析-----*/\n// dfs：从坐标(x, y)开始搜索，尝试填入1~9中未被占用的数字\n// 搜索顺序：从左到右逐格扫描，到达行末(y==9)则换行，到达棋盘末尾(x==9)则输出解\n// 返回值：bool类型，找到解返回true使上层递归提前终止（只需输出一个解）\nbool dfs(int x, int y)\n{\n    // 行末换行：当前行扫描完，跳到下一行开头\n    if (y == 9)\n    {\n        x++, y = 0;\n    }\n    // 递归出口：所有行都处理完，输出解\n    if (x == 9)\n    {\n        for (int i = 0; i \u003c 9; i++)\n        {\n            for (int j = 0; j \u003c 9; j++)\n            {\n                printf(\"%d\", g[i][j]);\n            }\n            printf(\"\\n\");\n        }\n        return true;                    // 找到解，返回true\n    }\n\n    // 如果当前格子已有数字（非0），跳过，继续下一格\n    if (g[x][y] != 0)\n    {\n        return dfs(x, y + 1);           // 递归结果直接返回，使找到解后能逐层终止\n    }\n\n    /*-----尝试填入数字-----*/\n    // 枚举1~9，检查行、列、宫格是否允许\n    for (int t = 1; t \u003c 10; t++)\n    {\n        if (!row[x][t] \u0026\u0026 !col[y][t] \u0026\u0026 !cell[x / 3][y / 3][t])\n        {\n            // 放置数字t\n            g[x][y] = t;\n            row[x][t] = col[y][t] = cell[x / 3][y / 3][t] = true;\n\n            // 递归下一格，如果一路到底找到解，逐层返回true终止搜索\n            if (dfs(x, y + 1))\n                return true;\n\n            // 回溯：撤销本次放置\n            row[x][t] = col[y][t] = cell[x / 3][y / 3][t] = false;\n            g[x][y] = 0;\n        }\n    }\n\n    return false;                       // 所有数字都不可行，回溯\n}","summary":"标准9x9数独求解，DFS+回溯。核心是check函数检查行、列、3x3宫是否冲突。","codeFile":"LinK46-1.cpp"},{"id":"LinK47","title":"寻找林克的回忆(2)","cat":"搜索","sub":"回溯/数独","diff":3,"tags":["回溯","DFS","数独","多组输入"],"classic":"数独求解 II / Sudoku Solver II","naive":"数独求解变体：81字符输入，多组测试用例","keyCode":"/*-----题目分析-----\n * 数独求解（二进制状态压缩 + 优化搜索顺序）：\n * 与LinK46数独问题相同，但增加了以下优化：\n *   1. 用9位二进制整数（bit 0~8 → 数字1~9）表示行/列/宫格的数字可用状态\n *      1表示该数字可用，0表示已被占用。三方取交集只需一次 \u0026 运算。\n *   2. 优化搜索顺序：每次选择可选数字最少的空格填入（最少分支优先），\n *      用 ones[] 打表快速查询二进制中1的个数。\n *   3. 用 map[] 和 lowbit 快速定位最低位1所在位置。\n * 输入：多组测试数据，每组一个81字符的字符串（\u0027.\u0027表示空格），以字符\u0027e\u0027结束。\n *-----题目分析-----*/\n\nconst int N = 9, M = 1 \u003c\u003c N;            // M = 512（2^9）\n\n/*-----二进制状态压缩-----*/\n// row[x]：第x行当前可用数字的9位二进制（bit t=1表示数字t+1可用）\n// col[y]：第y列当前可用数字的9位二进制\n// cell[i][j]：第(i,j)宫格当前可用数字的9位二进制\nint row[N], col[N], cell[3][3];\n\nchar str[100];                          // 输入字符串（81字符，9×9）\nint ones[M];                            // ones[i]：二进制数i中1的个数（打表）\nint map[M];                             // map[1\u003c\u003ct] = t，快速定位最低位1的位置\n\n/*-----lowbit函数-----*/\n// 返回x的二进制中最低位的1所代表的值\ninline int lowbit(int x)\n{\n    return x \u0026 -x;\n}\n\n/*-----get函数-----*/\n// 获取坐标(x,y)处可用数字的二进制状态（行、列、宫三方取交集）\ninline int get(int x, int y)\n{\n    return row[x] \u0026 col[y] \u0026 cell[x / 3][y / 3];\n}\n\n/*-----init函数-----*/\n// 初始化：建立map查询表和ones计数表，将所有行/列/宫格初始化为全可用（M-1 = 511 = 111111111₂）\nvoid init()\n{\n    // 建立map：map[2^i] = i，即二进制位 → 数字索引\n    for (int i = 0; i \u003c N; i++)\n    {\n        map[1 \u003c\u003c i] = i;\n    }\n\n    // 建立ones：统计每个9位二进制中1的个数\n    for (int i = 0; i \u003c M; i++)\n    {\n        ones[i] = 0;                    // 多测例时需归零\n        for (int j = i; j; j -= lowbit(j))\n        {\n            ones[i]++;\n        }\n    }\n\n    // 初始化所有行/列/宫格为全可用\n    for (int i = 0; i \u003c N; i++)\n    {\n        row[i] = col[i] = M - 1;        // M-1 = 511 = 111111111₂（9位全1）\n    }\n    for (int i = 0; i \u003c 3; i++)\n    {\n        for (int j = 0; j \u003c 3; j++)\n        {\n            cell[i][j] = M - 1;\n        }\n    }\n}\n\n/*-----dfs函数分析-----*/\n// dfs：还剩cnt个空格需要填充，每次选择可选数字最少的空格进行尝试\n//      这样能最大化剪枝效果（分支数最小），这是\"优化搜索顺序\"策略\n// 返回值：bool，找到任一解即返回true终止搜索\nbool dfs(int cnt)\n{\n    // 递归出口：所有空格已填完\n    if (!cnt)\n        return true;\n\n    /*-----优化搜索顺序：找可选数字最少的空格-----*/\n    int minv = 10;                      // 最少可选数，初始化为大于9的值\n    int x = 0, y = 0;\n    for (int i = 0; i \u003c N; i++)\n    {\n        for (int j = 0; j \u003c N; j++)\n        {\n            if (str[i * 9 + j] == \u0027.\u0027)\n            {\n                int t = ones[get(i, j)];  // 该空格有多少个可用数字\n\n                if (t \u003c minv)             // 打擂台取最少分支\n                {\n                    minv = t;\n                    x = i, y = j;\n                }\n            }\n        }\n    }\n\n    /*-----枚举所有可用数字-----*/\n    // 对当前格子的每个可用位（1的位置），尝试填入对应数字\n    for (int i = get(x, y); i; i -= lowbit(i))\n    {\n        int t = map[lowbit(i)];         // 取出最低位1对应的数字索引（0~8 → 数字1~9）\n\n        // 标记占用：将该数字从行/列/宫格的可用集合中移除\n        row[x] -= 1 \u003c\u003c t;\n        col[y] -= 1 \u003c\u003c t;\n        cell[x / 3][y / 3] -= 1 \u003c\u003c t;\n        str[x * 9 + y] = \u00271\u0027 + t;       // 填入数字（索引0→数字1）\n\n        if (dfs(cnt - 1))               // 递归，如果找到解则逐层返回\n            return true;\n\n        // 回溯：恢复占用标记\n        row[x] += 1 \u003c\u003c t;\n        col[y] += 1 \u003c\u003c t;\n        cell[x / 3][y / 3] += 1 \u003c\u003c t;\n        str[x * 9 + y] = \u0027.\u0027;\n    }\n\n    return false;                       // 所有数字都不可行\n}","summary":"数独求解的多组输入版本。练习处理不同输入格式。核心回溯逻辑不变。","codeFile":"LinK47-2.cpp"},{"id":"LinK48","title":"寻找林克的回忆(3)","cat":"搜索","sub":"回溯/数独","diff":3,"tags":["回溯","DFS","目标数独","剪枝"],"classic":"靶形数独 / Target Sudoku","naive":"靶形数独：每个格子有权重分值（中心区域分值高），求总分最高的合法解","keyCode":"/*-----题目分析-----\n * 靶形数独（数独 + 最大分数）：\n * 在9×9靶形数独中，每个格子有分值（离中心越近分值越高，6~10分），\n * 填入数字后，该格子的贡献 = 分值 × 填入数字。\n * 求能够得到的最高总分；若无解输出-1。\n *\n * 解法：在数独DFS回溯基础上增加分数计算\n *   1. 用二进制状态压缩（同LinK47）优化搜索\n *   2. 用优化搜索顺序（每次选可选数字最少的空格）\n *   3. 搜索所有合法解，记录最大分数\n *   4. 分值函数：score(x, y) = min(min(x,8-x), min(y,8-y)) + 6\n *-----题目分析-----*/\n\nconst int N = 9, M = 1 \u003c\u003c N;\n\nint row[N], col[N], cell[3][3];         // 二进制状态：行/列/宫格可用数字\nint ones[M];                            // ones[i]：二进制i中1的个数\nint map[M];                             // map[1\u003c\u003ct] = t\nint g[N][N];                            // 棋盘（0表示空格，1~9表示已填）\nint ans = -1;                            // 最高分数（-1表示无解）\n\n/*-----lowbit-----*/\ninline int lowbit(int n)\n{\n    return n \u0026 -n;\n}\n\n/*-----get-----*/\n// 获取(x,y)处可用数字的二进制状态\ninline int get(int x, int y)\n{\n    return row[x] \u0026 col[y] \u0026 cell[x / 3][y / 3];\n}\n\n/*-----get_score-----*/\n// 靶形数独分值：越靠近中心分值越高\n// 最内圈（黄）10分 → 红9分 → 蓝8分 → 棕7分 → 最外圈（白）6分\n// 公式：min(到四边距离) + 6，实现简洁\ninline int get_score(int x, int y, int t)\n{\n    return (min(min(x, 8 - x), min(y, 8 - y)) + 6) * t;\n}\n\n/*-----init-----*/\nvoid init()\n{\n    // 建立map表\n    for (int i = 0; i \u003c N; i++)\n    {\n        map[1 \u003c\u003c i] = i;\n    }\n\n    // 建立ones表\n    for (int i = 0; i \u003c M; i++)\n    {\n        ones[i] = 0;\n        for (int j = i; j; j -= lowbit(j))\n        {\n            ones[i]++;\n        }\n    }\n\n    // 初始化所有行/列/宫格为全可用 (511 = 111111111₂)\n    for (int i = 0; i \u003c N; i++)\n    {\n        row[i] = col[i] = M - 1;\n    }\n    for (int i = 0; i \u003c 3; i++)\n    {\n        for (int j = 0; j \u003c 3; j++)\n        {\n            cell[i][j] = M - 1;\n        }\n    }\n}\n\n/*-----draw函数-----*/\n// 在(x,y)处填入数字（t\u003e0）或擦除数字（t\u003c0，用-t恢复）\n// 同时更新行/列/宫格的二进制占用状态\nvoid draw(int x, int y, int t)\n{\n    if (t \u003e 0)\n    {\n        g[x][y] = t;                    // 填入数字\n        t--;                            // 转为索引0~8\n        row[x] -= 1 \u003c\u003c t;               // 将该数字从可用集合中移除\n        col[y] -= 1 \u003c\u003c t;               // 修复：col[y]而非col[x]\n        cell[x / 3][y / 3] -= 1 \u003c\u003c t;   // 修复：cell[x/3][y/3]而非cell[x][y]\n    }\n    else\n    {\n        int val = -t;                   // 恢复的数字值\n        g[x][y] = 0;                    // 擦除（空格）\n        val--;                          // 转为索引\n        row[x] += 1 \u003c\u003c val;             // 将该数字恢复到可用集合\n        col[y] += 1 \u003c\u003c val;\n        cell[x / 3][y / 3] += 1 \u003c\u003c val;\n    }\n}\n\n/*-----dfs函数分析-----*/\n// dfs：还剩cnt个空格，当前已得score分，搜索所有合法解并更新最高分\n// 由于要遍历所有解，不能用bool提前返回（与LinK47不同）\nvoid dfs(int cnt, int score)\n{\n    // 递归出口：所有空格已填完，更新最高分\n    if (!cnt)\n    {\n        ans = max(ans, score);\n        return;                         // 修复：需要return避免继续搜索\n    }\n\n    // 剪枝：如果当前分数+剩余格子全填10分×9（理论最大值）仍≤ans，剪枝\n    // 实际上没有此剪枝也能通过，但加上后可大幅加速\n\n    /*-----优化搜索顺序：找可选数字最少的空格-----*/\n    int minv = 10;\n    int x = 0, y = 0;\n    for (int i = 0; i \u003c N; i++)\n    {\n        for (int j = 0; j \u003c N; j++)\n        {\n            if (g[i][j] == 0)           // 修复：0表示空格（g是int数组）\n            {\n                int t = ones[get(i, j)];\n                if (t \u003c minv)\n                {\n                    minv = t;\n                    x = i, y = j;\n                }\n            }\n        }\n    }\n\n    // 枚举所有可用数字\n    for (int i = get(x, y); i; i -= lowbit(i))\n    {\n        int t = map[lowbit(i)] + 1;     // 索引→数字（1~9）\n        draw(x, y, t);                  // 填入\n        dfs(cnt - 1, score + get_score(x, y, t));\n        draw(x, y, -t);                 // 回溯\n    }\n}","summary":"靶形数独——在标准数独基础上加入格子权重（中心区域分值高），求最大总分。","codeFile":"LinK48-3.cpp"},{"id":"LinK49","title":"寻找林克的回忆(4)","cat":"搜索","sub":"回溯/数独","diff":3,"tags":["回溯","DFS","16x16数独","字母"],"classic":"16x16字母数独 / 16x16 Letter Sudoku","naive":"16x16数独用字母A-P代替1-16，回溯解法与9x9类似但规模更大","keyCode":"/*-----题目分析-----\n * 16×16字母数独：填入A~P使每行每列每个4×4宫格内16个字母各出现一次。\n * 输入中\u0027-\u0027表示空格，多组数据以空行分隔，输入至EOF。\n *\n * 解法：DFS + 二进制状态压缩（类LinK47但扩展到16×16）。\n *   row/col/cell用16位二进制表示可用字母，lowbit取交集。\n *   优化搜索顺序：每次选可选字母最少的空格。\n *-----题目分析-----*/\n\nconst int N = 16, M = 1 \u003c\u003c N;               // M=65536\nint row[N], col[N], cell[4][4];             // 二进制状态\nint ones[M], map[M];                        // 打表\nchar str[N][N + 1];                         // 棋盘（含\u0027\\0\u0027）\n\ninline int lowbit(int x) { return x \u0026 -x; }\ninline int get(int x, int y) { return row[x] \u0026 col[y] \u0026 cell[x/4][y/4]; }\n\nvoid init() {\n    for (int i = 0; i \u003c N; i++) map[1 \u003c\u003c i] = i;\n    for (int i = 0; i \u003c M; i++) {\n        ones[i] = 0;\n        for (int j = i; j; j -= lowbit(j)) ones[i]++;\n    }\n    for (int i = 0; i \u003c N; i++) row[i] = col[i] = M - 1;\n    for (int i = 0; i \u003c 4; i++)\n        for (int j = 0; j \u003c 4; j++) cell[i][j] = M - 1;\n}\n\n/*-----dfs：还剩cnt个空格待填，每次选可选字母最少的格子-----*/\nbool dfs(int cnt) {\n    if (!cnt) return true;                  // 全部填完\n    int minv = 17, x = 0, y = 0;\n    for (int i = 0; i \u003c N; i++)\n        for (int j = 0; j \u003c N; j++)\n            if (str[i][j] == \u0027-\u0027 \u0026\u0026 ones[get(i, j)] \u003c minv)\n                minv = ones[get(i, j)], x = i, y = j;\n\n    for (int i = get(x, y); i; i -= lowbit(i)) {\n        int t = map[lowbit(i)];\n        row[x] -= 1 \u003c\u003c t; col[y] -= 1 \u003c\u003c t; cell[x/4][y/4] -= 1 \u003c\u003c t;\n        str[x][y] = \u0027A\u0027 + t;\n        if (dfs(cnt - 1)) return true;\n        row[x] += 1 \u003c\u003c t; col[y] += 1 \u003c\u003c t; cell[x/4][y/4] += 1 \u003c\u003c t;\n        str[x][y] = \u0027-\u0027;\n    }\n    return false;\n}","summary":"16x16字母数独——规模升级版。使用字母A-P，检查4x4宫。回溯框架不变但搜索空间更大。","codeFile":"LinK49-4.cpp"},{"id":"LinK50","title":"寻找林克的回忆(4)","cat":"搜索","sub":"回溯/数独","diff":3,"tags":["回溯","DFS","16x16数独"],"classic":"16x16字母数独 (副本)","naive":"LinK49的副本/备用版本，同样是16x16字母数独","keyCode":"/*-----题目分析-----\n * 16×16字母数独（同LinK49）。\n * LinK50是LinK49的副本，完全相同的题目和代码。\n *-----题目分析-----*/\n\nconst int N = 16, M = 1 \u003c\u003c N;\nint row[N], col[N], cell[4][4];\nint ones[M], map[M];\nchar str[N][N + 1];\n\ninline int lowbit(int x) { return x \u0026 -x; }\ninline int get(int x, int y) { return row[x] \u0026 col[y] \u0026 cell[x/4][y/4]; }\n\nvoid init() {\n    for (int i = 0; i \u003c N; i++) map[1 \u003c\u003c i] = i;\n    for (int i = 0; i \u003c M; i++) {\n        ones[i] = 0;\n        for (int j = i; j; j -= lowbit(j)) ones[i]++;\n    }\n    for (int i = 0; i \u003c N; i++) row[i] = col[i] = M - 1;\n    for (int i = 0; i \u003c 4; i++)\n        for (int j = 0; j \u003c 4; j++) cell[i][j] = M - 1;\n}\n\nbool dfs(int cnt) {\n    if (!cnt) return true;\n    int minv = 17, x = 0, y = 0;\n    for (int i = 0; i \u003c N; i++)\n        for (int j = 0; j \u003c N; j++)\n            if (str[i][j] == \u0027-\u0027 \u0026\u0026 ones[get(i, j)] \u003c minv)\n                minv = ones[get(i, j)], x = i, y = j;\n\n    for (int i = get(x, y); i; i -= lowbit(i)) {\n        int t = map[lowbit(i)];\n        row[x] -= 1 \u003c\u003c t; col[y] -= 1 \u003c\u003c t; cell[x/4][y/4] -= 1 \u003c\u003c t;\n        str[x][y] = \u0027A\u0027 + t;\n        if (dfs(cnt - 1)) return true;\n        row[x] += 1 \u003c\u003c t; col[y] += 1 \u003c\u003c t; cell[x/4][y/4] += 1 \u003c\u003c t;\n        str[x][y] = \u0027-\u0027;\n    }\n    return false;\n}","summary":"16x16数独的另一版本。重点练习大规模回溯的剪枝优化策略。","codeFile":"LinK50-4.cpp"},{"id":"LinK51","title":"净化迷雾森林(广搜)","cat":"搜索","sub":"BFS搜索","diff":2,"tags":["BFS","网格","连通性"],"classic":"迷雾森林 BFS版 / Fog Forest BFS","naive":"用BFS替代DFS搜索连通区域，输出需要净化的区域","keyCode":"/*-----题目分析-----\n * 迷宫连通区域计数（BFS泛洪填充）：\n * 给定H×W的迷宫，\u0027@\u0027是起点，\u0027.\u0027是可通行区域，\u0027#\u0027是墙壁。\n * 从起点出发，每次可向上下左右移动一格，求能到达的区域总数（含起点）。\n * 多组数据，以\"0 0\"结束。\n *-----题目分析-----*/\n\ntypedef pair\u003cint, int\u003e PII;\n\nconst int N = 25;\nint row, col;                           // 注意：row=H(行数), col=W(列数)\nchar g[N][N];                           // 地图\n\nint dx[] = {1, -1, 0, 0};              // 四个方向的偏移量\nint dy[] = {0, 0, 1, -1};\n\n/*-----bfs函数分析-----*/\n// BFS泛洪填充：从起点(x,y)出发，将所有可达的\u0027.\u0027标记为\u0027#\u0027（已访问），统计总格数\n// 不需要额外的st数组，直接修改地图即可\nint bfs(int x, int y)\n{\n    queue\u003cPII\u003e q;\n\n    g[x][y] = \u0027#\u0027;                      // 标记起点为已访问\n    q.push({x, y});\n    int res = 0;\n\n    while (!q.empty())\n    {\n        auto t = q.front();\n        q.pop();\n        res++;                          // 每出队一个格子，计数+1\n\n        for (int i = 0; i \u003c 4; i++)\n        {\n            int X = t.first + dx[i];\n            int Y = t.second + dy[i];\n\n            if (X \u003c 0 || X \u003e= row || Y \u003c 0 || Y \u003e= col)\n                continue;               // 越界\n            if (g[X][Y] == \u0027#\u0027)\n                continue;               // 墙壁或已访问\n\n            q.push({X, Y});\n            g[X][Y] = \u0027#\u0027;              // 入队即标记，避免重复入队\n        }\n    }\n\n    return res;\n}","summary":"与LinK39(DFS版)对应的BFS版本。BFS按层扩展，适合求最短路径。","codeFile":"LinK51-problem.cpp"},{"id":"LinK52","title":"波克布林的巡逻范围","cat":"搜索","sub":"BFS搜索","diff":2,"tags":["BFS","范围计算","多源BFS"],"classic":"巡逻范围 / Patrol Range","naive":"多源BFS：从所有波克布林位置同时开始BFS，标记巡逻范围","keyCode":"/*-----题目分析-----\n * 机器人可达范围（BFS + 数位和约束）：\n * 在m×n的网格中，从(0,0)出发，每次向上下左右移动一格，\n * 但不能进入行坐标和列坐标的数位之和大于k的格子。\n * 求能到达多少个格子。\n *\n * 数位和：例如(35,37)，3+5+3+7=18，若k≥18则可进入，否则不能。\n * 约束：0≤k≤100，0≤m≤50，0≤n≤50\n *-----题目分析-----*/\n\nconst int N = 110;\n\ntypedef pair\u003cint, int\u003e PII;\nint m, n;                               // m行n列\nbool st[N][N];                          // 访问标记（每个BFS只用一次，不需重置）\n\nint dx[] = {1, -1, 0, 0}, dy[] = {0, 0, 1, -1};\n\n/*-----get_plus函数-----*/\n// 计算整数x的各数位之和（例如18→1+8=9）\ninline int get_plus(int x)\n{\n    int res = 0;\n    while (x)\n    {\n        res += x % 10;                  // 取个位\n        x /= 10;                        // 去掉个位\n    }\n    return res;\n}\n\n/*-----bfs函数分析-----*/\n// BFS从(sx,sy)出发，探索所有满足\"数位和≤k\"的格子\n// 由于约束是数位和阈值，合法区域是连通的（从原点开始），BFS不会漏掉\nint bfs(int sx, int sy, int k)\n{\n    memset(st, false, sizeof(st));      // 每次BFS重新初始化访问标记\n    queue\u003cPII\u003e q;\n    int res = 0;\n    q.push({sx, sy});\n    st[sx][sy] = true;\n\n    while (q.size())\n    {\n        auto t = q.front();\n        q.pop();\n        res++;                          // 计数可达格子\n\n        for (int i = 0; i \u003c 4; i++)\n        {\n            int x = t.first + dx[i], y = t.second + dy[i];\n\n            if (x \u003c 0 || x \u003e= m || y \u003c 0 || y \u003e= n)\n                continue;               // 越界\n            // 数位和超过k 或 已访问，跳过\n            if (get_plus(x) + get_plus(y) \u003e k || st[x][y])\n                continue;\n\n            q.push({x, y});\n            st[x][y] = true;\n        }\n    }\n\n    return res;\n}","summary":"多源BFS模板。将所有起点同时放入队列，同时向外扩展。用于计算每个点到最近起点的距离。","codeFile":"LinK52-problem.cpp"},{"id":"LinK53","title":"加农的入侵","cat":"搜索","sub":"BFS搜索","diff":3,"tags":["BFS","模拟","扩散"],"classic":"加农的入侵 / Ganon\u0027s Invasion","naive":"BFS模拟入侵扩散过程，计算被入侵的时间或范围","keyCode":"/*-----题目分析-----\n * 马走日（8方向BFS最远距离）：\n * 在row×col的棋盘上，从起点出发，每次可向8个马步方向移动（日字形），\n * 不可走出棋盘或经过障碍(\u0027*\u0027)。求从起点到任意可达格子的最远距离（步数）。\n *\n * 输入：col row start_x start_y，然后是棋盘（\u0027.\u0027空地，\u0027*\u0027障碍）\n * 注意：输入顺序是先col(列)后row(行)，且坐标从1开始\n *-----题目分析-----*/\n\ntypedef pair\u003cint, int\u003e PII;\n\nconst int N = 110;\nint row, col;\nPII start;                              // 起点坐标\nchar g[N][N];                           // 地图（1-indexed）\nint dist[N][N];                         // dist[x][y]：起点到(x,y)的最短距离\n\n// 8方向马步：日字形移动（先直走再斜走）\nconst int dx[] = {1, -1, 1, -1, 0, 0, -1, 1};\nconst int dy[] = {1, -1, 0, 0, 1, -1, 1, -1};\n\n/*-----bfs函数分析-----*/\n// BFS求从起点出发到所有可达格子的最远距离\n// 由于BFS天然按距离分层，每层距离+1，最终遍历到的最大dist即为最远距离\nint bfs()\n{\n    memset(dist, -1, sizeof(dist));     // -1表示未访问\n\n    queue\u003cPII\u003e q;\n    q.push(start);\n    dist[start.first][start.second] = 0;\n\n    int res = 0;                        // 记录最远距离\n    while (q.size())\n    {\n        auto t = q.front();\n        q.pop();\n\n        for (int i = 0; i \u003c 8; i++)\n        {\n            int x = t.first + dx[i], y = t.second + dy[i];\n\n            // 棋盘坐标从1开始到row/col\n            if (x \u003c 1 || x \u003e row || y \u003c 1 || y \u003e col) continue;\n            if (g[x][y] == \u0027*\u0027 || dist[x][y] != -1) continue;  // 障碍或已访问\n\n            // 新格子的距离 = 前一格距离 + 1\n            dist[x][y] = dist[t.first][t.second] + 1;\n            res = max(res, dist[x][y]); // 更新最远距离\n            q.push(make_pair(x, y));\n        }\n    }\n\n    return res;                         // 注意：若没有可达格子（除起点），返回0\n}","summary":"BFS模拟扩散过程。逐层向外扩展，类似洪水填充算法。","codeFile":"LinK53-problem.cpp"},{"id":"LinK54","title":"骑士林克的怜悯(2)","cat":"搜索","sub":"BFS搜索","diff":3,"tags":["BFS","状态压缩","最短路"],"classic":"骑士的怜悯II / Knight\u0027s Mercy II","naive":"BFS+状态压缩：状态包含位置和已收集物品等信息","keyCode":"/*-----题目分析-----\n * 骑士救公主（8方向BFS最短路径）：\n * 在row×col的棋盘上，骑士(\u0027K\u0027)需要到达公主的位置(\u0027H\u0027)，\u0027*\u0027是障碍。\n * 骑士每次可以向8个马步方向移动（日字形），求最短步数。\n *\n * 解法：BFS天然保证首次到达目标时的距离即为最短距离\n *-----题目分析-----*/\n\ntypedef pair\u003cint, int\u003e PII;\n\nconst int N = 155;\n\nint col, row;\nchar g[N][N];                           // 地图：\u0027K\u0027起点，\u0027H\u0027终点，\u0027*\u0027障碍，\u0027.\u0027空地\nint dist[N][N];                         // 距离数组，-1表示未访问\nPII start;                              // 骑士起点\nPII ending;                             // 公主位置\n\n// 8方向马步（日字形）：(±2,±1) 和 (±1,±2) 的组合\nint dx[] = {1, -1, 1, -1, 2, -2, 2, -2};\nint dy[] = {2, 2, -2, -2, 1, 1, -1, -1};\n\n/*-----bfs函数分析-----*/\n// BFS从起点搜索，找到终点即返回最短距离\n// 由于BFS按层扩展，首次遇到终点时的dist即为最短路径长度\nint bfs(PII start, PII end)\n{\n    memset(dist, -1, sizeof(dist));     // 初始化所有距离为-1（未访问）\n\n    queue\u003cPII\u003e q;\n    q.push({start.first, start.second});\n    dist[start.first][start.second] = 0;\n\n    while (!q.empty())\n    {\n        auto t = q.front();\n        q.pop();\n\n        for (int i = 0; i \u003c 8; i++)\n        {\n            int x = dx[i] + t.first, y = dy[i] + t.second;\n\n            if (x \u003c 0 || x \u003e= row || y \u003c 0 || y \u003e= col) continue;   // 越界\n            if (g[x][y] == \u0027*\u0027) continue;                            // 障碍\n            if (dist[x][y] != -1) continue;                          // 已访问\n\n            // 到新格子的距离 = 到当前格子距离 + 1\n            dist[x][y] = dist[t.first][t.second] + 1;\n\n            // 如果到达终点，直接返回最短距离\n            if (make_pair(x, y) == end) return dist[x][y];\n\n            q.push({x, y});\n            g[x][y] = \u0027*\u0027;              // 标记为已访问（修改地图，无需额外st数组）\n        }\n    }\n\n    return -1;                          // 无法到达（题目保证有解，此行不会执行）\n}","summary":"BFS+状态压缩。当搜索状态不止位置一个维度时，用二进制位表示附加状态。","codeFile":"LinK54-2.cpp"},{"id":"LinK55","title":"公主的攻击范围","cat":"贪心","sub":"区间覆盖","diff":2,"tags":["贪心","区间覆盖","排序"],"classic":"区间覆盖 / Interval Covering","naive":"贪心区间覆盖：按左端点排序，每次选能覆盖当前位置且右端点最远的区间","keyCode":"/*-----题目分析-----\n * 多源BFS：给定N×M的01矩阵，计算每个位置到最近\u00271\u0027的曼哈顿距离。\n * 等价于：所有\u00271\u0027同时作为起点向外扩展，BFS逐层扩散。\n *\n * 解法：将所有\u00271\u0027入队（距离=0），BFS向外扩展4个方向，\n *       每个格子的距离 = 前一格距离 + 1。\n * 时间复杂度 O(N×M)\n *-----题目分析-----*/\n\nconst int MAXN = 1005;\nconst int INF = 1e9;\nint dist[MAXN][MAXN];                       // dist[i][j]：(i,j)到最近\u00271\u0027的距离\nint n, m;\n\nint dx[] = {0, 0, 1, -1};                  // 4方向偏移\nint dy[] = {1, -1, 0, 0};\n\n    ios::sync_with_stdio(false);\n    cin.tie(nullptr);\n\n    // [输入数据]\n    vector\u003cstring\u003e grid(n);\n    for (int i = 0; i \u003c n; i++) {\n        // [输入数据]\n    }\n\n    /*-----多源BFS-----*/\n    // 初始状态：所有\u00271\u0027位置距离为0，同时入队\n    queue\u003cpair\u003cint,int\u003e\u003e q;\n    for (int i = 0; i \u003c n; i++) {\n        for (int j = 0; j \u003c m; j++) {\n            if (grid[i][j] == \u00271\u0027) {\n                dist[i][j] = 0;             // 源头距离为0\n                q.push({i, j});\n            } else {\n                dist[i][j] = INF;           // 未访问标记为INF\n            }\n        }\n    }\n\n    // BFS逐层扩散\n    while (!q.empty()) {\n        auto t = q.front(); int x = t.first, y = t.second;\n        q.pop();\n        for (int d = 0; d \u003c 4; d++) {\n            int nx = x + dx[d];\n            int ny = y + dy[d];\n            // 只访问未到达过的格子（dist==INF），BFS保证首次到达即最短距离\n            if (nx \u003e= 0 \u0026\u0026 nx \u003c n \u0026\u0026 ny \u003e= 0 \u0026\u0026 ny \u003c m \u0026\u0026 dist[nx][ny] == INF) {\n                dist[nx][ny] = dist[x][y] + 1;\n                q.push({nx, ny});\n            }\n        }\n    }\n\n    // 输出结果矩阵\n    for (int i = 0; i \u003c n; i++) {\n        for (int j = 0; j \u003c m; j++) {\n            // [输出结果]\n            if (j \u003c m - 1) cout \u003c\u003c \" \";\n        }\n        // [输出结果]\n    }","summary":"区间覆盖问题的贪心策略：每次选择左端点在已覆盖范围内且右端点最远的区间。","codeFile":"LinK55-problem.cpp"},{"id":"LinK56","title":"滚石柱","cat":"贪心","sub":"进阶贪心","diff":3,"tags":["贪心","模拟","策略"],"classic":"滚石柱 / Rolling Stone Pillar","naive":"结合贪心策略和模拟，选择每次滚动的方向","keyCode":"/*-----题目分析-----\n * 滚石柱（Bloxorz）：一个1×1×2的长方体石柱在N×M的迷宫中滚动。\n * 石柱有3种状态：立着(0)、横躺(1)、竖躺(2)。\n * 需要滚动到目标位置\u0027O\u0027上且状态为立着，求最少步数；无解输出\"Impossible\"。\n *\n * 解法：BFS（状态为 (x, y, st) 三元组）\n *   st=0（立）：占据1格 (x,y)，不能立在\u0027E\u0027上\n *   st=1（横躺）：占据2格 (x,y)和(x,y+1)\n *   st=2（竖躺）：占据2格 (x,y)和(x+1,y)\n *\n * 多组测试数据，以\"0 0\"结束。\n * 数据范围：3 ≤ N, M ≤ 500\n *-----题目分析-----*/\n\nconst int N = 510;\n\nint row, col;\nchar area[N][N];\n\n/*-----石柱状态结构-----*/\n// st=0：立着 (x,y)\n// st=1：横躺，占据(x,y)和(x,y+1)\n// st=2：竖躺，占据(x,y)和(x+1,y)\nstruct Stone {\n    int x, y, st;\n};\nStone src, dst;                             // 起点和终点\n\n/*-----isInside-----*/\n// 判断坐标是否在迷宫范围内\ninline bool isInside(int x, int y) {\n    return x \u003e= 0 \u0026\u0026 x \u003c row \u0026\u0026 y \u003e= 0 \u0026\u0026 y \u003c col;\n}\n\n/*-----isValid-----*/\n// 判断石柱当前状态是否合法\n// 规则：不能有任何部位在禁地\u0027#\u0027上；立着时不能站在易碎地\u0027E\u0027上\ninline bool isValid(Stone s) {\n    // 基本检查：主坐标必须在界内且非禁地\n    if (!isInside(s.x, s.y) || area[s.x][s.y] == \u0027#\u0027) return false;\n\n    // 横躺：右边那格也必须在界内且非禁地\n    if (s.st == 1 \u0026\u0026 (!isInside(s.x, s.y + 1) || area[s.x][s.y + 1] == \u0027#\u0027))\n        return false;\n\n    // 竖躺：下边那格也必须在界内且非禁地\n    if (s.st == 2 \u0026\u0026 (!isInside(s.x + 1, s.y) || area[s.x + 1][s.y] == \u0027#\u0027))\n        return false;\n\n    // 立着时不能站在易碎地面上\n    if (s.st == 0 \u0026\u0026 area[s.x][s.y] == \u0027E\u0027) return false;\n\n    return true;\n}\n\n/*-----nextState：计算滚动后的状态-----*/\n// 对石柱执行向(dir)方向滚动，dir: 0=右, 1=左, 2=下, 3=上\n// 返回滚动后的新状态（不检查合法性，由调用者检查）\nStone nextState(Stone s, int dir) {\n    Stone nxt;\n    if (s.st == 0) {                        // 当前立着\n        if (dir == 0)      nxt = {s.x, s.y + 1, 1};  // 向右滚 → 横躺\n        else if (dir == 1) nxt = {s.x, s.y - 2, 1};  // 向左滚 → 横躺\n        else if (dir == 2) nxt = {s.x + 1, s.y, 2};  // 向下滚 → 竖躺\n        else               nxt = {s.x - 2, s.y, 2};  // 向上滚 → 竖躺\n    } else if (s.st == 1) {                 // 当前横躺\n        if (dir == 0)      nxt = {s.x, s.y + 2, 0};  // 向右滚 → 立着\n        else if (dir == 1) nxt = {s.x, s.y - 1, 0};  // 向左滚 → 立着\n        else if (dir == 2) nxt = {s.x + 1, s.y, 1};  // 向下滚 → 横躺\n        else               nxt = {s.x - 1, s.y, 1};  // 向上滚 → 横躺\n    } else {                                // 当前竖躺 (s.st == 2)\n        if (dir == 0)      nxt = {s.x, s.y + 1, 2};  // 向右滚 → 竖躺\n        else if (dir == 1) nxt = {s.x, s.y - 1, 2};  // 向左滚 → 竖躺\n        else if (dir == 2) nxt = {s.x + 2, s.y, 0};  // 向下滚 → 立着\n        else               nxt = {s.x - 1, s.y, 0};  // 向上滚 → 立着\n    }\n    return nxt;\n}\n\n/*-----BFS-----*/\n// dist[x][y][st]：到达状态(x,y,st)的最少步数，-1表示未访问\nint dist[N][N][3];\n\nint bfs() {\n    memset(dist, -1, sizeof(dist));\n    queue\u003cStone\u003e q;\n\n    dist[src.x][src.y][src.st] = 0;\n    q.push(src);\n\n    while (!q.empty()) {\n        Stone cur = q.front();\n        q.pop();\n\n        // 到达目标：立着站在\u0027O\u0027上\n        if (cur.st == 0 \u0026\u0026 area[cur.x][cur.y] == \u0027O\u0027)\n            return dist[cur.x][cur.y][cur.st];\n\n        for (int dir = 0; dir \u003c 4; dir++) {\n            Stone nxt = nextState(cur, dir);\n            if (!isValid(nxt)) continue;    // 非法状态跳过\n            if (dist[nxt.x][nxt.y][nxt.st] != -1) continue;  // 已访问\n\n            dist[nxt.x][nxt.y][nxt.st] = dist[cur.x][cur.y][cur.st] + 1;\n            q.push(nxt);\n        }\n    }\n\n    return -1;                              // 无解\n}\n\n/*-----build_map-----*/\n// 读取地图，定位起点和终点\nvoid build_map() {\n    for (int i = 0; i \u003c row; i++) {\n        cin \u003e\u003e area[i];\n    }\n\n    src.st = -1;                            // 标记未找到起点\n    for (int i = 0; i \u003c row; i++) {\n        for (int j = 0; j \u003c col; j++) {\n            if (area[i][j] == \u0027#\u0027) continue;\n\n            if (area[i][j] == \u0027X\u0027) {\n                // 起点：检查是单独一个X还是两个相邻的X\n                if (src.st == -1) {\n                    // 向右检查是否横躺\n                    if (j + 1 \u003c col \u0026\u0026 area[i][j + 1] == \u0027X\u0027) {\n                        src = {i, j, 1};    // 横躺起点\n                    }\n                    // 向下检查是否竖躺\n                    else if (i + 1 \u003c row \u0026\u0026 area[i + 1][j] == \u0027X\u0027) {\n                        src = {i, j, 2};    // 竖躺起点\n                    }\n                    else {\n                        src = {i, j, 0};    // 立着起点\n                    }\n                }\n            }\n        }\n    }\n}","summary":"贪心策略配合模拟的应用题。需要正确设计每次决策的贪心准则。","codeFile":"LinK56-problem.cpp"},{"id":"LinK57","title":"Dijkstra求最短路(1)","cat":"图论","sub":"最短路","diff":2,"tags":["Dijkstra","最短路","图论"],"classic":"Dijkstra Shortest Path I","naive":"Dijkstra算法：每次选距离最小的未标记节点，更新其邻居距离","keyCode":"/*-----题目分析-----\n * Dijkstra求最短路（朴素版 O(n²)）：\n * 给定一个n个点m条边的有向图，可能存在重边和自环，所有边权均为正值。\n * 求从1号点到n号点的最短距离，若不可达则输出-1。\n *\n * 解法：朴素Dijkstra算法，适用于稠密图（边数m接近n²）\n *   每次从未确定最短距离的点中找出dist最小的点t，\n *   将其标记为已确定，并用t更新所有邻接点的dist。\n * 时间复杂度 O(n²)\n *-----题目分析-----*/\n\nconst int N = 510;\n\nint n, m;\nint w[N][N];                                // 邻接矩阵，w[a][b]=a到b的边权\nint dist[N];                                // dist[i]：1号点到i号点的最短距离\nbool st[N];                                 // st[i]：i号点的最短距离是否已确定\n\n/*-----dijkstra函数分析-----*/\n// 朴素Dijkstra：每次选dist最小的未确定点，用其更新邻居\nint dijkstra()\n{\n    memset(st, false, sizeof(st));\n    memset(dist, 0x3f, sizeof(dist));       // 0x3f3f3f3f ≈ 1e9，一个\"大而不溢出\"的值\n\n    dist[1] = 0;                            // 起点距离为0\n\n    /*-----迭代 n-1 次-----*/\n    // 每次确定一个点的最短距离（最后一个点不需要更新别人，所以n-1次即可）\n    for (int i = 0; i \u003c n - 1; i++)\n    {\n        /*-----第一步：从所有未确定点中找到dist最小的点t-----*/\n        int t = -1;\n        for (int j = 1; j \u003c= n; j++)\n        {\n            // 如果点j未确定 且 (t==-1首次 或 dist[j] \u003c dist[t])\n            if (st[j] == false \u0026\u0026 (t == -1 || dist[t] \u003e dist[j]))\n            {\n                t = j;\n            }\n        }\n\n        if (t == -1) break;                 // 所有可达点都已确定（剩余不可达）\n        st[t] = true;                       // 标记t的最短距离已确定\n\n        /*-----第二步：用t更新所有邻接点的dist-----*/\n        for (int j = 1; j \u003c= n; j++)\n        {\n            // 若j未确定 且 通过t到达j比当前dist[j]更短，则更新\n            if (!st[j] \u0026\u0026 dist[t] + w[t][j] \u003c dist[j])\n            {\n                dist[j] = dist[t] + w[t][j];\n            }\n        }\n    }\n\n    if (dist[n] == 0x3f3f3f3f) return -1;   // 不可达\n    return dist[n];\n}","summary":"Dijkstra算法模板。用优先队列优化，每次取出距离最小的节点进行松弛操作。","codeFile":"LinK57-dijkstra-1.cpp"},{"id":"LinK58","title":"Dijkstra求最短路(2)","cat":"图论","sub":"最短路","diff":3,"tags":["Dijkstra","最短路","进阶"],"classic":"Dijkstra Shortest Path II","naive":"Dijkstra变体，可能需要处理更大规模的数据或特殊约束","keyCode":"/*-----题目分析-----\n * Dijkstra求最短路（堆优化版 O(m log n)）：\n * 给定一个n个点m条边的有向图，所有边权均为正值。\n * 求从1号点到n号点的最短距离，若不可达则输出-1。\n *\n * 解法：堆优化Dijkstra，适用于稀疏图（边数m远小于n²）\n *   用优先队列（小根堆）维护(dist, node)，每次取出堆顶的未确定点，\n *   标记为已确定，并松弛其所有出边。\n * 时间复杂度 O(m log n)\n *-----题目分析-----*/\n\ntypedef pair\u003cint, int\u003e PII;                 // (距离, 节点编号)\n\nconst int N = 150010;                       // 边数上限\nconst int INF = 0x3f3f3f3f;\n\nint n, m;\n\n/*-----邻接表-----*/\n// h[i]：以i为起点的第一条边的索引\n// e[idx]：第idx条边的终点；w[idx]：边权；ne[idx]：下一条边的索引\nint h[N], e[N], ne[N], w[N], idx;\n\nint dist[N];                                // dist[i]：1到i的最短距离\nbool st[N];                                 // st[i]：i的最短距离是否已确定\n\n/*-----add：添加一条有向边 a→b，权值为c-----*/\nvoid add(int a, int b, int c) {\n    e[idx] = b;                             // 边的终点\n    w[idx] = c;                             // 边权\n    ne[idx] = h[a];                         // 链表头插法：新边指向原链表头\n    h[a] = idx++;                           // 更新链表头\n}\n\n/*-----dijkstra函数分析-----*/\n// 堆优化Dijkstra：用优先队列自动维护当前dist最小的节点\nint dijkstra() {\n    memset(dist, 0x3f, sizeof(dist));\n    memset(st, false, sizeof(st));\n    dist[1] = 0;\n\n    // 小根堆：按距离从小到大排列\n    priority_queue\u003cPII, vector\u003cPII\u003e, greater\u003cPII\u003e\u003e heap;\n    heap.push({0, 1});                      // (距离, 节点编号)\n\n    while (!heap.empty()) {\n        auto top = heap.top(); int d = top.first, t = top.second; // d是1到t的当前最短距离\n        heap.pop();\n\n        if (st[t]) continue;                // 已确定，跳过（堆中可能有过期数据）\n        st[t] = true;                       // 标记t的最短距离已确定\n\n        /*-----松弛t的所有出边-----*/\n        for (int i = h[t]; i != -1; i = ne[i]) {\n            int j = e[i];                   // 邻接点\n            // 如果通过t到达j比当前dist[j]更短，则更新并入堆\n            if (dist[j] \u003e d + w[i]) {\n                dist[j] = d + w[i];\n                heap.push({dist[j], j});    // 注意：可能有重复节点，由st[t]检查去重\n            }\n        }\n    }\n\n    if (dist[n] == INF) return -1;          // 不可达\n    return dist[n];\n}","summary":"Dijkstra算法的进阶应用。处理更复杂的图或约束条件。","codeFile":"LinK58-dijkstra-2.cpp"},{"id":"LinK59","title":"维修电路","cat":"图论","sub":"最短路","diff":3,"tags":["最短路","0-1BFS","双端队列"],"classic":"维修电路 / Circuit Repair","naive":"0-1 BFS：边的权重只有0和1，用双端队列代替优先队列，O(V+E)","keyCode":"/*-----题目分析-----\n * 维修电路（0-1 BFS/双端队列BFS）：\n * R×C网格，每个格子有\u0027/\u0027或\u0027\\\u0027的电子元件（可旋转连接对角线两端）。\n * 求从(0,0)到(R,C)的最少旋转次数，无解输出\"NO SOLUTION\"。\n *\n * 解法：转化为图论。把格点(R+1)×(C+1)当作节点。\n *   元件\u0027\\\u0027连接左上-右下（代价0），旋转后连接右上-左下（代价1）。\n *   用双端队列BFS（0-1 BFS）：边权0的放队首、边权1的放队尾。\n *-----题目分析-----*/\n\nconst int N = 510;\nint R, C;\nchar g[N][N];\nint dist[N][N];                             // dist[x][y] 到达格点(x,y)的最少旋转次数\n\nint bfs() {\n    memset(dist, 0x3f, sizeof(dist));\n    deque\u003cpair\u003cint,int\u003e\u003e q;\n    q.push_front({0, 0}); dist[0][0] = 0;\n\n    while (!q.empty()) {\n        auto f = q.front(); int x = f.first, y = f.second; q.pop_front();\n        // 4个方向去往相邻格点（通过某格子的元件）\n        // 左上↘：通过格子(x,y)的元件\n        if (x \u003e 0 \u0026\u0026 y \u003e 0) {\n            int w = (g[x-1][y-1] == \u0027\\\\\u0027) ? 0 : 1;  // \\可直达（0代价），/需旋转（1代价）\n            if (dist[x-1][y-1] \u003e dist[x][y] + w) {\n                dist[x-1][y-1] = dist[x][y] + w;\n                if (w) q.push_back({x-1, y-1}); else q.push_front({x-1, y-1});\n            }\n        }\n        // 右上↙：通过格子(x-1, y)\n        if (x \u003e 0 \u0026\u0026 y \u003c C) {\n            int w = (g[x-1][y] == \u0027/\u0027) ? 0 : 1;\n            if (dist[x-1][y+1] \u003e dist[x][y] + w) {\n                dist[x-1][y+1] = dist[x][y] + w;\n                if (w) q.push_back({x-1, y+1}); else q.push_front({x-1, y+1});\n            }\n        }\n        // 左下↗：通过格子(x, y-1)\n        if (x \u003c R \u0026\u0026 y \u003e 0) {\n            int w = (g[x][y-1] == \u0027/\u0027) ? 0 : 1;\n            if (dist[x+1][y-1] \u003e dist[x][y] + w) {\n                dist[x+1][y-1] = dist[x][y] + w;\n                if (w) q.push_back({x+1, y-1}); else q.push_front({x+1, y-1});\n            }\n        }\n        // 右下↖：通过格子(x, y)\n        if (x \u003c R \u0026\u0026 y \u003c C) {\n            int w = (g[x][y] == \u0027\\\\\u0027) ? 0 : 1;\n            if (dist[x+1][y+1] \u003e dist[x][y] + w) {\n                dist[x+1][y+1] = dist[x][y] + w;\n                if (w) q.push_back({x+1, y+1}); else q.push_front({x+1, y+1});\n            }\n        }\n    }\n    return dist[R][C] == 0x3f3f3f3f ? -1 : dist[R][C];\n}","summary":"0-1 BFS。当边权只有0和1时，用双端队列比优先队列更高效。权0放队头，权1放队尾。","codeFile":"LinK59-problem.cpp"},{"id":"LinK60","title":"突袭路线","cat":"图论","sub":"拓扑排序","diff":2,"tags":["拓扑排序","DAG","BFS"],"classic":"拓扑排序 / Topological Sort","naive":"求有向无环图的拓扑序：用BFS统计入度，每次取入度为0的节点","keyCode":"/*-----题目分析-----\n * 拓扑排序：n个点m条边有向图，输出任一拓扑序列；若无（存在环）输出-1。\n *\n * 解法：BFS Kahn算法。统计每个点的入度indeg，\n *   将入度为0的点入队，逐一取出并删除其出边（邻接点入度-1），\n *   新入度变为0的点入队。若最终输出点数\u003cn则存在环。\n *-----题目分析-----*/\n\nconst int N = 100010;\nint n, m;\nint h[N], e[N], ne[N], idx;                 // 邻接表\nint indeg[N];                               // indeg[i]：点i的入度\nvector\u003cint\u003e topo;                           // 拓扑序列\n\nvoid add(int a, int b) {\n    e[idx] = b; ne[idx] = h[a]; h[a] = idx++;\n}\n\nbool kahn() {\n    queue\u003cint\u003e q;\n    for (int i = 1; i \u003c= n; i++)\n        if (indeg[i] == 0) q.push(i);       // 入度为0的点入队\n\n    while (!q.empty()) {\n        int t = q.front(); q.pop();\n        topo.push_back(t);\n        for (int i = h[t]; i != -1; i = ne[i]) {\n            int j = e[i];\n            if (--indeg[j] == 0) q.push(j); // 删边后入度变0则入队\n        }\n    }\n    return (int)topo.size() == n;           // 是否所有点都入了拓扑序\n}","summary":"拓扑排序模板。BFS法：每次取入度为0的节点，删除其出边。若最终排序节点数\u003cn则图中有环。","codeFile":"LinK60-problem.cpp"},{"id":"LinK61","title":"最省赛程","cat":"图论","sub":"最短路","diff":3,"tags":["最短路","Dijkstra","油价优化"],"classic":"最省赛程 / Cheapest Fuel Route","naive":"Dijkstra变体：状态包含当前油量，每条边的代价跟油价和油耗相关","keyCode":"/*-----题目分析-----\n * 最省赛程（状态图Dijkstra）：\n * N个城市M条赛道（无向图），每城市有油价P_i。车油箱容量C，初始空油。\n * q个查询(S,E,C)，求从S到E的最少油钱，不可达输出\"impossible\"。\n *\n * 解法：Dijkstra在状态图(city, fuel)上求最短路。\n *   状态转移有两种：\n *     1. 在当前城市加1单位油：cost+P[city], fuel+1 (if fuel\u003cC)\n *     2. 去相邻城市：fuel-d (if fuel\u003e=d)\n *   状态数N×C最多约1000×100=100000，用优先队列优化。\n *-----题目分析-----*/\n\nconst int N = 1010, M = 20010, C_MAX = 110;\n\nint n, m;\nint price[N];                               // 各城市油价\nint h[N], e[M], ne[M], w[M], idx;           // 邻接表（无向边）\n\nvoid add(int a, int b, int c) {\n    e[idx] = b; w[idx] = c; ne[idx] = h[a]; h[a] = idx++;\n}\n\n/*-----状态图Dijkstra-----*/\n// dist[city][fuel]：到达某城市、油量为fuel时的最小花费\nint dist[N][C_MAX];\nbool vis[N][C_MAX];                         // 访问标记（可复用）\n\nstruct State {\n    int cost, city, fuel;\n    bool operator\u003c(const State \u0026o) const { return cost \u003e o.cost; }  // 小根堆\n};\n\nint dijkstra(int C, int S, int E) {\n    memset(dist, 0x3f, sizeof(dist));\n    memset(vis, 0, sizeof(vis));\n    priority_queue\u003cState\u003e pq;\n\n    dist[S][0] = 0;\n    pq.push({0, S, 0});\n\n    while (!pq.empty()) {\n        auto top = pq.top(); pq.pop(); int cur_cost = top.cost, u = top.city, f = top.fuel;\n        if (u == E) return cur_cost;        // 到达终点，首次即最优\n        if (vis[u][f]) continue;\n        vis[u][f] = true;\n\n        /*-----转移1：在当前城市加1单位油-----*/\n        if (f \u003c C) {\n            int nxt_cost = cur_cost + price[u];\n            int nxt_f = f + 1;\n            if (dist[u][nxt_f] \u003e nxt_cost) {\n                dist[u][nxt_f] = nxt_cost;\n                pq.push({nxt_cost, u, nxt_f});\n            }\n        }\n\n        /*-----转移2：去相邻城市-----*/\n        for (int i = h[u]; i != -1; i = ne[i]) {\n            int v = e[i], d = w[i];\n            if (f \u003e= d) {\n                int nxt_f = f - d;\n                if (dist[v][nxt_f] \u003e cur_cost) {\n                    dist[v][nxt_f] = cur_cost;\n                    pq.push({cur_cost, v, nxt_f});\n                }\n            }\n        }\n    }\n    return -1;                              // 不可达\n}","summary":"Dijkstra的状态扩展。将油量加入状态维度，每次可以选择加油或行驶。核心是正确建模状态空间。","codeFile":"LinK61-problem.cpp"},{"id":"LinK62","title":"数字三角形","cat":"DP","sub":"线性DP","diff":1,"tags":["DP","数字三角形","递推"],"classic":"数字三角形 / Number Triangle","naive":"自底向上的DP：dp[i][j]=max(dp[i+1][j],dp[i+1][j+1])+a[i][j]","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 1007;\n\n// 三角形的行数\nint n;\n// w[i][j]第i行第j列的数字\nint w[N][N];\n/*-----状态表示f[i][j]-----*/\n// 【集合】从(i,j)出发到达底部能获得的最大和\nint f[N][N];\n\n    // 输入三角形（行下标从1开始，第i行有i个数字）\n    // [输入数据]\n    for (int i = 1; i \u003c= n; i++)\n        for (int j = 1; j \u003c= i; j++)\n            // [输入数据]\n\n    /*----- 状态初始化：三角形底边 -----*/\n    // f[n][x] 就是从最底层出发，只经过这一个点，和就是它自身的数值\n    for (int x = 1; x \u003c= n; x++)\n        f[n][x] = w[n][x];\n\n    /*----- 自底向上递推 -----*/\n    // 从倒数第二行往上推，每行逐列计算\n    // f[i][j] = 当前位置的数字 + 下方两个位置中较大的那个\n    for(int i = n - 1; i \u003e 0; i--)\n    {\n        for(int j = 1; j \u003c= i; j++)\n        {\n            // 从(i,j)出发：可以走向正下方(i+1,j)或右下方(i+1,j+1)\n            // 选择下方两条路径中较大的，加上当前位置的数字\n            f[i][j] = max(f[i + 1][j], f[i + 1][j + 1]) + w[i][j];\n        }\n    }\n\n    // 最终答案：从顶点(1,1)出发所获得的最大路径和\n    // [输出结果]","summary":"DP入门经典题。从底层向上递推，每个位置的最大路径和等于自身值加上下方两个位置中的较大值。","codeFile":"LinK62-problem.cpp"},{"id":"LinK63","title":"林克的01背包","cat":"DP","sub":"背包DP","diff":2,"tags":["DP","01背包","背包问题"],"classic":"01背包 / 0-1 Knapsack","naive":"dp[j]=max(dp[j],dp[j-w[i]]+v[i])，注意j从大到小遍历","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 1007;\n\n// n件物品，背包容量为m\nint n, m;\n// 第i件物品的：V体积 / W价值\nint V[N], W[N];\n/*-----状态表示f[i][j]-----*/\n// 【集合】对前i件物品、限定容量为j，所有可能的总价值\nint f[N][N];\n\n    // 输入物品数量和背包容量\n    // [输入数据]\n\n    // 输入每件物品的体积和价值，下标从1开始\n    for (int i = 1; i \u003c= n; i++)\n    {\n        // [输入数据]\n    }\n\n    // 枚举物品件数与限定容量，都是由少到多枚举\n    for (int i = 1; i \u003c= n; i++)\n    {\n        for (int j = 0; j \u003c= m; j++)\n        {\n            /*-----集合运算-----*/\n            // 对前i件物品与限定容量j而言，f[i][j]有两种可能：\n            // 1. 不选第i件物品——等于只考虑前i-1件时的最优解\n            // 2. 选第i件物品——因为每件只能用一次，\n            //    选了之后只能从\"前i-1件物品、容量为j-V[i]\"（上一层）转移\n\n            // 这里先认定不选的情况\n            f[i][j] = f[i - 1][j];\n\n            // 如果容量j能装下第i件物品，考虑选它\n            // 注意：01背包用 f[i-1][j-V[i]]（上一层）\n            // 表示选了第i件后，只能从前i-1件继续选，保证每件只用一次\n            if (j \u003e= V[i])\n                f[i][j] = max(f[i][j], f[i - 1][j - V[i]] + W[i]);\n        }\n    }\n\n    // 最终所需要的答案：\n    // 是同时存在n件物品(每件最多选一次)时，限定(背包)总容量为m，所取得的总价值最大值\n    // [输出结果]\n\n/*\n * ===== 空间优化版本：一维滚动数组 =====\n * 将f[N][N]压缩为f[N]，逆序枚举容量保证每件物品只选一次。\n * 注意：使用此版本时需将f数组声明改为 int f[N]; 并删除f[i][j]相关代码。\n *\n\nconst int N = 1007;\n\nint n, m;\nint V[N], W[N];\nint f[N];  // 一维滚动数组\n\nint main()\n{\n    cin \u003e\u003e n \u003e\u003e m;\n    for (int i = 1; i \u003c= n; i++)\n        cin \u003e\u003e V[i] \u003e\u003e W[i];\n\n    for (int i = 1; i \u003c= n; i++)\n    {\n        // 逆序枚举：保证f[j-V[i]]是本轮更新前的旧值(等价于f[i-1][j-V[i]])\n        for (int j = m; j \u003e= V[i]; j--)\n            f[j] = max(f[j], f[j - V[i]] + W[i]);\n    }\n\n    cout \u003c\u003c f[m] \u003c\u003c endl;\n    return 0;\n}\n * ===== 空间优化版本结束 =====\n */","summary":"01背包模板。每件物品只能选一次，容量维度必须倒序遍历，防止同一物品被重复使用。","codeFile":"LinK63-01.cpp"},{"id":"LinK64","title":"林克的完全背包","cat":"DP","sub":"背包DP","diff":2,"tags":["DP","完全背包","背包问题"],"classic":"完全背包 / Unbounded Knapsack","naive":"dp[j]=max(dp[j],dp[j-w[i]]+v[i])，注意j从小到大遍历","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 1007;\n\n// n种物品，背包容量为m（数据范围 N,V ≤ 1000）\nint n, m;\n// 第i种物品的：v体积 / w价值（每种物品有无限件可用）\nint v[N], w[N];\n/*-----状态表示f[i][j]-----*/\n// 【集合】对前i种物品、限定容量为j，所有可能的总价值\nint f[N][N];\n\n    // 输入并装填元素，从1开始方便下标观察\n    // [输入数据]\n    for(int i = 1; i \u003c= n; i ++)\n    {\n        // [输入数据]\n    }\n\n    // 枚举物品种数与限定容量，都是由少到多枚举\n    for(int i = 1; i \u003c= n; i++)\n    {\n        for(int j = 0; j \u003c= m; j++)\n        {\n            /*-----集合运算-----*/\n            // 对前i种物品与限定容量j而言，枚举选取第i种物品的数量k：\n            // 因为每种物品有无限件，k可以从0取到 j/v[i]（容量上限）\n            // f[i][j] = max{ f[i-1][j - k*v[i]] + k*w[i] }   (0 ≤ k ≤ j/v[i])\n\n            // k从0开始枚举：k=0等价于不选第i种物品（f[i-1][j]）\n            for(int k = 0; j \u003e= k * v[i]; k++)\n            {\n                // 选k个第i种物品：腾出k*v[i]容量，获得k*w[i]价值\n                // 从 f[i-1][...]（上一层）转移\n                f[i][j] = max(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);\n            }\n        }\n    }\n\n    // 最终所需要的答案：\n    // 是同时存在n种物品(每种无限件)时，限定(背包)总容量为m，所取得的总价值最大值\n    // [输出结果]\n\n/*\n * ===== 时间优化版本：O(N*V) 二重循环 =====\n * 利用完全背包可重复选取的特性，将枚举k的循环优化掉：\n * f[i][j] = max(f[i-1][j], f[i][j-v[i]] + w[i])\n * 关键区别：用 f[i][j-v[i]]（本层）而非 f[i-1][j-v[i]]（上层），\n * 因为选了第i种之后还能继续选，所以看同层已更新的状态。\n * 同时 j 必须正序枚举（从小到大），保证 f[i][j-v[i]] 已在本层计算完毕。\n *\n\nconst int N = 1007;\n\nint n, m;\nint v[N], w[N];\nint f[N][N];\n\nint main()\n{\n    cin \u003e\u003e n \u003e\u003e m;\n    for(int i = 1; i \u003c= n; i ++)\n        cin \u003e\u003e v[i] \u003e\u003e w[i];\n\n    for(int i = 1; i \u003c= n; i++)\n    {\n        for(int j = 0; j \u003c= m; j++)\n        {\n            f[i][j] = f[i - 1][j];\n            if (j \u003e= v[i])\n                f[i][j] = max(f[i][j], f[i][j - v[i]] + w[i]);\n        }\n    }\n\n    cout \u003c\u003c f[n][m] \u003c\u003c endl;\n    return 0;\n}\n * ===== 时间优化版本结束 =====\n */","summary":"完全背包模板。每件物品可以选无限次，容量维正序遍历。与01背包的唯一区别就是循环方向。","codeFile":"LinK64-problem.cpp"},{"id":"LinK65","title":"多重背包问题(1)","cat":"DP","sub":"背包DP","diff":2,"tags":["DP","多重背包","拆分"],"classic":"多重背包I / Bounded Knapsack I","naive":"将每种物品的s件拆成s个单独物品做01背包，O(N*V*S)","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 110;\n\n// n种物品，背包容量为V（数据范围 N,V,si ≤ 100）\nint n, V;\n// 第i种物品的：v体积 / w价值 / s数量(最多s件)\nint v[N], w[N], s[N];\n/*-----状态表示f[i][j]-----*/\n// 【集合】对前i组物品、限定容量为j，所有可能的总价值\nint f[N][N];\n\n    // 输入并装填元素，从1开始方便下标观察\n    // [输入数据]\n    for(int i = 1; i \u003c= n; i++)\n    {\n        // [输入数据]\n    }\n\n    // 枚举物品种数与限定容量，都是由少到多枚举\n    for(int i = 1; i \u003c= n; i++)\n    {\n        for(int j = 0; j \u003c= V; j++)\n        {\n            /*-----集合运算-----*/\n            // 对前i种物品与限定容量j而言，枚举选取第i种物品的数量k\n            // k=0表示不选第i种物品（等价于f[i-1][j]）\n            // k从0到s[i]（且容量不能超）逐一遍历取最大值\n\n            // f[i][j] 初始为不选的情况（k=0时自动覆盖）\n            // 注意：这里利用max的累积比较，每次尝试不同k值并取最优\n            for(int k = 0; k \u003c= s[i] \u0026\u0026 j \u003e= k * v[i]; k++)\n            {\n                // 选k个第i种物品：腾出k*v[i]容量，获得k*w[i]价值\n                // 从 f[i-1][j - k*v[i]]（上一层）转移\n                f[i][j] = max(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);\n            }\n        }\n    }\n\n    // 最终所需要的答案：\n    // 是同时存在n种物品(每种有数量限制)时，限定(背包)总容量为V，所取得的总价值最大值\n    // [输出结果]","summary":"多重背包朴素做法。每件物品最多s件，拆成s个物品后按01背包处理。","codeFile":"LinK65-1.cpp"},{"id":"LinK66","title":"多重背包问题(2)","cat":"DP","sub":"背包DP","diff":3,"tags":["DP","多重背包","二进制优化"],"classic":"多重背包II / Bounded Knapsack II","naive":"二进制拆分优化：将s拆成1,2,4,8...+余数，再01背包，O(N*V*logS)","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\n// 注意：朴素方法只需 N≤110（si≤100 时三重循环可过）；\n//       二进制优化版本需要 N≥12000（拆分后物品数上限）\nconst int N = 110;\n// 背包容量上限（朴素方法 V≤100）\nconst int M = 110;\n\n// num种物品，背包容量为V（本题朴素版数据范围：N,V,si ≤ 100）\nint num, V;\n// 第i种物品的：v体积 / w价值 / s数量(最多s件)\nint v[N], w[N], s[N];\n/*-----状态表示f[i][j]-----*/\n// 【集合】对前i种物品、限定容量为j，所有可能的总价值\nint f[N][M];\n\n    // 输入并装填元素，从1开始方便下标观察\n    // [输入数据]\n    for (int i = 1; i \u003c= num; i++)\n    {\n        // [输入数据]\n    }\n\n    // 枚举物品种数与限定容量，都是由少到多枚举\n    for (int i = 1; i \u003c= num; i++)\n    {\n        for (int j = 0; j \u003c= V; j++)\n        {\n            /*-----集合运算-----*/\n            // 对前i种物品与限定容量j而言，枚举选取第i种物品的数量k：\n            // k从0取到 min(s[i], j/v[i])，逐一比较取最大值\n            // f[i][j] = max{ f[i-1][j - k*v[i]] + k*w[i] }  (0 ≤ k ≤ s[i], k*v[i] ≤ j)\n\n            // k从0开始枚举：k=0等价于不选第i种物品（f[i-1][j]）\n            for (int k = 0; k \u003c= s[i] \u0026\u0026 j \u003e= k * v[i]; k++)\n            {\n                // 选k个第i种物品：腾出k*v[i]容量，获得k*w[i]价值\n                // 从 f[i-1][...]（上一层）转移，保证不超出数量限制\n                f[i][j] = max(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);\n            }\n        }\n    }\n\n    // 最终所需要的答案：\n    // 是同时存在num种物品(每种有数量限制)时，限定(背包)总容量为V，所取得的总价值最大值\n    // [输出结果]\n\n/*\n * ===== 二进制优化版本：适用于大数据范围 (N,V,si ≤ 1000~2000) =====\n * 核心思想：将每种物品的si件按1,2,4,8,...打包成若干\"大物品\"，\n * 任意数量k(0≤k≤si)都可以通过这些包的组合精确表示。\n * 然后将打包后的物品做一遍01背包即可。\n * 复杂度：O( N*log(max_si) * V )，远优于朴素O(N*V*max_si)。\n *\n\nconst int N = 12000;  // 二进制拆分后物品数上限 (1000 * log2(2000) ≈ 11000)\nconst int M = 2010;   // 背包容量上限\n\nint num, V;\nint f[M];             // 一维滚动数组\nint v[N], w[N];       // 拆分后第cnt个打包物品的体积/价值\n\nint main()\n{\n    cin \u003e\u003e num \u003e\u003e V;\n\n    int cnt = 0;  // 拆分后的打包物品总数\n    for (int i = 1; i \u003c= num; i++)\n    {\n        int a, b, s;\n        cin \u003e\u003e a \u003e\u003e b \u003e\u003e s;\n\n        // 二进制拆分：每次取1,2,4,8,...件打包\n        int k = 1;\n        while (k \u003c= s)\n        {\n            cnt++;\n            v[cnt] = a * k;\n            w[cnt] = b * k;\n            s -= k;\n            k *= 2;\n        }\n        // 剩余不足一包的部分\n        if (s \u003e 0)\n        {\n            cnt++;\n            v[cnt] = a * s;\n            w[cnt] = b * s;\n        }\n    }\n    num = cnt;\n\n    // 01背包：对拆分后的打包物品做一维DP\n    for (int i = 1; i \u003c= num; i++)\n        for (int j = V; j \u003e= v[i]; j--)\n            f[j] = max(f[j], f[j - v[i]] + w[i]);\n\n    cout \u003c\u003c f[V] \u003c\u003c endl;\n    return 0;\n}\n * ===== 二进制优化版本结束 =====\n */","summary":"多重背包的二进制优化。将s拆分为1+2+4+8+...+余数，任意1~s之间的数量都能由这些组合表示。","codeFile":"LinK66-2.cpp"},{"id":"LinK67","title":"分组背包问题","cat":"DP","sub":"背包DP","diff":2,"tags":["DP","分组背包"],"classic":"分组背包 / Group Knapsack","naive":"每组内物品互斥，先枚举组再枚举容量再枚举组内物品","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 110;\n\n//num组物品和一个容量是V的背包\nint num, V;\n//[i][j] = 第i组物品第j个的：v体积 / w价值\nint v[N][N], w[N][N];\n/*-----状态表示f[i][j]-----*/\n// 【集合】对i组物品、限定容量为j，所有可能的总价值\nint f[N][N];\n//第i组物品的个数\nint s[N];\n\n    //输入并装填元素，从1开始方便下标观察\n    // [输入数据]\n    for (int i = 1; i \u003c= num; i++)\n    {\n        // 对第i组物品，有s[i]个\n        // [输入数据]\n\n        // 对这s[i]个第i组的物品分别输入体积和价值\n        for (int j = 1; j \u003c= s[i]; j++)\n        {\n            // [输入数据]\n        }\n    }\n\n    //枚举物品组数与限定体积，都是由少到多枚举\n    for (int i = 1; i \u003c= num; i++)\n    {\n        for(int j = 0; j \u003c= V; j ++)\n        {\n            /*-----集合运算-----*/\n            // 对物品组数i与限定体积j而言，f[i][j]有两种可能\n            // 1.等于限定j体积下选择i-1组物品的总价值\n            // (此时第i组物品任意选一个进去都会使总体积超过j)\n            // 2.等于除了第i组物品第k个以外的最大物品总价值+第i组物品第k个\n            // (此时显然第i组里存在合适的物品可以放入)\n\n            // 这里先认定情况一，后续再进行更新\n            f[i][j] = f[i - 1][j];\n            // 继续枚举：选择对第i组物品的第k个\n            for(int k = 1; k \u003c= s[i]; k++)\n            {\n                //如果限定体积j大于所选入的物品，那么更新f[i][j]的值\n                if (j \u003e= v[i][k])\n                    f[i][j] = max(f[i][j], f[i - 1][j - v[i][k]] + w[i][k]);\n            }\n        }\n    }\n\n    // 最终所需要的答案：\n    // 是同时存在num种物品时，限定(背包)总体积V，所取得的总物品价值最大值\n    // [输出结果]","summary":"分组背包。每组最多选一件物品。三层循环顺序：组-\u003e容量-\u003e组内物品。容量倒序保证每组最多一件。","codeFile":"LinK67-problem.cpp"},{"id":"LinK68","title":"混合背包问题","cat":"DP","sub":"背包DP","diff":3,"tags":["DP","混合背包"],"classic":"混合背包 / Mixed Knapsack","naive":"综合01背包、完全背包和多重背包，根据物品类型选择循环方向","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 1010;\n\n// num种物品和一个容量是V的背包\nint num, V;\n// 第i种物品的：v体积 / w价值 / s数量\n// s=-1表示01背包（只能用1次）；s=0表示完全背包（无限次）；s\u003e0表示多重背包（最多s次）\nint v[N], w[N], s[N];\n/*-----状态表示f[i][j]-----*/\n// 【集合】对前i种物品、限定容量为j，所有可能的总价值\nint f[N][N];\n\n    // 输入并装填元素，从1开始方便下标观察\n    // [输入数据]\n    for (int i = 1; i \u003c= num; i++)\n    {\n        // [输入数据]\n    }\n\n    // 枚举物品种数与限定容量，都是由少到多枚举\n    for (int i = 1; i \u003c= num; i++)\n    {\n        for (int j = 0; j \u003c= V; j++)\n        {\n            /*-----集合运算-----*/\n            // 无论哪种背包类型，都可以选择不拿第i种物品\n            f[i][j] = f[i - 1][j];\n\n            // ----- 情况一：01背包 (s[i] == -1) -----\n            // 第i种物品只能用1次，选或不选\n            // 从 f[i-1][j-v[i]]（上一层）转移，保证每件只用一次\n            if (s[i] == -1)\n            {\n                if (j \u003e= v[i])\n                    f[i][j] = max(f[i][j], f[i - 1][j - v[i]] + w[i]);\n            }\n\n            // ----- 情况二：完全背包 (s[i] == 0) -----\n            // 第i种物品可以用无限次，枚举选取数量k（朴素做法）\n            // f[i][j] = max{ f[i-1][j - k*v[i]] + k*w[i] }  (0 ≤ k ≤ j/v[i])\n            if (s[i] == 0)\n            {\n                for (int k = 0; j \u003e= k * v[i]; k++)\n                {\n                    f[i][j] = max(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);\n                }\n            }\n\n            // ----- 情况三：多重背包 (s[i] \u003e 0) -----\n            // 第i种物品最多用s[i]次，枚举选取数量k（朴素做法）\n            // f[i][j] = max{ f[i-1][j - k*v[i]] + k*w[i] }  (0 ≤ k ≤ s[i], k*v[i] ≤ j)\n            if (s[i] \u003e 0)\n            {\n                for (int k = 0; k \u003c= s[i] \u0026\u0026 j \u003e= k * v[i]; k++)\n                {\n                    f[i][j] = max(f[i][j], f[i - 1][j - k * v[i]] + k * w[i]);\n                }\n            }\n        }\n    }\n\n    // 最终所需要的答案：\n    // 是同时存在num种物品(混合类型)时，限定(背包)总容量为V，所取得的总价值最大值\n    // [输出结果]\n\n/*\n * ===== 完全背包优化：将枚举k改为O(1)转移 =====\n * 完全背包部分的三重循环可以优化为O(N*V)：\n *   将 s[i]==0 分支的 for(k) 循环替换为：\n *     if (j \u003e= v[i])\n *         f[i][j] = max(f[i][j], f[i][j - v[i]] + w[i]);\n * 关键：用 f[i][j-v[i]]（本层）而非 f[i-1][j-v[i]]（上层），\n * 因为完全背包选了第i种之后还能继续选第i种。\n *\n * ===== 多重背包优化：二进制拆分 =====\n * 多重背包部分(s[i]\u003e0)可进一步用二进制拆分优化（参见LinK66的优化版本），\n * 将s[i]件按1,2,4,8,...打包后做01背包，复杂度从O(N*V*max_s)降为O(N*V*log(max_s))。\n */","summary":"混合背包结合了01、完全和多重背包。关键是辨别每种物品类型，用对应的循环策略。","codeFile":"LinK68-problem.cpp"},{"id":"LinK69","title":"摘花生","cat":"DP","sub":"线性DP","diff":1,"tags":["DP","网格DP"],"classic":"摘花生 / Peanut Picking","naive":"网格DP：dp[i][j]=max(dp[i-1][j],dp[i][j-1])+a[i][j]","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 110;\n\n// 花生地的行数和列数\nint row, col;\n// w[i][j]第i行第j列的花生数量；f[i][j]从左上角到达(i,j)能摘到的最大花生数\nint w[N][N], f[N][N];\n\n    // T组测试数据\n    int T;\n    // [输入数据]\n    while (T--)\n    {\n        // 输入花生地的行数和列数\n        // [输入数据]\n\n        // 输入每株花生苗上的花生数量，下标从1开始\n        for (int i = 1; i \u003c= row; i++)\n            for (int j = 1; j \u003c= col; j++)\n                // [输入数据]\n\n        /*----- 状态递推：逐行逐列计算 -----*/\n        // 只能向东(右)或向南(下)走，所以：\n        // 到达(i,j)只能从上边(i-1,j)或左边(i,j-1)来\n        // f[i][j] = max(上边来的值, 左边来的值) + 当前位置花生数\n        for(int x = 1; x \u003c= row; x++)\n        {\n            for(int y = 1; y \u003c= col; y++)\n            {\n                // f[x-1][y]和f[x][y-1]在边界外自动为0（全局数组已初始化）\n                f[x][y] = max(f[x - 1][y], f[x][y - 1]) + w[x][y];\n            }\n        }\n\n        // 最终答案：走到右下角(row,col)时摘到的最大花生总数\n        // [输出结果]\n    }","summary":"经典网格DP。每个位置只能从上方或左方过来，递推求到达每格的最大花生数。","codeFile":"LinK69-problem.cpp"},{"id":"LinK70","title":"最低通行费","cat":"DP","sub":"线性DP","diff":2,"tags":["DP","网格DP","最小值"],"classic":"最低通行费 / Minimum Toll","naive":"网格DP求最小值：dp[i][j]=min(dp[i-1][j],dp[i][j-1])+cost[i][j]","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 110;\n// 定义无穷大常量，用于初始化最小费用的比较\nconst int INF = 1e9;\n\n// 正方形的宽度N\nint s;\n// w[i][j]第i行第j列方格的费用；f[i][j]从左上角到达(i,j)的最小总费用\nint w[N][N], f[N][N];\n\n    // 输入正方形的宽度\n    // [输入数据]\n\n    // 输入每个方格的费用，下标从1开始\n    for (int i = 1; i \u003c= s; i++)\n        for (int j = 1; j \u003c= s; j++)\n            // [输入数据]\n\n    /*----- 状态递推：逐行逐列计算最小费用 -----*/\n    // 题目要求必须在(2N-1)单位时间内穿越，这意味着只能向右或向下走\n    // （如果往回走会超时），所以与\"摘花生\"思路类似，但求的是最小值\n    for (int i = 1; i \u003c= s; i++)\n    {\n        for (int j = 1; j \u003c= s; j++)\n        {\n            // 起点特殊处理：没有\"从哪边来\"的选择\n            if (i == 1 \u0026\u0026 j == 1)\n                f[i][j] = w[i][j];\n            else\n            {\n                // 先初始化为无穷大，再用min选出较小路径\n                f[i][j] = INF;\n                // 如果上方有格子，考虑从上边来\n                if (i \u003e 1)\n                    f[i][j] = min(f[i][j], f[i - 1][j] + w[i][j]);\n                // 如果左方有格子，考虑从左边来\n                if (j \u003e 1)\n                    f[i][j] = min(f[i][j], f[i][j - 1] + w[i][j]);\n            }\n        }\n    }\n\n    // 最终答案：从左上角(1,1)到右下角(s,s)的最小总费用\n    // [输出结果]","summary":"与摘花生类似，但求最小值。关键是初始化边界条件。","codeFile":"LinK70-problem.cpp"},{"id":"LinK71","title":"最长上升子序列","cat":"DP","sub":"线性DP","diff":2,"tags":["DP","LIS","最长上升子序列"],"classic":"LIS / Longest Increasing Subsequence","naive":"O(n^2)DP：dp[i]=max(dp[j])+1 对所有j\u003ci且a[j]\u003ca[i]","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 1010;\n\n// 序列长度\nint n;\n/*-----状态表示f[i]-----*/\n// 【集合】以第i个数结尾的所有上升子序列中，最长的那一个的长度\nint f[N];\n// a[i]原序列的第i个数值\nint a[N];\n\n    // 输入序列长度和序列元素，下标从0开始\n    // [输入数据]\n    for (int x = 0; x \u003c n; x++)\n        // [输入数据]\n\n    /*----- 状态递推：O(N²) -----*/\n    // res存储最终答案（全局最长长度）\n    // 注意：不一定以最后一个元素结尾的就是最长的，需要遍历所有f[i]取最大\n    int res = 0;\n    for(int i = 0; i \u003c n; i++)\n    {\n        // 对每个位置i，以自身为起点的子序列长度至少为1\n        f[i] = 1;\n\n        // 遍历i之前的所有位置j，尝试将a[i]接在以a[j]结尾的子序列后面\n        for(int j = 0; j \u003c i; j ++)\n        {\n            // 如果a[j] \u003c a[i]，说明满足严格递增，可以接上\n            if(a[j] \u003c a[i])\n            {\n                // 以a[j]结尾的长度+1（算上a[i]自己）\n                f[i] = max(f[i], f[j] + 1);\n            }\n        }\n        // 每计算完一个f[i]，更新全局最大值\n        res = max(res, f[i]);\n    }\n\n    // 最终答案：整个序列中最长严格递增子序列的长度\n    // [输出结果]","summary":"最长上升子序列(LIS)。dp[i]表示以第i个元素结尾的LIS长度，枚举前面所有比它小的元素来转移。","codeFile":"LinK71-problem.cpp"},{"id":"LinK72","title":"最长上升子序列(2)","cat":"DP","sub":"线性DP","diff":3,"tags":["DP","LIS","贪心+二分"],"classic":"LIS II / Longest Increasing Subsequence (Optimized)","naive":"O(n log n)解法：贪心+二分，维护一个尽可能小的递增序列","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 1010;\n\n// 序列长度\nint n;\n/*-----状态表示f[i]-----*/\n// 【集合】以第i个数结尾的所有上升子序列中，最长的那一个的长度\nint f[N];\n// a[i]原序列的第i个数值\nint a[N];\n\n    // 输入序列长度和元素，下标从0开始\n    // [输入数据]\n    for (int i = 0; i \u003c n; i++)\n        // [输入数据]\n\n    /*----- 状态递推：O(N²)-----*/\n    // res存储最终答案（全局最长长度）\n    // 注意：不一定以最后一个元素结尾的就是最长的，需要遍历所有f[i]取最大\n    int res = 0;\n    for (int i = 0; i \u003c n; i++)\n    {\n        // 对每个位置i，以自身为起点的子序列长度至少为1\n        f[i] = 1;\n\n        // 遍历i之前的所有位置j，尝试将a[i]接在以a[j]结尾的子序列后面\n        for (int j = 0; j \u003c i; j++)\n        {\n            // 如果a[j] \u003c a[i]，说明满足严格递增，可以接上\n            if (a[j] \u003c a[i])\n            {\n                // 以a[j]结尾的长度+1（算上a[i]自己）\n                f[i] = max(f[i], f[j] + 1);\n            }\n        }\n        // 每计算完一个f[i]，更新全局最大值\n        res = max(res, f[i]);\n    }\n\n    // 最终答案：整个序列中最长严格递增子序列的长度\n    // [输出结果]\n\n/*\n * ===== 贪心+二分优化版本：O(NlogN) =====\n * 适用于N较大(如N≥1e5)时，O(N²)会超时的情况。\n * 核心思想：维护数组q，q[len]表示长度为len的上升子序列的最小末尾值。\n * 遍历每个数x时，在q中二分查找第一个≥x的位置并替换，使末尾尽可能小。\n *\n\nint main()\n{\n    int n;\n    cin \u003e\u003e n;\n\n    vector\u003cint\u003e a(n);\n    for (int i = 0; i \u003c n; i++)\n        cin \u003e\u003e a[i];\n\n    // q[len]：长度为len的上升子序列中，最小的末尾元素值\n    vector\u003cint\u003e q;\n\n    for (int x : a)\n    {\n        // 在q中二分查找第一个 ≥ x 的位置\n        auto it = lower_bound(q.begin(), q.end(), x);\n\n        if (it == q.end())\n            q.push_back(x);  // x比所有末尾都大，扩展长度\n        else\n            *it = x;         // 用更小的x替换，使该长度末尾更小\n    }\n\n    // q的长度即为最长上升子序列的长度\n    cout \u003c\u003c q.size() \u003c\u003c endl;\n    return 0;\n}\n * ===== 贪心+二分优化版本结束 =====\n */","summary":"LIS的O(n log n)优化。维护tails数组，tails[i]表示长度为i+1的上升子序列的最小末尾值。","codeFile":"LinK72-2.cpp"},{"id":"LinK73","title":"拦截导弹","cat":"DP","sub":"线性DP","diff":3,"tags":["DP","Dilworth定理","LIS"],"classic":"拦截导弹 / Missile Interception","naive":"Dilworth定理：序列最少不升子序列划分数=最长上升子序列长度","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 1010;\n\n// n个导弹（由输入动态确定数量）\nint n;\n// h[i]第i个导弹的高度；f[i]以第i个导弹结尾的最长不升子序列长度\nint h[N], f[N];\n// q数组用于贪心求最少系统数：q[k]存储第k套系统当前能拦截的最低高度\nint q[N];\n\n    // 输入：一行以空格分隔的导弹高度\n    // 使用getline+stringstream处理不确定数量的输入\n    string line;\n    getline(cin, line);\n    stringstream ssin(line);\n    while (ssin \u003e\u003e h[n])\n        n++;\n\n    /*----- 同时求解两问 -----*/\n    // res: 第一问答案 —— 最多能拦截的导弹数（最长不升子序列长度）\n    // cnt: 第二问答案 —— 最少需要的系统数（贪心序列覆盖）\n    int res = 0, cnt = 0;\n\n    for (int i = 0; i \u003c n; i++)\n    {\n        /*----- 第一问：最长不升子序列 O(N²) -----*/\n        // 【集合f[i]】以第i个导弹结尾的最长不升子序列长度\n        // “不升”的含义：每一发都不能高于前一发，即 h[i] \u003c= h[j]（j是i之前的位置）\n        f[i] = 1; // 最少可以只拦截自身\n        for (int j = 0; j \u003c i; j++)\n        {\n            // 如果前面的导弹高度 \u003e= 当前导弹高度，则可以接上\n            if (h[i] \u003c= h[j])\n                f[i] = max(f[i], f[j] + 1);\n        }\n        // 更新全局最长不升子序列长度\n        res = max(res, f[i]);\n\n        /*----- 第二问：最少系统数（贪心）-----*/\n        // 维护q数组，q[k]表示第k套系统当前能拦截的最低高度（最高的那个已拦截导弹）\n        // 对于每个新导弹h[i]，在已有系统中找第一个q[k] \u003e= h[i]的（即最低的那个能拦截它的）\n        // 如果找不到，说明需要新增一套系统\n        int k = 0;\n        while (k \u003c cnt \u0026\u0026 q[k] \u003c h[i])\n            k++;\n\n        if (k == cnt)\n            // 所有现有系统都不能拦截当前导弹，新增一套\n            q[cnt++] = h[i];\n        else\n            // 第k套系统可以拦截，更新其拦截高度\n            q[k] = h[i];\n    }\n\n    // 第一行：最多能拦截的导弹数\n    // [输出结果]\n    // 第二行：要拦截所有导弹最少要配备的系统数\n         \u003c\u003c cnt \u003c\u003c endl;","summary":"Dilworth定理的经典应用。最少的不升子序列划分等于最长上升子序列的长度。","codeFile":"LinK73-problem.cpp"},{"id":"LinK75","title":"最长公共子序列","cat":"DP","sub":"线性DP","diff":2,"tags":["DP","LCS","双序列DP"],"classic":"LCS / Longest Common Subsequence","naive":"dp[i][j]=max(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]+(a[i]==b[j]))","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 1010;\n\n// 字符串A长度为n，字符串B长度为m\nint n, m;\n// A和B是两个字符串（从下标1开始存储，方便与f数组对齐）\nchar A[N], B[N];\n/*-----状态表示f[i][j]-----*/\n// 【集合】所有由A的前i个字符和B的前j个字符构成的公共子序列中，最长的那一个的长度\nint f[N][N];\n\n    // 输入字符串长度，以及两个字符串（从下标1开始存储）\n    // [输入数据]\n    // [输入数据]\n\n    // 枚举字符串A和B的前缀长度，由短到长递推\n    for(int i = 1; i \u003c= n; i++)\n    {\n        for(int j = 1; j \u003c= m; j++)\n        {\n            /*-----集合运算-----*/\n            // 对f[i][j]而言，有两种大情况：\n            // 1. A[i] == B[j]：这两个字符可以配对\n            //    → 在f[i-1][j-1]的基础上+1（将A[i]和B[j]加入公共子序列）\n            // 2. A[i] != B[j]：至少有一个字符不在最优解中\n            //    → 取 max(不看A[i]的情况, 不看B[j]的情况)\n\n            if(A[i] == B[j])\n            {\n                // 两字符相等：直接从前缀(i-1,j-1)继承并长度+1\n                f[i][j] = f[i - 1][j - 1] + 1;\n            }\n            else\n            {\n                // 两字符不等：取\"去掉A[i]\"和\"去掉B[j]\"两种方案中较大的\n                f[i][j] = max(f[i - 1][j], f[i][j - 1]);\n            }\n        }\n    }\n\n    // 最终所需要的答案：\n    // A的前n个字符与B的前m个字符的最长公共子序列长度\n    // [输出结果]","summary":"LCS双序列DP模板。a[i]==b[j]时从左上角+1转移，否则取上方或左方的较大值。","codeFile":"LinK75-problem.cpp"},{"id":"LinK76","title":"石子合并","cat":"DP","sub":"区间DP","diff":3,"tags":["DP","区间DP","石子合并"],"classic":"石子合并 / Stone Merge","naive":"区间DP：dp[i][j]=min(dp[i][k]+dp[k+1][j])+sum[i][j]","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 310;\n\n// num堆石子\nint num;\n// w[i]第i堆石子的原始质量；s[i]前缀和（前i堆石子质量之和）\nint w[N], s[N];\n/*-----状态表示f[l][r]-----*/\n// 【集合】将第l堆到第r堆石子合并成一堆的所有方案中，最小总代价\nint f[N][N];\n\n    // 输入石子堆数\n    // [输入数据]\n\n    // 读入石子重量，同时计算前缀和\n    // s[i] = 前i堆石子的总质量，用于O(1)计算区间和\n    for(int i = 1; i \u003c= num; i++)\n    {\n        // [输入数据]\n        s[i] = s[i - 1] + w[i];\n    }\n\n    /*----- 区间DP：枚举区间长度，由短到长递推 -----*/\n    // 长度为1的区间不需要合并，代价自然为0（全局数组已初始化为0）\n    for(int len = 2; len \u003c= num; len++)\n    {\n        // 枚举区间左端点l\n        for(int l = 1; l + len - 1 \u003c= num; l++)\n        {\n            // 区间右端点r\n            int r = l + len - 1;\n\n            // 初始化为较大值，后续用min逐步更新\n            f[l][r] = 1e9;\n\n            // 枚举分界点k：将[l,r]分成[l,k]和[k+1,r]两部分\n            // 先将左右两堆各自内部合并，再将这两堆合并在一起\n            for(int k = l; k \u003c r; k++)\n            {\n                // 状态转移：\n                // 代价 = 左边合并的最小代价 + 右边合并的最小代价 + 本次合并的代价\n                // 本次合并的代价 = [l,r]区间所有石子质量之和 = s[r] - s[l-1]\n                f[l][r] = min(f[l][r],\n                             f[l][k] + f[k + 1][r] + s[r] - s[l - 1]);\n            }\n        }\n    }\n\n    // 最终所需要的答案：\n    // 将第1堆到第num堆全部石子合并成一堆的最小总代价\n    // [输出结果]","summary":"区间DP经典题。枚举区间长度、起点、分割点。dp[i][j]表示合并区间[i,j]的最小代价。","codeFile":"LinK76-problem.cpp"},{"id":"LinK78","title":"加分二叉树","cat":"DP","sub":"树形DP/区间DP","diff":3,"tags":["DP","树形DP","区间DP","二叉树"],"classic":"加分二叉树 / Bonus Binary Tree","naive":"区间DP构建最优二叉搜索树：枚举根节点k，左子树[i,k-1]和右子树[k+1,j]","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 35;\n\n// 二叉树节点个数\nint n;\n// w[i]第i个节点的分数；root[l][r]区间[l,r]构成子树时得分最高的根节点编号\nint w[N], root[N][N];\n/*-----状态表示f[l][r]-----*/\n// 【集合】中序遍历区间[l,r]内的节点构成的所有二叉树中，最高加分\nint f[N][N];\n\n// 前序遍历输出：根据root数组递归输出二叉树的前序遍历\nvoid dfs(int l, int r)\n{\n    // 空区间，递归边界\n    if(l \u003e r) return;\n\n    // 取出当前区间的根节点编号\n    int k = root[l][r];\n    // 输出根节点（前序遍历：根→左→右）\n    cout \u003c\u003c k \u003c\u003c \" \";\n\n    // 递归输出左子树和右子树\n    dfs(l, k - 1);\n    dfs(k + 1, r);\n}","summary":"结合了树结构的最优二叉搜索树问题。用区间DP枚举根节点，递归构造最优树。","codeFile":"LinK78-problem.cpp"},{"id":"LinK80","title":"没有上司的舞会","cat":"DP","sub":"树形DP","diff":2,"tags":["DP","树形DP","树上DP"],"classic":"没有上司的舞会 / Tree DP (Independent Set)","naive":"树形DP：dp[u][0]=sum max(dp[v][0],dp[v][1]), dp[u][1]=sum dp[v][0]+happy[u]","keyCode":"// 确认大致的数组范围，防止数组太小、边界太紧从而发生越界\nconst int N = 6010;\n\n// n个职员（节点总数）\nint n;\n// h[i]第i号职员的快乐指数\nint h[N];\n/*-----状态表示f[u][0], f[u][1]-----*/\n// 【集合】以u为根的子树中：\n//   f[u][0] = u不参加时，该子树能获得的最大快乐值\n//   f[u][1] = u参加时，该子树能获得的最大快乐值\nint f[N][2];\n\n// 邻接表：children[u]存储u的所有直接下属（子节点）\nvector\u003cint\u003e children[N];\n// has_father[i]标记i号职员是否有直接上司（用于找根节点）\nbool has_father[N];\n\n// 建边函数：a是上司，b是下属，将b加入a的子节点列表\nvoid add(int a, int b)\n{\n    children[a].push_back(b);\n}\n\n// 树形DP（后序遍历）：先递归计算所有子节点，再计算当前节点\nvoid dfs(int u)\n{\n    // 初始化：\n    // u参加 → 先把自己的快乐值算上\n    // u不参加 → 初始为0\n    f[u][1] = h[u];\n    f[u][0] = 0;\n\n    // 遍历u的每一个直接下属（子节点）\n    for(int j : children[u])\n    {\n        // 先递归计算子节点j的子树\n        dfs(j);\n\n        /*----- 状态转移 -----*/\n        // 1. 如果u不去：儿子可以自由选择去(max)或不去(max)，选大的累加\n        f[u][0] += max(f[j][0], f[j][1]);\n\n        // 2. 如果u去：直接上司在场，儿子绝对不能去，只能累加f[j][0]\n        f[u][1] += f[j][0];\n    }\n}","summary":"树形DP模板。在树上做动态规划，通常用DFS实现。dp[u][0/1]表示节点u选或不选时的最优值。","codeFile":"LinK80-problem.cpp"}]</script>
+
+<script>
+(function() {
+  // Safe storage wrapper
+  var storage = {
+    get: function(k,d){ try{ var v=localStorage.getItem(k); return v===null?d:v; }catch(e){ return d; } },
+    set: function(k,v){ try{ localStorage.setItem(k,v); }catch(e){} },
+    remove: function(k){ try{ localStorage.removeItem(k); }catch(e){} }
+  };
+
+  // ═══════════════════════════════════════════
+  //  Device Lock System (PIN-based)
+  // ═══════════════════════════════════════════
+  var HARDCODED_PIN_HASH = 'c0229da06cc045f0ea51d064c77c197802950a37c7c943461cc9a8e77b20963f';
+  var UNLOCK_KEY = 'xmuoj_device_unlocked';
+  var PIN_LENGTH_MIN = 4, PIN_LENGTH_MAX = 8;
+  var pinMode = null; // 'verify'
+  var pinTargetAction = null; // callback to run after unlock
+
+  // Simple async SHA-256 via Web Crypto API
+  function sha256(text) {
+    var encoder = new TextEncoder();
+    var data = encoder.encode(text);
+    return crypto.subtle.digest('SHA-256', data).then(function(hash){
+      var arr = Array.from(new Uint8Array(hash));
+      return arr.map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+    });
+  }
+
+  function isUnlocked() {
+    return sessionStorage.getItem(UNLOCK_KEY) === '1';
+  }
+
+  function updateLockUI() {
+    var btn = document.getElementById('lock-btn');
+    if (!btn) return;
+    if (isUnlocked()) {
+      btn.textContent = '🔓 已解锁';
+      btn.className = 'lock-btn unlocked';
+    } else {
+      btn.textContent = '🔒 已锁定';
+      btn.className = 'lock-btn locked';
+    }
+  }
+
+  function buildPinInputs() {
+    var row = document.getElementById('pin-inputs');
+    row.innerHTML = '';
+    for (var i = 0; i < PIN_LENGTH_MAX; i++) {
+      var inp = document.createElement('input');
+      inp.type = 'password';
+      inp.maxLength = 1;
+      inp.pattern = '[0-9]';
+      inp.setAttribute('data-idx', i);
+      inp.addEventListener('input', function(e){
+        var idx = parseInt(e.target.getAttribute('data-idx'));
+        var val = e.target.value.replace(/[^0-9]/g, '');
+        e.target.value = val.slice(0,1);
+        if (val && idx < PIN_LENGTH_MAX - 1) {
+          var next = row.children[idx + 1];
+          if (next) next.focus();
+        }
+        document.getElementById('pin-error').textContent = '';
+      });
+      inp.addEventListener('keydown', function(e){
+        var idx = parseInt(e.target.getAttribute('data-idx'));
+        if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+          var prev = row.children[idx - 1];
+          if (prev) { prev.focus(); prev.value = ''; }
+        }
+        if (e.key === 'Enter') confirmPin();
+      });
+      inp.addEventListener('paste', function(e){
+        e.preventDefault();
+        var paste = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
+        for (var j = 0; j < Math.min(paste.length, PIN_LENGTH_MAX); j++) {
+          if (row.children[j]) row.children[j].value = paste[j];
+        }
+        var last = Math.min(paste.length, PIN_LENGTH_MAX) - 1;
+        if (row.children[last]) row.children[last].focus();
+        document.getElementById('pin-error').textContent = '';
+      });
+      row.appendChild(inp);
+    }
+  }
+
+  function readPin() {
+    var inputs = document.querySelectorAll('#pin-inputs input');
+    var pin = '';
+    inputs.forEach(function(inp){ pin += inp.value; });
+    return pin;
+  }
+
+  function clearPinInputs() {
+    var inputs = document.querySelectorAll('#pin-inputs input');
+    inputs.forEach(function(inp){ inp.value = ''; });
+    if (inputs.length > 0) inputs[0].focus();
+    document.getElementById('pin-error').textContent = '';
+  }
+
+  function showPinModal(mode, callback) {
+    pinMode = mode;
+    pinTargetAction = callback || null;
+    var overlay = document.getElementById('pin-modal-overlay');
+    var title = document.getElementById('pin-modal-title');
+    var sub = document.getElementById('pin-modal-sub');
+    var cancelBtn = document.getElementById('pin-cancel-btn');
+    var confirmBtn = document.getElementById('pin-confirm-btn');
+
+    buildPinInputs();
+    clearPinInputs();
+
+    // Only 'verify' mode supported — password is hardcoded in source
+    title.textContent = '🔒 验证设备密码';
+    sub.textContent = '请输入密码以解锁照片编辑功能';
+    cancelBtn.style.display = '';
+    confirmBtn.textContent = '解锁';
+
+    overlay.style.display = 'flex';
+    setTimeout(function(){
+      var first = document.querySelector('#pin-inputs input');
+      if (first) first.focus();
+    }, 150);
+  }
+
+  window.closePinModal = function() {
+    document.getElementById('pin-modal-overlay').style.display = 'none';
+    pinMode = null;
+    pinTargetAction = null;
+  };
+
+  window.confirmPin = function() {
+    var pin = readPin();
+    var errEl = document.getElementById('pin-error');
+
+    if (pin.length < PIN_LENGTH_MIN) {
+      errEl.textContent = '密码至少需要 ' + PIN_LENGTH_MIN + ' 位数字';
+      return;
+    }
+
+    sha256(pin).then(function(hash){
+      if (hash === HARDCODED_PIN_HASH) {
+        sessionStorage.setItem(UNLOCK_KEY, '1');
+        updateLockUI();
+        closePinModal();
+        if (pinTargetAction) { pinTargetAction(); pinTargetAction = null; }
+      } else {
+        errEl.textContent = '密码错误，请重试';
+        clearPinInputs();
+      }
+    });
+  };
+
+  window.handleLockClick = function() {
+    if (isUnlocked()) {
+      // Lock it
+      sessionStorage.removeItem(UNLOCK_KEY);
+      updateLockUI();
+    } else {
+      showPinModal('verify');
+    }
+  };
+
+  // ═══════════════════════════════════════════
+  //  Interactive User Guide
+  // ═══════════════════════════════════════════
+  var GUIDE_KEY = 'xmuoj_guide_done';
+  var guideStep = 0;
+  var guideSteps = [
+    {
+      title: '欢迎使用 XMUOJ 题目展示系统',
+      desc: '本指南将用 30 秒带你快速了解网站的各项功能。按「下一步」继续，或点击「跳过」随时退出。',
+      target: null,
+      pos: 'center'
+    },
+    {
+      title: '① 统计概览',
+      desc: '顶部统计栏一目了然地展示：总题数、分类组别数、以及简单/中等/困难题目的数量分布。',
+      target: '.stats-bar',
+      pos: 'bottom'
+    },
+    {
+      title: '② 分类组别视图',
+      desc: '在「分类组别」标签页中，题目按算法类别分组（基础入门、枚举、递归、DP…），同组题目按难度排序。点击组标题可折叠/展开。',
+      target: '#tab-categories',
+      pos: 'top'
+    },
+    {
+      title: '③ 按题号排列',
+      desc: '切换到「按题号排列」标签页，所有题目按 LinK 序号从小到大展示，方便按课堂进度查阅。',
+      target: '.tabs',
+      pos: 'bottom'
+    },
+    {
+      title: '④ 搜索与筛选',
+      desc: '支持按题号、标题或标签文字搜索；也可按难度等级或算法标签进行筛选。多个条件可同时使用，结果实时更新。',
+      target: '.filter-bar',
+      pos: 'bottom'
+    },
+    {
+      title: '⑤ 点击题目查看详情',
+      desc: '点击任意题目卡片，弹出详情窗口。包含：所属类别、经典原题描述、朴素解题思路、核心代码（带注释）、以及极简总结。',
+      target: '#tab-categories',
+      pos: 'top'
+    },
+    {
+      title: '⑥ 照片笔记上传（密码保护）',
+      desc: '每道题目支持上传一张照片笔记。照片编辑功能受密码保护——上传/删除需验证密码。密码已内置在源码中，他人即使拿到文件也无法编辑。',
+      target: null,
+      pos: 'center'
+    },
+    {
+      title: '⑦ 深色/浅色模式',
+      desc: '点击右上角「切换主题」按钮可在浅色模式与深色模式之间切换。当前选择会自动保存到浏览器。',
+      target: '.theme-btn',
+      pos: 'bottom'
+    },
+    {
+      title: '准备就绪！',
+      desc: '你已经了解了全部功能。点击「完成」关闭指南，开始浏览题目吧。Keyboard 快捷键：Esc 关闭弹窗，Ctrl+K 聚焦搜索框。',
+      target: null,
+      pos: 'center'
+    }
+  ];
+
+  function positionTooltip(targetEl, pos) {
+    var tip = document.getElementById('guide-tooltip');
+    var spotlight = document.getElementById('spotlight-window');
+    var spotlightContainer = document.getElementById('guide-spotlight');
+
+    if (!targetEl || pos === 'center') {
+      // Center the tooltip
+      tip.style.top = '50%';
+      tip.style.left = '50%';
+      tip.style.transform = 'translate(-50%,-50%)';
+      spotlight.style.display = 'none';
+      return;
+    }
+
+    spotlight.style.display = 'block';
+    var rect = targetEl.getBoundingClientRect();
+    var pad = 6;
+    spotlight.style.top = (rect.top - pad) + 'px';
+    spotlight.style.left = (rect.left - pad) + 'px';
+    spotlight.style.width = (rect.width + pad * 2) + 'px';
+    spotlight.style.height = (rect.height + pad * 2) + 'px';
+
+    var tipRect = tip.getBoundingClientRect();
+    var tipW = tipRect.width || 340;
+    var tipH = tipRect.height || 160;
+    var gap = 16;
+
+    if (pos === 'bottom') {
+      tip.style.top = (rect.bottom + gap) + 'px';
+      tip.style.left = Math.max(10, Math.min(rect.left + rect.width / 2 - tipW / 2, window.innerWidth - tipW - 10)) + 'px';
+      tip.style.transform = 'none';
+    } else if (pos === 'top') {
+      tip.style.top = (rect.top - tipH - gap) + 'px';
+      tip.style.left = Math.max(10, Math.min(rect.left + rect.width / 2 - tipW / 2, window.innerWidth - tipW - 10)) + 'px';
+      tip.style.transform = 'none';
+    } else if (pos === 'right') {
+      tip.style.top = Math.max(10, rect.top + rect.height / 2 - tipH / 2) + 'px';
+      tip.style.left = (rect.right + gap) + 'px';
+      tip.style.transform = 'none';
+    } else if (pos === 'left') {
+      tip.style.top = Math.max(10, rect.top + rect.height / 2 - tipH / 2) + 'px';
+      tip.style.left = (rect.left - tipW - gap) + 'px';
+      tip.style.transform = 'none';
+    }
+  }
+
+  function renderGuideDots() {
+    var dots = document.getElementById('guide-dots');
+    var html = '';
+    for (var i = 0; i < guideSteps.length; i++) {
+      html += '<span class="step-dot' + (i === guideStep ? ' active' : '') + '"></span>';
+    }
+    dots.innerHTML = html;
+  }
+
+  function renderGuideStep() {
+    var step = guideSteps[guideStep];
+    document.getElementById('guide-title').textContent = step.title;
+    document.getElementById('guide-desc').textContent = step.desc;
+
+    // Prev button
+    var prevBtn = document.getElementById('guide-prev');
+    prevBtn.style.display = guideStep === 0 ? 'none' : '';
+
+    // Next button
+    var nextBtn = document.getElementById('guide-next');
+    if (guideStep === guideSteps.length - 1) {
+      nextBtn.textContent = '完成';
+      nextBtn.onclick = endGuide;
+    } else {
+      nextBtn.textContent = '下一步';
+      nextBtn.onclick = nextGuideStep;
+    }
+
+    renderGuideDots();
+
+    // Position spotlight + tooltip
+    var targetEl = step.target ? document.querySelector(step.target) : null;
+    positionTooltip(targetEl, step.pos);
+
+    // Show
+    document.getElementById('guide-spotlight').style.display = 'block';
+    document.getElementById('guide-tooltip').style.display = 'block';
+  }
+
+  window.startGuide = function() {
+    guideStep = 0;
+    renderGuideStep();
+  };
+
+  window.nextGuideStep = function() {
+    if (guideStep < guideSteps.length - 1) {
+      guideStep++;
+      renderGuideStep();
+    }
+  };
+
+  window.prevGuideStep = function() {
+    if (guideStep > 0) {
+      guideStep--;
+      renderGuideStep();
+    }
+  };
+
+  window.endGuide = function() {
+    guideStep = 0;
+    document.getElementById('guide-spotlight').style.display = 'none';
+    document.getElementById('guide-tooltip').style.display = 'none';
+    storage.set(GUIDE_KEY, '1');
+  };
+
+  // Reveal hidden code file content for pseudo-problem
+  window.revealEggCode = function() {
+    var el = document.getElementById('egg-code-content');
+    if(el) el.style.display = 'block';
+  };
+
+  // ═══════════════════════════════════════════
+  //  Easter Egg
+  // ═══════════════════════════════════════════
+  var EGG_SECRET = '05170417';
+
+  window.checkEggSecret = function() {
+    var input = document.getElementById('egg-secret-input');
+    var errEl = document.getElementById('egg-secret-error');
+    var val = (input ? input.value : '').trim();
+
+    if (val === EGG_SECRET) {
+      closeModal();
+      setTimeout(function(){ showEggPage(); }, 300);
+    } else {
+      if (errEl) errEl.textContent = 'Opps';
+      if (input) input.value = '';
+      setTimeout(function(){
+        closeModal();
+        document.getElementById('search-input').value = '';
+        document.getElementById('diff-filter').value = '';
+        document.getElementById('tag-filter').value = '';
+        switchTab('categories');
+        doFilter();
+      }, 600);
+    }
+  };
+
+  function showEggPage() {
+    document.getElementById('egg-overlay').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function spawnConfetti() {
+    var colors = ['#0da5b3','#20c4d4','#87c4ca','#ffe0a0','#f5fafa','#ffb3c6','#ffe066','#a0e7f0','#ffcc80'];
+    for (var i = 0; i < 60; i++) {
+      var piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + '%';
+      piece.style.top = -(Math.random() * 30 + 10) + 'px';
+      piece.style.width = (Math.random() * 8 + 6) + 'px';
+      piece.style.height = (Math.random() * 12 + 8) + 'px';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+      piece.style.animationDelay = Math.random() * 1.5 + 's';
+      document.body.appendChild(piece);
+    }
+  }
+
+  function clearConfetti() {
+    var pieces = document.querySelectorAll('.confetti-piece');
+    pieces.forEach(function(p){ p.remove(); });
+  }
+
+  var eggDismissed = false;
+  var celebrateStep = 0;
+
+  window.dismissEgg = function(event) {
+    if (eggDismissed) return;
+    eggDismissed = true;
+
+    var egg = document.getElementById('egg-shell');
+    var overlay = document.getElementById('egg-overlay');
+    var introText = document.getElementById('egg-intro-text');
+    var celebrate = document.getElementById('egg-celebrate');
+    var big = document.getElementById('egg-big-emoji');
+
+    // Phase 1: Crack the egg, kill animation so opacity:0 sticks
+    egg.classList.add('crack');
+    introText.style.animation = 'none';
+    introText.style.opacity = '0';
+
+    // Phase 2: Shatter egg, hide overlay clicks, show celebration overlay
+    setTimeout(function(){
+      egg.classList.remove('crack');
+      egg.classList.add('shatter');
+      overlay.style.pointerEvents = 'none';
+      celebrate.classList.add('active');
+      spawnConfetti();
+    }, 400);
+
+    // Phase 3: Pop :P — messages appear one per click via endCelebration
+    setTimeout(function(){
+      big.classList.add('pop');
+    }, 900);
+  };
+
+  window.endCelebration = function(event) {
+    if (event) event.stopPropagation();
+    celebrateStep++;
+
+    // Show messages one at a time on each click
+    if (celebrateStep === 1) {
+      document.getElementById('egg-msg1').classList.add('show');
+      return;
+    }
+    if (celebrateStep === 2) {
+      document.getElementById('egg-msg2').classList.add('show');
+      return;
+    }
+    if (celebrateStep === 3) {
+      document.getElementById('egg-msg3').classList.add('show');
+      return;
+    }
+
+    // Step 4+: Fade out and return to homepage
+    var celebrate = document.getElementById('egg-celebrate');
+    var overlay = document.getElementById('egg-overlay');
+    celebrate.style.opacity = '0';
+    celebrate.style.transition = 'opacity 0.6s ease';
+    celebrate.style.pointerEvents = 'none';
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.6s ease';
+    clearConfetti();
+
+    setTimeout(function(){
+      celebrate.classList.remove('active');
+      celebrate.style.opacity = '';
+      celebrate.style.pointerEvents = '';
+      overlay.style.display = 'none';
+      overlay.style.opacity = '';
+      overlay.style.pointerEvents = '';
+      document.getElementById('egg-big-emoji').classList.remove('pop');
+      document.getElementById('egg-msg1').classList.remove('show');
+      document.getElementById('egg-msg2').classList.remove('show');
+      document.getElementById('egg-msg3').classList.remove('show');
+      document.getElementById('egg-shell').classList.remove('crack','shatter');
+      document.getElementById('egg-intro-text').style.opacity = '';
+      document.getElementById('egg-intro-text').style.animation = '';
+      eggDismissed = false;
+      celebrateStep = 0;
+      document.body.style.overflow = '';
+      document.getElementById('search-input').value = '';
+      document.getElementById('diff-filter').value = '';
+      document.getElementById('tag-filter').value = '';
+      switchTab('categories');
+      doFilter();
+    }, 700);
+  };
+
+  // Parse problem data from JSON script tag
+  var PROBLEMS = JSON.parse(document.getElementById('problem-data').textContent);
+
+  // Hidden pseudo-problem (Easter egg — only visible via "LMJ" tag)
+  PROBLEMS.push({
+    id: "???",
+    title: "一个并不存在的题目",
+    cat: "彩蛋",
+    sub: "",
+    tags: ["LMJ"],
+    diff: 1,
+    classic: "这道题并不存在于任何已知的题库中...你究竟是如何找到它的？",
+    naive: "看起来此处本该有一段朴素思路，但它被一只彩蛋吃掉了。或许你可以试试下方的「伪照片导入框」，输入某段神秘代码来召唤它？",
+    summary: "好奇心是程序员最宝贵的品质之一 —— 但有时候，过度的好奇心只会带来一只彩蛋。",
+    keyCode: "啊呀，这里似乎本来有一段核心代码，但它似乎被狡猾的彩蛋一边\"嘻嘻\"一边吃掉了！我还能听到那笑声呢！"
+  });
+
+  // Helper functions
+  function getDifficultyLabel(d) { return d===1?'简单':d===2?'中等':'困难'; }
+  function getDifficultyClass(d) { return d===1?'diff-easy':d===2?'diff-mid':'diff-hard'; }
+  function safeHtml(s) { if(!s&&s!==0) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  // Populate tag filter
+  var allTags = {};
+  PROBLEMS.forEach(function(p){ p.tags.forEach(function(t){ allTags[t]=true; }); });
+  var tagFilter = document.getElementById('tag-filter');
+  Object.keys(allTags).sort().forEach(function(t){
+    var o = document.createElement('option'); o.value = t; o.textContent = t; tagFilter.appendChild(o);
+  });
+
+  // Render category view
+  function renderCategories() {
+    var container = document.getElementById('tab-categories');
+    var groups = {};
+    PROBLEMS.forEach(function(p){
+      if(p.id === '???') return; // Hidden — rendered separately
+      if(!groups[p.cat]) groups[p.cat] = { subs:{} };
+      var subKey = p.sub || '__default__';
+      if(!groups[p.cat].subs[subKey]) groups[p.cat].subs[subKey] = [];
+      groups[p.cat].subs[subKey].push(p);
+    });
+    Object.keys(groups).forEach(function(k){
+      Object.keys(groups[k].subs).forEach(function(sk){
+        groups[k].subs[sk].sort(function(a,b){ return a.diff-b.diff || (a.id<b.id?-1:1); });
+      });
+    });
+    var catOrder = ["基础入门","枚举","双指针","递归","排序","二分查找","位运算","搜索","贪心","图论","DP"];
+    var html = '';
+    catOrder.forEach(function(cat){
+      if(!groups[cat]) return;
+      var g = groups[cat];
+      var subs = Object.keys(g.subs);
+      var total = 0;
+      subs.forEach(function(s){ total += g.subs[s].length; });
+      html += '<div class="group" data-cat="'+cat+'">';
+      html += '<div class="group-header" onclick="toggleGroup(this)">';
+      html += '<span>'+cat+'</span>';
+      html += '<span style="display:flex;align-items:center;gap:10px;"><span class="group-count">'+total+' 题</span><span class="group-arrow">&#9660;</span></span>';
+      html += '</div><div class="group-body">';
+      subs.sort(function(a,b){ return a==='__default__'?1:b==='__default__'?-1:a.localeCompare(b); });
+      subs.forEach(function(subKey){
+        var probs = g.subs[subKey];
+        if(subKey !== '__default__'){
+          html += '<div class="sub-group" data-sub="'+subKey+'">';
+          html += '<div class="sub-group-header" onclick="toggleSubGroup(this)">'+subKey+' <span class="group-count">'+probs.length+' 题</span></div>';
+          html += '<div class="sub-group-body">';
+        }
+        probs.forEach(function(p){ html += renderProblemCard(p); });
+        if(subKey !== '__default__') html += '</div></div>';
+      });
+      html += '</div></div>';
+    });
+    // Hidden easter egg group (only visible when LMJ tag selected)
+    var eggP = null;
+    for(var ei=0;ei<PROBLEMS.length;ei++){ if(PROBLEMS[ei].id==='???'){ eggP=PROBLEMS[ei]; break; } }
+    if(eggP) {
+      html += '<div class="group" data-cat="彩蛋" style="display:none;">';
+      html += '<div class="group-header" onclick="toggleGroup(this)"><span>🥚 彩蛋</span><span style="display:flex;align-items:center;gap:10px;"><span class="group-count">1 题</span><span class="group-arrow">&#9660;</span></span></div>';
+      html += '<div class="group-body">'+renderProblemCard(eggP)+'</div></div>';
+    }
+    container.innerHTML = html || '<div class="no-results">没有匹配的题目</div>';
+  }
+
+  function renderProblemCard(p) {
+    var tagsHtml = p.tags.slice(0,3).map(function(t){ return '<span class="prob-tag">'+t+'</span>'; }).join('');
+    return '<div class="problem-card" data-id="'+p.id+'" data-title="'+p.title+'" data-tags="'+p.tags.join(',')+'" data-diff="'+p.diff+'" onclick="openProblem(\''+p.id+'\')">'+
+      '<span class="prob-num">'+p.id+'</span>'+
+      '<span class="prob-title">'+p.title+'</span>'+
+      '<span class="prob-diff '+getDifficultyClass(p.diff)+'">'+getDifficultyLabel(p.diff)+'</span>'+
+      '<span class="prob-tags">'+tagsHtml+'</span>'+
+    '</div>';
+  }
+
+  function renderSequential() {
+    var container = document.getElementById('tab-sequential');
+    var sorted = PROBLEMS.slice().sort(function(a,b){
+      var na = parseFloat(a.id.replace('LinK',''));
+      var nb = parseFloat(b.id.replace('LinK',''));
+      return na - nb;
+    });
+    var html = '';
+    sorted.forEach(function(p){
+      if(p.id === '???') return; // Hidden — rendered at end
+      html += '<div class="seq-item" data-id="'+p.id+'" data-title="'+p.title+'" data-tags="'+p.tags.join(',')+'" data-diff="'+p.diff+'" onclick="openProblem(\''+p.id+'\')">'+
+        '<span class="prob-num">'+p.id+'</span>'+
+        '<span class="prob-title">'+p.title+'</span>'+
+        '<span class="prob-diff '+getDifficultyClass(p.diff)+'">'+getDifficultyLabel(p.diff)+'</span>'+
+        '<span class="prob-tags">'+p.tags.slice(0,3).map(function(t){ return '<span class="prob-tag">'+t+'</span>'; }).join('')+'</span>'+
+        '<span style="color:var(--text2);font-size:0.8rem;">'+p.cat+'</span>'+
+      '</div>';
+    });
+    // Hidden easter egg item
+    var eggP = null;
+    for(var ei=0;ei<PROBLEMS.length;ei++){ if(PROBLEMS[ei].id==='???'){ eggP=PROBLEMS[ei]; break; } }
+    if(eggP) {
+      html += '<div class="seq-item" data-id="'+eggP.id+'" data-title="'+eggP.title+'" data-tags="'+eggP.tags.join(',')+'" data-diff="'+eggP.diff+'" onclick="openProblem(\''+eggP.id+'\')" style="display:none;">'+
+        '<span class="prob-num">'+eggP.id+'</span>'+
+        '<span class="prob-title">'+eggP.title+'</span>'+
+        '<span class="prob-diff '+getDifficultyClass(eggP.diff)+'">'+getDifficultyLabel(eggP.diff)+'</span>'+
+        '<span class="prob-tags">'+eggP.tags.slice(0,3).map(function(t){ return '<span class="prob-tag">'+t+'</span>'; }).join('')+'</span>'+
+        '<span style="color:var(--text2);font-size:0.8rem;">'+eggP.cat+'</span>'+
+      '</div>';
+    }
+    container.innerHTML = html;
+  }
+
+  // Filter functions
+  window.doFilter = function() {
+    var query = (document.getElementById('search-input').value||'').toLowerCase();
+    var diff = document.getElementById('diff-filter').value;
+    var tag = document.getElementById('tag-filter').value;
+    document.querySelectorAll('.problem-card, .seq-item').forEach(function(el){
+      var id = (el.getAttribute('data-id')||'').toLowerCase();
+      var title = (el.getAttribute('data-title')||'').toLowerCase();
+      var tags = (el.getAttribute('data-tags')||'').toLowerCase();
+      var d = parseInt(el.getAttribute('data-diff'));
+      var isEgg = (el.getAttribute('data-id') === '???');
+      var show = true;
+      if(query && id.indexOf(query)===-1 && title.indexOf(query)===-1 && tags.indexOf(query)===-1) show=false;
+      if(diff && !(diff==='easy'&&d===1 || diff==='mid'&&d===2 || diff==='hard'&&d===3)) show=false;
+      var tagLower = tag.toLowerCase();
+      if(tag && tags.split(',').map(function(s){return s.trim().toLowerCase();}).indexOf(tagLower)===-1) show=false;
+      // Easter egg: only visible when LMJ tag is explicitly selected
+      if(isEgg && tagLower !== 'lmj') show = false;
+      el.style.display = show ? '' : 'none';
+    });
+    document.querySelectorAll('.group').forEach(function(g){
+      var cards = g.querySelectorAll('.problem-card');
+      if(cards.length===0) return;
+      var allHidden = true;
+      cards.forEach(function(c){ if(c.style.display!=='none') allHidden=false; });
+      g.style.display = allHidden ? 'none' : '';
+    });
+    document.querySelectorAll('.sub-group').forEach(function(sg){
+      var cards = sg.querySelectorAll('.problem-card');
+      if(cards.length===0) return;
+      var allHidden = true;
+      cards.forEach(function(c){ if(c.style.display!=='none') allHidden=false; });
+      sg.style.display = allHidden ? 'none' : '';
+    });
+  };
+
+  window.clearFilter = function() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('diff-filter').value = '';
+    document.getElementById('tag-filter').value = '';
+    document.querySelectorAll('.problem-card, .seq-item').forEach(function(el){ el.style.display = ''; });
+    document.querySelectorAll('.group, .sub-group').forEach(function(g){ g.style.display = ''; });
+    // Re-hide easter egg elements
+    document.querySelectorAll('[data-id="???"]').forEach(function(el){ el.style.display = 'none'; });
+    var eggGroup = document.querySelector('.group[data-cat="彩蛋"]');
+    if(eggGroup) eggGroup.style.display = 'none';
+  };
+
+  // Modal
+  window.openProblem = function(id) {
+    var p = null;
+    for(var i=0;i<PROBLEMS.length;i++){ if(PROBLEMS[i].id===id){ p=PROBLEMS[i]; break; } }
+    if(!p) return;
+
+    var isEaster = (p.id === '???');
+
+    // Special photo zone for easter egg pseudo-problem
+    var photoHtml;
+    if (isEaster) {
+      photoHtml = '<div class="photo-zone" style="border-style:dotted;border-color:var(--accent2);">'+
+        '<p style="color:var(--text2);margin-bottom:6px;">🔍 伪照片导入框</p>'+
+        '<input type="password" id="egg-secret-input" class="egg-secret-input" placeholder="输入密钥..." onkeydown="if(event.key===\'Enter\')checkEggSecret()">'+
+        '<br><button class="egg-secret-btn" onclick="checkEggSecret()">验证</button>'+
+        '<div id="egg-secret-error" style="color:#f44336;font-size:0.8rem;margin-top:6px;min-height:1.2em;"></div>'+
+        '</div>';
+    } else {
+      var storedPhoto = storage.get('photo_'+id,'');
+      photoHtml = storedPhoto
+        ? '<div class="photo-zone"><img src="'+storedPhoto+'" class="photo-preview" alt="photo"><br><button class="photo-delete" onclick="deletePhoto(\''+id+'\')">删除照片</button><div style="margin-top:8px;"><label for="photo-reupload-'+id+'" style="cursor:pointer;color:var(--accent);">重新上传照片</label></div><input type="file" id="photo-reupload-'+id+'" accept="image/*" onchange="uploadPhoto(\''+id+'\',this)"></div>'
+        : '<div class="photo-zone"><label for="photo-input-'+id+'">点击上传照片（题目笔记/草稿等）</label><input type="file" id="photo-input-'+id+'" accept="image/*" onchange="uploadPhoto(\''+id+'\',this)"></div>';
+    }
+
+    var tagsHtml = p.tags.map(function(t){ return '<span class="prob-tag">'+t+'</span>'; }).join('');
+
+    // Code file link: for easter egg, show the key inline; for normal problems, link to file
+    var codeLinkHtml;
+    if (isEaster) {
+      codeLinkHtml = '<a class="code-link" href="javascript:void(0)" onclick="revealEggCode()" style="display:inline-block;">查看完整代码文件</a>'+
+        '<div id="egg-code-content" style="display:none;margin-top:10px;"><pre style="font-size:0.8rem;text-align:center;padding:10px;">'+
+        '// Here\'s a password which isn\'t important at all.\n// What will you do with it? :D\n// 05170417</pre></div>';
+    } else {
+      codeLinkHtml = '<a class="code-link" href="code/'+p.codeFile+'" target="_blank">查看完整代码文件</a>';
+    }
+
+    var modal = document.getElementById('modal-box');
+    modal.innerHTML =
+      '<div class="modal-header"><div><h2>'+p.id+' '+p.title+'</h2><div class="badge-row"><span class="prob-diff '+getDifficultyClass(p.diff)+'">'+getDifficultyLabel(p.diff)+'</span>'+tagsHtml+'</div></div><button class="modal-close" onclick="closeModal()">x</button></div>'+
+      '<div class="modal-body">'+
+      '<div class="modal-section"><h3>所属类别</h3><p>'+p.cat+(p.sub?' / '+p.sub:'')+'</p></div>'+
+      '<div class="modal-section"><h3>经典原题</h3><p>'+p.classic+'</p></div>'+
+      '<div class="modal-section"><h3>朴素思路</h3><p>'+p.naive+'</p></div>'+
+      '<div class="modal-section"><h3>极简总结</h3><p>'+p.summary+'</p></div>'+
+      '<div class="modal-section"><h3>核心代码</h3><pre>'+safeHtml(p.keyCode)+'</pre></div>'+
+      codeLinkHtml+
+      '<div class="modal-section" style="margin-top:16px;"><h3>题目笔记照片</h3>'+photoHtml+'</div></div>';
+    document.getElementById('modal-overlay').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeModal = function() {
+    document.getElementById('modal-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+  };
+
+  window.uploadPhoto = function(id, input) {
+    // Require device unlock — password hardcoded in source for cross-device protection
+    if (!isUnlocked()) {
+      showPinModal('verify', function(){ openProblem(id); });
+      return;
+    }
+    var file = input.files[0];
+    if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e){
+      try { storage.set('photo_'+id, e.target.result); openProblem(id); }
+      catch(err){ alert('图片过大，请压缩后再上传。'); }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.deletePhoto = function(id) {
+    // Require device unlock
+    if (!isUnlocked()) {
+      showPinModal('verify', function(){ openProblem(id); });
+      return;
+    }
+    storage.remove('photo_'+id);
+    openProblem(id);
+  };
+
+  // ── AC Screenshots ──
+  var AC_SCREENSHOTS_KEY = 'xmuoj_ac_screenshots';
+
+  function getAcScreenshots() {
+    var raw = storage.get(AC_SCREENSHOTS_KEY, '');
+    if (!raw) return [];
+    try { return JSON.parse(raw); } catch(e) { return []; }
+  }
+
+  function saveAcScreenshots(list) {
+    storage.set(AC_SCREENSHOTS_KEY, JSON.stringify(list));
+  }
+
+  window.uploadAcScreenshot = function(input) {
+    if (!isUnlocked()) {
+      showPinModal('verify', function(){ input.value = ''; });
+      return;
+    }
+    var file = input.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var id = 'ac_' + Date.now();
+        storage.set('ac_photo_' + id, e.target.result);  // separate key to avoid 5 MiB limit per-key
+        var list = getAcScreenshots();
+        list.push({ id: id, ts: new Date().toLocaleString('zh-CN') });
+        saveAcScreenshots(list);
+        input.value = '';
+        renderScreenshots();
+      } catch(err) {
+        alert('图片过大，请压缩后再上传。');
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  window.deleteAcScreenshot = function(id) {
+    if (!isUnlocked()) {
+      showPinModal('verify', function(){ renderScreenshots(); });
+      return;
+    }
+    storage.remove('ac_photo_' + id);
+    var list = getAcScreenshots().filter(function(item){ return item.id !== id; });
+    saveAcScreenshots(list);
+    renderScreenshots();
+  };
+
+  window.openAcLightbox = function(src) {
+    var lb = document.getElementById('ac-lightbox');
+    lb.innerHTML = '<img src="' + src + '" alt="AC截图" onclick="event.stopPropagation()">';
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeAcLightbox = function() {
+    var lb = document.getElementById('ac-lightbox');
+    lb.style.display = 'none';
+    lb.innerHTML = '';
+    document.body.style.overflow = '';
+  };
+
+  function renderScreenshots() {
+    var container = document.getElementById('tab-screenshots');
+    var list = getAcScreenshots();
+    var html = '<div class="ac-grid">';
+    // Upload card
+    html += '<label class="ac-upload-card"><div class="ac-upload-plus">+</div><div class="ac-upload-label">上传AC截图</div><input type="file" accept="image/*" onchange="uploadAcScreenshot(this)"></label>';
+    if (list.length === 0) {
+      html += '<div class="ac-empty"><div class="ac-empty-icon">📸</div><p>还没有上传任何截图</p><p style="font-size:0.8rem;margin-top:4px;">点击左侧 + 卡片上传第一张 AC 截图吧</p></div>';
+    } else {
+      for (var i = list.length - 1; i >= 0; i--) {
+        var item = list[i];
+        var src = '';
+        try { src = storage.get('ac_photo_' + item.id, ''); } catch(e) {}
+        html += '<div class="ac-card">';
+        html += '<img class="ac-card-img" src="' + src + '" alt="Screenshot" loading="lazy" onclick="openAcLightbox(this.src)">';
+        html += '<div class="ac-card-footer"><span>' + safeHtml(item.ts || '') + '</span><button class="ac-card-del" onclick="event.stopPropagation();deleteAcScreenshot(\'' + item.id + '\')">删除</button></div>';
+        html += '</div>';
+      }
+    }
+    html += '</div>';
+    container.innerHTML = html;
+  };
+
+  window.toggleGroup = function(header) {
+    header.parentElement.classList.toggle('collapsed');
+  };
+
+  window.toggleSubGroup = function(header) {
+    header.parentElement.classList.toggle('collapsed');
+  };
+
+  window.switchTab = function(name) {
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.tab-content').forEach(function(c){ c.classList.remove('active'); });
+    var btns = document.querySelectorAll('.tab-btn');
+    for(var i=0;i<btns.length;i++){ if(btns[i].textContent.indexOf(name==='categories'?'分类':name==='sequential'?'题号':'截图')>=0) btns[i].classList.add('active'); }
+    document.getElementById('tab-'+name).classList.add('active');
+    if(name==='sequential' && !document.getElementById('tab-sequential').innerHTML) renderSequential();
+    if(name==='screenshots') renderScreenshots();
+    doFilter();
+  };
+
+  window.toggleTheme = function() {
+    var html = document.documentElement;
+    var cur = html.getAttribute('data-theme');
+    html.setAttribute('data-theme', cur==='dark'?'':'dark');
+    storage.set('xmuoj_theme', cur==='dark'?'':'dark');
+  };
+
+  function updateStats() {
+    var easy=0, mid=0, hard=0;
+    PROBLEMS.forEach(function(p){ if(p.id==='???') return; if(p.diff===1) easy++; else if(p.diff===2) mid++; else hard++; });
+    document.getElementById('stat-easy').textContent = easy;
+    document.getElementById('stat-mid').textContent = mid;
+    document.getElementById('stat-hard').textContent = hard;
+    var realProblems = PROBLEMS.filter(function(p){ return p.id!=='???'; });
+    document.getElementById('stat-groups').textContent = (new Set(realProblems.map(function(p){return p.cat;}))).size;
+    document.getElementById('completion-badge').textContent = '已完成 '+realProblems.length+' 题';
+  }
+
+  // Init
+  function init() {
+    var saved = storage.get('xmuoj_theme','');
+    if(saved==='dark') document.documentElement.setAttribute('data-theme','dark');
+    updateLockUI();
+    renderCategories();
+    updateStats();
+    document.addEventListener('keydown', function(e){
+      if(e.key==='Escape'){ closeModal(); closePinModal(); closeAcLightbox(); }
+      if((e.ctrlKey||e.metaKey) && e.key==='k'){ e.preventDefault(); document.getElementById('search-input').focus(); }
+    });
+    // Show guide on first visit
+    if (!storage.get(GUIDE_KEY, '') && window.innerWidth > 768) {
+      setTimeout(function(){ startGuide(); }, 600);
+    }
+  }
+
+  init();
+})();
+</script>
+<!-- Easter Egg Page -->
+<div id="egg-overlay" class="egg-overlay" style="display:none;" onclick="dismissEgg(event)">
+  <div id="egg-shell" class="egg-shape"></div>
+  <div class="egg-text" id="egg-intro-text">"Here is a colourful egg. Just kidding. Well, you shouldn't expect it way too much in the first place, right? It's just a simple funny test for my first project. Thx for being excessively careful with my homework~ :P"</div>
+</div>
+<div id="egg-celebrate" class="egg-celebrate" onclick="endCelebration()">
+  <div id="egg-big-emoji" class="egg-big-emoji">:P</div>
+  <div class="egg-msg msg1" id="egg-msg1">这可花了我不少token</div>
+  <div class="egg-msg msg2" id="egg-msg2">这是为了纪念我的一个好朋友~</div>
+  <div class="egg-msg msg3" id="egg-msg3">谢谢你这么认真地看我的作业~</div>
+</div>
+
+<!-- AC Screenshot Lightbox -->
+<div id="ac-lightbox" class="ac-lightbox" style="display:none;" onclick="closeAcLightbox()"></div>
+
+</body>
+</html>

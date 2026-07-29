@@ -1,0 +1,548 @@
+﻿[
+    {
+        "difficulty":  null,
+        "dirName":  "LinK01-a-b",
+        "title":  "A+B",
+        "problemId":  7464,
+        "displayId":  "LinK01"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK02-problem",
+        "title":  "完美立方",
+        "problemId":  7465,
+        "displayId":  "LinK02"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK03-problem",
+        "title":  "人的周期",
+        "problemId":  7466,
+        "displayId":  "LinK03"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK04-problem",
+        "title":  "排序考试",
+        "problemId":  7467,
+        "displayId":  "LinK04"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK05-problem",
+        "title":  "假币问题",
+        "problemId":  7468,
+        "displayId":  "LinK05"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK06-problem",
+        "title":  "两数之和",
+        "problemId":  7469,
+        "displayId":  "LinK06"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK07-problem",
+        "title":  "三数之和",
+        "problemId":  7470,
+        "displayId":  "LinK07"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK08-problem",
+        "title":  "四数之和",
+        "problemId":  7471,
+        "displayId":  "LinK08"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK09-i",
+        "title":  "汉诺塔I",
+        "problemId":  7472,
+        "displayId":  "LinK09"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK10-ii",
+        "title":  "汉诺塔II",
+        "problemId":  7473,
+        "displayId":  "LinK10"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK11-dfs",
+        "title":  "DFS试炼之排列数字",
+        "problemId":  7474,
+        "displayId":  "LinK11"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK12-problem",
+        "title":  "字符全排列",
+        "problemId":  7475,
+        "displayId":  "LinK12"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK13-n",
+        "title":  "输出N皇后的全部摆法",
+        "problemId":  7476,
+        "displayId":  "LinK13"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK14.5-dfs-n",
+        "title":  "DFS试炼之n皇后问题",
+        "problemId":  7560,
+        "displayId":  "LinK14.5"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK14-n",
+        "title":  "求八皇后的第n种解",
+        "problemId":  7477,
+        "displayId":  "LinK14"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK15-problem",
+        "title":  "爬天梯",
+        "problemId":  7478,
+        "displayId":  "LinK15"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK16-problem",
+        "title":  "放苹果",
+        "problemId":  7479,
+        "displayId":  "LinK16"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK17-problem",
+        "title":  "递归求波兰表达式",
+        "problemId":  7480,
+        "displayId":  "LinK17"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK18-2",
+        "title":  "2的幂次方表示",
+        "problemId":  7481,
+        "displayId":  "LinK18"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK19-problem",
+        "title":  "递归实现指数型枚举",
+        "problemId":  7482,
+        "displayId":  "LinK19"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK20-problem",
+        "title":  "递归实现组合型枚举",
+        "problemId":  7483,
+        "displayId":  "LinK20"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK21-problem",
+        "title":  "递归实现排列型枚举",
+        "problemId":  7484,
+        "displayId":  "LinK21"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK22-problem",
+        "title":  "算术表达式",
+        "problemId":  7485,
+        "displayId":  "LinK22"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK23-problem",
+        "title":  "二进制密码锁",
+        "problemId":  7486,
+        "displayId":  "LinK23"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK24-problem",
+        "title":  "熄灯问题",
+        "problemId":  7487,
+        "displayId":  "LinK24"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK25-problem",
+        "title":  "拨钟问题",
+        "problemId":  7488,
+        "displayId":  "LinK25"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK26-24",
+        "title":  "算24",
+        "problemId":  7489,
+        "displayId":  "LinK26"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK27-problem",
+        "title":  "大数排序",
+        "problemId":  7490,
+        "displayId":  "LinK27"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK28-k",
+        "title":  "快速选择第k个数",
+        "problemId":  7491,
+        "displayId":  "LinK28"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK29-k",
+        "title":  "输出前k大的数",
+        "problemId":  7492,
+        "displayId":  "LinK29"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK30-problem",
+        "title":  "归并排序",
+        "problemId":  7493,
+        "displayId":  "LinK30"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK31-problem",
+        "title":  "求排列的逆序数",
+        "problemId":  7494,
+        "displayId":  "LinK31"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK32-problem",
+        "title":  "查找指定数",
+        "problemId":  7495,
+        "displayId":  "LinK32"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK33-problem",
+        "title":  "攻击范围",
+        "problemId":  7496,
+        "displayId":  "LinK33"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK34-problem",
+        "title":  "求方程的根",
+        "problemId":  7497,
+        "displayId":  "LinK34"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK35-problem",
+        "title":  "数的三次方根",
+        "problemId":  7498,
+        "displayId":  "LinK35"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK36-problem",
+        "title":  "最小预算值",
+        "problemId":  7499,
+        "displayId":  "LinK36"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK37-problem",
+        "title":  "林克的蛋糕",
+        "problemId":  7500,
+        "displayId":  "LinK37"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK38-problem",
+        "title":  "林克的命运之阵",
+        "problemId":  7501,
+        "displayId":  "LinK38"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK39-problem",
+        "title":  "净化迷雾森林",
+        "problemId":  7502,
+        "displayId":  "LinK39"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK40-1",
+        "title":  "骑士林克的怜悯(1)",
+        "problemId":  7503,
+        "displayId":  "LinK40"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK41-problem",
+        "title":  "英杰们的蛋糕塔",
+        "problemId":  7504,
+        "displayId":  "LinK41"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK42-problem",
+        "title":  "击杀黄金蛋糕人马",
+        "problemId":  7505,
+        "displayId":  "LinK42"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK43-1",
+        "title":  "求二进制中1的个数",
+        "problemId":  7506,
+        "displayId":  "LinK43"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK44-1-lowbit",
+        "title":  "二进制中1的最低位位置(打表+Lowbit)",
+        "problemId":  7507,
+        "displayId":  "LinK44"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK45-problem",
+        "title":  "真假记忆碎片",
+        "problemId":  7508,
+        "displayId":  "LinK45"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK46-1",
+        "title":  "寻找林克的回忆(1)",
+        "problemId":  7509,
+        "displayId":  "LinK46"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK47-2",
+        "title":  "寻找林克的回忆(2)",
+        "problemId":  7510,
+        "displayId":  "LinK47"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK48-3",
+        "title":  "寻找林克的回忆(3)",
+        "problemId":  7511,
+        "displayId":  "LinK48"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK49-4",
+        "title":  "寻找林克的回忆(4)",
+        "problemId":  7512,
+        "displayId":  "LinK49"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK50-4",
+        "title":  "寻找林克的回忆(4)",
+        "problemId":  7513,
+        "displayId":  "LinK50"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK51-problem",
+        "title":  "净化迷雾森林(广搜)",
+        "problemId":  7514,
+        "displayId":  "LinK51"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK52-problem",
+        "title":  "波克布林的巡逻范围",
+        "problemId":  7515,
+        "displayId":  "LinK52"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK53-problem",
+        "title":  "加农的入侵",
+        "problemId":  7516,
+        "displayId":  "LinK53"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK54-2",
+        "title":  "骑士林克的怜悯(2)",
+        "problemId":  7517,
+        "displayId":  "LinK54"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK55-problem",
+        "title":  "公主的攻击范围",
+        "problemId":  7518,
+        "displayId":  "LinK55"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK56-problem",
+        "title":  "滚石柱",
+        "problemId":  7519,
+        "displayId":  "LinK56"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK57-dijkstra-1",
+        "title":  "Dijkstra求最短路(1)",
+        "problemId":  7520,
+        "displayId":  "LinK57"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK58-dijkstra-2",
+        "title":  "Dijkstra求最短路(2)",
+        "problemId":  7521,
+        "displayId":  "LinK58"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK59-problem",
+        "title":  "维修电路",
+        "problemId":  7522,
+        "displayId":  "LinK59"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK60-problem",
+        "title":  "突袭路线",
+        "problemId":  7523,
+        "displayId":  "LinK60"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK61-problem",
+        "title":  "最省赛程",
+        "problemId":  7524,
+        "displayId":  "LinK61"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK62-problem",
+        "title":  "数字三角形",
+        "problemId":  7525,
+        "displayId":  "LinK62"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK63-01",
+        "title":  "林克的01背包",
+        "problemId":  7526,
+        "displayId":  "LinK63"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK64-problem",
+        "title":  "林克的完全背包",
+        "problemId":  7527,
+        "displayId":  "LinK64"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK65-1",
+        "title":  "多重背包问题(1)",
+        "problemId":  7528,
+        "displayId":  "LinK65"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK66-2",
+        "title":  "多重背包问题(2)",
+        "problemId":  7529,
+        "displayId":  "LinK66"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK67-problem",
+        "title":  "分组背包问题",
+        "problemId":  7530,
+        "displayId":  "LinK67"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK68-problem",
+        "title":  "混合背包问题",
+        "problemId":  7531,
+        "displayId":  "LinK68"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK69-problem",
+        "title":  "摘花生",
+        "problemId":  7532,
+        "displayId":  "LinK69"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK70-problem",
+        "title":  "最低通行费",
+        "problemId":  7533,
+        "displayId":  "LinK70"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK71-problem",
+        "title":  "最长上升子序列",
+        "problemId":  7534,
+        "displayId":  "LinK71"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK72-2",
+        "title":  "最长上升子序列(2)",
+        "problemId":  7535,
+        "displayId":  "LinK72"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK73-problem",
+        "title":  "拦截导弹",
+        "problemId":  7536,
+        "displayId":  "LinK73"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK75-problem",
+        "title":  "最长公共子序列",
+        "problemId":  7538,
+        "displayId":  "LinK75"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK76-problem",
+        "title":  "石子合并",
+        "problemId":  7539,
+        "displayId":  "LinK76"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK78-problem",
+        "title":  "加分二叉树",
+        "problemId":  7541,
+        "displayId":  "LinK78"
+    },
+    {
+        "difficulty":  null,
+        "dirName":  "LinK80-problem",
+        "title":  "没有上司的舞会",
+        "problemId":  7543,
+        "displayId":  "LinK80"
+    }
+]
