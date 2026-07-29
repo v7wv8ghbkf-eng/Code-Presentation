@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>查看代码 - XMUOJ</title>
+<style>
+:root {
+  --bg: #1e1e1e; --text: #d4d4d4;
+  --header-bg: #054750; --accent: #0da5b3; --border: #333;
+  --comment: #6a9955; --keyword: #569cd6; --string: #ce9178;
+  --preprocessor: #9b9b9b; --number: #b5cea8; --function: #dcdcaa;
+}
+body { margin:0; font-family: "Cascadia Code","Fira Code","JetBrains Mono",Consolas,monospace; background:var(--bg); color:var(--text); min-height:100vh; }
+.header { background: linear-gradient(135deg, #032d32, #054750); color: #fff; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.header h1 { font-size: 1rem; font-weight: 600; margin: 0; }
+.header .file-name { font-size: 0.85rem; opacity: 0.85; }
+.back-btn { color: #fff; text-decoration: none; font-size: 0.85rem; padding: 6px 14px; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; transition: background 0.2s; }
+.back-btn:hover { background: rgba(255,255,255,0.1); }
+.wrapper { max-width: 1100px; margin: 0 auto; padding: 20px 24px; }
+pre { margin: 0; padding: 18px; background: #121212; border-radius: 10px; overflow-x: auto; font-size: 0.85rem; line-height: 1.6; counter-reset: line; white-space: pre-wrap; word-break: break-all; }
+pre code { display: table; min-width: 100%; }
+.line { display: table-row; }
+.line::before { counter-increment: line; content: counter(line); display: table-cell; text-align: right; padding-right: 16px; color: #555; user-select: none; min-width: 40px; }
+.error { text-align: center; padding: 48px; color: #f44336; font-size: 1rem; }
+.loading { text-align: center; padding: 48px; color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1 id="file-title">代码查看器</h1>
+  <a class="back-btn" href="javascript:history.back()">← 返回</a>
+</div>
+<div class="wrapper">
+  <pre id="code-container"><div class="loading">加载中...</div></pre>
+</div>
+<script>
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var file = params.get('f') || '';
+  document.getElementById('file-title').textContent = file || '代码查看器';
+  document.title = (file || '代码') + ' - XMUOJ';
+
+  if (!file) {
+    document.getElementById('code-container').innerHTML = '<div class="error">未指定文件</div>';
+    return;
+  }
+
+  // Try to fetch the file
+  fetch('code/' + file)
+    .then(function(res){
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    })
+    .then(function(text){
+      var lines = text.split('\n');
+      var html = '';
+      for (var i = 0; i < lines.length; i++) {
+        html += '<div class="line">' + escapeHtml(lines[i]) + '</div>';
+      }
+      document.getElementById('code-container').innerHTML = html;
+    })
+    .catch(function(err){
+      document.getElementById('code-container').innerHTML = '<div class="error">无法加载文件: ' + file + '<br><small>' + escapeHtml(err.message) + '</small></div>';
+    });
+
+  function escapeHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+})();
+</script>
+</body>
+</html>

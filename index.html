@@ -973,7 +973,7 @@ header .subtitle { font-size: 0.8rem; opacity: 0.8; margin-top: 2px; }
         '<div id="egg-code-content" style="display:none;margin-top:10px;"><pre style="font-size:0.8rem;text-align:center;padding:10px;">'+
         '// Here\'s a password which isn\'t important at all.\n// What will you do with it? :D\n// 05170417</pre></div>';
     } else {
-      codeLinkHtml = '<a class="code-link" href="code/'+p.codeFile+'" target="_blank">查看完整代码文件</a>';
+      codeLinkHtml = '<a class="code-link" href="code-viewer.html?f='+encodeURIComponent(p.codeFile)+'" target="_blank">查看完整代码文件</a>';
     }
 
     var modal = document.getElementById('modal-box');
